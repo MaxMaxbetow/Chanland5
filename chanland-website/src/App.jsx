@@ -130,7 +130,7 @@ function HeroSection() {
       <div className="absolute inset-0">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-fixed"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1536566482680-fca31930a0bd?w=1920&q=80')" }}
+          style={{ backgroundImage: "url('https://i.ytimg.com/vi/aVNTGDMU8Wc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLChiqqQRUuqISvvoZ-k2Efnzo-NjA')" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/10 to-white/80" />
         <div className="absolute inset-0 backdrop-blur-[2px]" />
