@@ -274,7 +274,7 @@ function CitiesSection() {
     {
       id: 3,
       name: 'ShrekБург',
-      logo: 'https://icdn.lenta.ru/images/2020/12/14/15/20201214153333319/wide_4_3_c05260d7ec900f64944d838491c05cc6.jpg',
+      logo: 'https://images.bauerhosting.com/legacy/empire-images/articles/5be1b60cfd0c0bc844479a97/shrek.jpg?ar=16%3A9&fit=crop&crop=top&auto=format&w=1440&q=80',
       players: 3,
       isOpen: true
     }
