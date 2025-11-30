@@ -450,7 +450,7 @@ function Footer() {
           </div>
 
           <div className="flex items-center justify-center gap-1 text-sm text-slate-500">
-            <span>© 2025 ChanLand. Сделано с</span>
+            <span>© 2025 ChanLand. all rights reserved , Создано с</span>
             <Heart className="w-4 h-4 text-red-400 fill-red-400" />
           </div>
         </div>
