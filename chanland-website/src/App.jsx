@@ -201,7 +201,7 @@ function AboutSection() {
       icon: Zap,
       title: 'Без лагов',
       description: 'Оптимизированный сервер с минимальными задержками для комфортной игры.',
-      image: 'https://imgur.com/NoG7pEF'
+      image: 'https://i.imgur.com/NoG7pEF_d.webp?maxwidth=1520&fidelity=grand'
     },
     {
       icon: Heart,
