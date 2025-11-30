@@ -63,7 +63,7 @@ function Header() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <a
-              href="https://discord.gg/XQ6JaNbDuB"
+              href="https://discord.gg/9WsxwGyVkE"
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 sm:px-5 py-2 sm:py-2.5 bg-white/50 hover:bg-white/70 backdrop-blur-sm rounded-full font-semibold text-slate-700 border border-white/60 shadow-lg transition-all duration-300 flex items-center gap-2"
@@ -162,7 +162,7 @@ function HeroSection() {
               Узнать больше
             </a>
             <a
-              href="https://discord.gg/XQ6JaNbDuB"
+              href="https://discord.gg/9WsxwGyVkE"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 bg-slate-800/80 hover:bg-slate-900/90 backdrop-blur-sm rounded-full font-semibold text-white border border-slate-700/50 shadow-lg transition-all duration-300 hover:scale-105 hover:-translate-y-0.5"
@@ -201,7 +201,7 @@ function AboutSection() {
       icon: Zap,
       title: 'Без лагов',
       description: 'Оптимизированный сервер с минимальными задержками для комфортной игры.',
-      image: 'https://i.imgur.com/NoG7pEF.jpg'
+      image: 'https://discord.gg/9WsxwGyVkE'
     },
     {
       icon: Heart,
@@ -417,7 +417,7 @@ function Footer() {
 
           <div className="flex flex-wrap justify-center gap-6 mb-8">
             <a 
-              href="https://discord.gg/XQ6JaNbDuB" 
+              href="https://discord.gg/9WsxwGyVkE" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors"
