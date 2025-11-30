@@ -189,25 +189,25 @@ function AboutSection() {
       icon: Gamepad2,
       title: 'Уникальный геймплей',
       description: 'Приватный сервер с сезонной системой и уникальными механиками, которые вы не найдете нигде.',
-      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&q=80'
+      image: 'https://miro.medium.com/0*Pb9jYCvEqtSHEgMz.jpeg'
     },
     {
       icon: Users,
       title: 'Активное сообщество',
       description: 'Новые ивенты, декор и вечеринки. Место, где игроки создают историю вместе.',
-      image: 'https://images.unsplash.com/photo-1493711662062-fa541f7f3d24?w=600&q=80'
+      image: 'https://ccdn.g-portal.com/large_News_header_image_1920px_MC_Shader_50568f29e1.jpg'
     },
     {
       icon: Zap,
       title: 'Без лагов',
       description: 'Оптимизированный сервер с минимальными задержками для комфортной игры.',
-      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80'
+      image: 'https://i.imgur.com/NoG7pEF.jpg'
     },
     {
       icon: Heart,
       title: 'Дружелюбная атмосфера',
       description: 'Мы ценим каждого игрока и создаём уютное пространство для всех.',
-      image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&q=80'
+      image: 'https://i.tlauncher.org/images/2020-10-07-05.png'
     }
   ];
 
