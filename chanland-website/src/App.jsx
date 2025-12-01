@@ -21,17 +21,20 @@ function Header() {
     { label: 'Территории', href: '#cities' },
   ];
 
-return (
+
+  return (
     // Внешний DIV: Всегда приклеен к верху (top-0) и центрирует хедер.
-    <div className="fixed z-50 w-full flex justify-center top-0 px-4 transition-all duration-700 ease-out" 
+    <div className="fixed z-50 left-0 right-0 top-0 flex justify-center transition-all duration-700 ease-out" 
          style={{
            paddingLeft: isScrolled ? '1rem' : '0',
            paddingRight: isScrolled ? '1rem' : '0',
            paddingTop: isScrolled ? '1rem' : '0'
          }}> 
       <header 
-        className="w-full max-w-5xl transition-all duration-700 ease-out"
+        className="transition-all duration-700 ease-out"
         style={{
+          width: isScrolled ? '100%' : '100vw',
+          maxWidth: isScrolled ? '80rem' : 'none',
           backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.2)',
           backdropFilter: isScrolled ? 'blur(40px)' : 'blur(24px)',
           borderRadius: isScrolled ? '9999px' : '0px',
