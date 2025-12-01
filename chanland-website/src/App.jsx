@@ -337,7 +337,7 @@ function CitiesSection() {
               </button>
             </div>
 
-            <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-3 max-h-[100px] overflow-y-auto pr-2 custom-scrollbar">
               {filteredCities.length > 0 ? (
                 filteredCities.map((city) => (
                   <div
