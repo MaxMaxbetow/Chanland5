@@ -14,21 +14,4 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* В вашем глобальном CSS файле (globals.css или index.css) */
-.transition-header-smooth {
-  /* Длительность 0.7 секунды для плавной анимации */
-  transition-duration: 0.7s; 
-  /* Кривая Безье для эффекта "жидкого" отскока (overshoot) */
-  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1.4); 
-  /* Анимируем все свойства (ширина, закругление, отступы, фон) */
-  transition-property: all; 
-}
-/* Глобальный CSS */
-.transition-header-smooth {
-  /* Длительность 0.7 секунды для заметной плавности */
-  transition-duration: 0.7s; 
-  /* Кривая Безье для эффекта отскока: выходит за пределы конечного значения и возвращается */
-  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1.4); 
-  /* Анимируем все изменяемые свойства (ширина, отступы, закругление, фон) */
-  transition-property: all; 
-}
+
