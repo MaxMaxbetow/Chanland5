@@ -26,7 +26,7 @@ function Header() {
       <header 
         className={`transition-all duration-500 ease-out ${
           isScrolled 
-            ? 'w-full max-w-5xl rounded-full bg-white/40 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' 
+            ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' 
             : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30'
         }`}
       >
