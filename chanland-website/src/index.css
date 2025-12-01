@@ -14,15 +14,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* В вашем глобальном CSS файле (globals.css или index.css) */
 .transition-header-smooth {
-  /* Увеличенная длительность (0.7s) для плавности */
-  transition-duration: 0.7s;
-  /* Кастомная кривая Безье для эффекта отскока */
+  /* Длительность 0.7 секунды для плавной анимации */
+  transition-duration: 0.7s; 
+  /* Кривая Безье для эффекта "жидкого" отскока (overshoot) */
   transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1.4); 
-  /* Указываем, какие свойства анимируем (top, padding, background, border, etc.) */
+  /* Анимируем все свойства (ширина, закругление, отступы, фон) */
   transition-property: all; 
 }
-
-/* Если вы используете Tailwind CSS с JIT-режимом (что, вероятно, так), 
-   лучше добавить это в файл конфигурации tailwind.config.js:
-*/
