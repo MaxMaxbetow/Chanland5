@@ -4,19 +4,10 @@ import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, User
 // Header Component
 import React, { useState, useEffect } from 'react';
 // Предполагая, что у вас есть компоненты X, Menu, ChevronDown, ExternalLink
-// Если это иконки Lucide/Feather, их нужно импортировать
 // import { X, Menu, ChevronDown, ExternalLink } from 'lucide-react'; 
 
-// Добавьте этот класс в ваш глобальный CSS файл (например, index.css или global.css)
-// или в конфигурацию Tailwind, если вы используете @layer utilities.
-/*
-@layer utilities {
-  .transition-header-smooth {
-    transition: all 0.7s cubic-bezier(0.4, 0.0, 0.2, 1.4); 
-    // Эта функция (0.4, 0.0, 0.2, 1.4) дает хороший "жидкий" отскок (overshoot effect)
-  }
-}
-*/
+// Важно: убедитесь, что вы добавили класс transition-header-smooth в ваш CSS
+// .transition-header-smooth { transition-duration: 0.7s; transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1.4); transition-property: all; }
 
 function Header({ X, Menu, ChevronDown, ExternalLink }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -37,18 +28,22 @@ function Header({ X, Menu, ChevronDown, ExternalLink }) {
     { label: 'Территории', href: '#cities' },
   ];
 
-  // Изменено: добавлен класс transition-header-smooth и 'top-4' изменен на 'top-2' для более выраженного отскока
   return (
-    <div className={`fixed z-50 w-full flex justify-center transition-header-smooth ${isScrolled ? 'top-2 px-4' : 'top-0 px-0'}`}>
+    // Изменено: Удалены все классы, которые меняют top и px. Хедер всегда приклеен к верху.
+    <div className="fixed z-50 w-full flex justify-center top-0"> 
       <header 
-        // Изменено: добавлен класс transition-header-smooth
+        // Изменено: Используем transition-header-smooth для эффекта отскока
+        // Классы isScrolled теперь управляют шириной и закруглением
         className={`transition-header-smooth ${
           isScrolled 
-            ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' 
-            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30'
+            // Хедер сжат, закруглен, и имеет отступ сверху и по бокам (px-4)
+            ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4 mx-4' 
+            // Хедер на всю ширину, без закруглений, приклеен к краю
+            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30 rounded-none' 
         }`}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+          {/* ... (остальная часть содержимого хедера осталась без изменений) ... */}
           <a href="#" className="flex items-center gap-3 shrink-0">
             <img 
               src="https://easydonate.s3.easyx.ru/images/sides/84/bc/84bcc9aab09ae4d54ddc34c092a960407160139d8c0628ce914ce0f43e4d7bff.png" 
@@ -63,7 +58,6 @@ function Header({ X, Menu, ChevronDown, ExternalLink }) {
               <a
                 key={link.label}
                 href={link.href}
-                // transition-all duration-300 - сохранено для внутренних элементов
                 className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium transition-all duration-300 rounded-full hover:bg-white/40"
               >
                 {link.label}
@@ -85,7 +79,6 @@ function Header({ X, Menu, ChevronDown, ExternalLink }) {
               href="https://discord.gg/9WsxwGyVkE"
               target="_blank"
               rel="noopener noreferrer"
-              // transition-all duration-300 - сохранено
               className="px-3 sm:px-5 py-2 sm:py-2.5 bg-white/50 hover:bg-white/70 backdrop-blur-sm rounded-full font-semibold text-slate-700 border border-white/60 shadow-lg transition-all duration-300 flex items-center gap-2"
             >
               <svg className="w-5 h-5 text-[#5865F2]" fill="currentColor" viewBox="0 0 24 24">
@@ -96,16 +89,15 @@ function Header({ X, Menu, ChevronDown, ExternalLink }) {
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              // transition-all duration-300 - сохранено
               className="lg:hidden p-2 rounded-full bg-white/30 hover:bg-white/50 backdrop-blur-sm border border-white/40 transition-all duration-300"
             >
               {menuOpen ? <X className="w-5 h-5 text-slate-700" /> : <Menu className="w-5 h-5 text-slate-700" />}
             </button>
           </div>
         </div>
-
+        
+        {/* ... (мобильное меню) ... */}
         {menuOpen && (
-          // Не используем 'transition-header-smooth' здесь, чтобы выпадающее меню не "прыгало"
           <div className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white/60 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-xl p-6 space-y-3">
             {navLinks.map((link) => (
               <a
@@ -144,6 +136,7 @@ function Header({ X, Menu, ChevronDown, ExternalLink }) {
     </div>
   );
 }
+
 // Hero Section Component
 function HeroSection() {
   return (
