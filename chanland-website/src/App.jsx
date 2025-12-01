@@ -50,7 +50,7 @@ function Header() {
             borderStyle: "solid",
             borderWidth: "1px",
             width: "100%",
-            maxWidth: "1200px", // подстраивай под свой макет, раньше был max-w-5xl
+            max-w-5xl
           }}
         >
           <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
