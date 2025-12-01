@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
-// Header Component (готово к вставке)
+// Header Component (исправленный — готов к вставке)
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [downloadOpen, setDownloadOpen] = useState(false);
@@ -13,9 +13,8 @@ function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // легкая задержка появления
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => setMounted(true), []);
 
   const navLinks = [
     { label: "Правила", href: "#hero" },
@@ -23,8 +22,7 @@ function Header() {
     { label: "Территории", href: "#cities" },
   ];
 
-  // параметры анимации: масштаб по X и радиус
-  const scaleX = isScrolled ? 0.96 : 1; // 0.96 — чуть сжато по бокам
+  const scaleX = isScrolled ? 0.96 : 1;
   const radius = isScrolled ? "9999px" : "0px";
   const bg = isScrolled ? "rgba(255,255,255,0.60)" : "rgba(255,255,255,0.20)";
   const borderColor = isScrolled ? "rgba(255,255,255,0.70)" : "rgba(255,255,255,0.30)";
@@ -33,13 +31,10 @@ function Header() {
 
   return (
     <div className={`fixed z-50 w-full flex justify-center header-outer ${isScrolled ? "top-4 px-4" : "top-0 px-0"} transition-all duration-300`}>
-      <header
-        className={`${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"} transition-all duration-500`}
-        aria-hidden={false}
-      >
-        {/* inner контейнер анимируется через transform (scaleX) + border-radius */}
+      <header className={`${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"} transition-all duration-500`}>
         <div
-          className="header-inner"
+          /* Tailwind класс max-w-5xl должен быть в className, а не в style */
+          className="header-inner w-full max-w-5xl"
           style={{
             transform: `scaleX(${scaleX})`,
             borderRadius: radius,
@@ -49,8 +44,7 @@ function Header() {
             boxShadow: shadow,
             borderStyle: "solid",
             borderWidth: "1px",
-            width: "100%",
-            max-w-5xl
+            width: "100%"
           }}
         >
           <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
@@ -146,7 +140,6 @@ function Header() {
     </div>
   );
 }
-
 
 // Hero Section Component
 function HeroSection() {
