@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
-// Header Component (исправленный — готов к вставке)
+// Header Component 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [downloadOpen, setDownloadOpen] = useState(false);
@@ -34,8 +34,9 @@ function Header() {
       <header className={`${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"} transition-all duration-500`}>
         <div
           /* Tailwind класс max-w-5xl должен быть в className, а не в style */
-          className="header-inner w-full max-w-5xl"
-          style={{
+          <div className="header-inner"
+            style={{
+            maxWidth: isScrolled ? "1100px" : "100%",  // Вот здесь надо менять
             transform: `scaleX(${scaleX})`,
             borderRadius: radius,
             backgroundColor: bg,
