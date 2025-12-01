@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
+import { Menu, X, ChevronDown, ExternalLink } from 'lucide-react';
 
-// Задаем кастомную функцию перехода для эффекта отскока
-const BOUNCE_TRANSITION = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.5s ease-out, border 0.5s ease-out, box-shadow 0.5s ease-out, border-radius 0.5s ease-out';
-const DEFAULT_TRANSITION = 'all 0.5s ease-out'; // Используется для других элементов
+// Кастомная функция перехода для эффекта отскока/жидкости (Bounce)
+// 0.175, 0.885, 0.32, 1.275 - это стандартный "out-back" эффект
+const BOUNCE_TRANSITION_TIMING = 'cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+
+// Перечисляем все анимируемые свойства для плавности
+const HEADER_TRANSITION = `transform 0.5s ${BOUNCE_TRANSITION_TIMING}, 
+                         width 0.5s ${BOUNCE_TRANSITION_TIMING}, 
+                         max-width 0.5s ${BOUNCE_TRANSITION_TIMING}, 
+                         border-radius 0.5s ${BOUNCE_TRANSITION_TIMING},
+                         background-color 0.5s ease-out,
+                         border 0.5s ease-out,
+                         box-shadow 0.5s ease-out,
+                         padding 0.5s ease-out`;
 
 // Header Component
 function Header() {
@@ -16,7 +26,8 @@ function Header() {
       // isScrolled = true, когда скролл > 50px
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll, { passive: true }); // passive: true для лучшей производительности скролла
+    // Используем { passive: true } для лучшей производительности скролла на мобильных
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -26,34 +37,39 @@ function Header() {
     { label: 'Территории', href: '#cities' },
   ];
   
-  // 1. Анимация смещения: isScrolled ? header должен быть 'внутри' на 16px (top-4) : header должен быть 'снаружи' (top-0)
-  // Используем transform: translateY для плавности
-  const headerContainerTransform = isScrolled 
-    ? { transform: 'translateY(16px)' } // Сместить контейнер вниз на 16px
-    : { transform: 'translateY(0px)' }; // В базовом положении
+  // 1. Анимация смещения и "сжатия" (Transform and Padding)
+  // Мы смещаем контейнер, чтобы создать эффект "всплывающей таблетки"
+  const containerStyle = isScrolled 
+    ? { 
+        transform: 'translateY(16px)', // Смещаем контейнер вниз на 16px (для эффекта top-4)
+        transition: HEADER_TRANSITION,
+        willChange: 'transform, width, max-width',
+        // Дополнительный padding для центрирования, если нужно.
+      }
+    : { 
+        transform: 'translateY(0px)', 
+        transition: HEADER_TRANSITION,
+        willChange: 'transform, width, max-width',
+      };
 
-  // 2. Анимация изменения размера и формы (header inner element)
+  // 2. Анимация формы и фона (Inner Header)
   const headerClasses = isScrolled
     ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' 
     : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30';
-
-
+    
   return (
-    // Контейнер: fixed, top-0, will-change, используем transform для смещения
+    // Внешний контейнер: position fixed, top-0, применяем transform и переход
     <div 
       className="fixed z-50 w-full flex justify-center px-4" 
-      style={{
-        top: 0, // Фиксируем к верху
-        ...headerContainerTransform,
-        transition: BOUNCE_TRANSITION, // Применяем переход с отскоком
-        willChange: 'transform', // Подсказка браузеру
-      }}
+      style={containerStyle} 
     >
+      {/* Внутренний Header: применяем изменения ширины, фона, скругления */}
       <header 
         className={headerClasses}
         style={{
-          transition: DEFAULT_TRANSITION, // Используем обычный переход для стилей (ширина, фон и т.д.)
-          willChange: 'backdrop-filter, border-radius', // Подсказка для эффектов
+          transition: HEADER_TRANSITION,
+          // will-change помогает браузеру подготовить слои для плавного backdrop-filter
+          willChange: 'backdrop-filter, border-radius, background-color, box-shadow', 
         }}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
@@ -110,7 +126,7 @@ function Header() {
           </div>
         </div>
 
-        {/* Мобильное меню (остается неизменным, использует дефолтные переходы) */}
+        {/* Мобильное меню (остается прежним) */}
         {menuOpen && (
           <div className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white/60 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-xl p-6 space-y-3">
             {navLinks.map((link) => (
@@ -152,7 +168,6 @@ function Header() {
 }
 
 // ... Остальные компоненты (HeroSection, AboutSection, CitiesSection, Footer) остаются неизменными
-
 // Main App Component
 export default function App() {
   return (
