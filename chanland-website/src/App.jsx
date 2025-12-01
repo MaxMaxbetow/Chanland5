@@ -260,7 +260,7 @@ function CitiesSection() {
     {
       id: 1,
       name: 'Ivan-City',
-      logo: 'https://i.imgur.com/rqEIUG0.png',
+      logo: 'https://i.imgur.com/22YDl33.png',
       players: 6,
       isOpen: false
     },
@@ -332,7 +332,7 @@ function CitiesSection() {
               </button>
             </div>
 
-            <div className="space-y-3 max-h-[100px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
               {filteredCities.length > 0 ? (
                 filteredCities.map((city) => (
                   <div
