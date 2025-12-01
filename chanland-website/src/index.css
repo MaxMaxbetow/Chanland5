@@ -14,4 +14,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+/* Добавьте этот код в ваш глобальный CSS или в App.jsx <style> */
+.transition-header-smooth {
+  transition-duration: 0.7s; 
+  /* Кривая Безье для эффекта отскока */
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1.4); 
+  transition-property: all; 
+}
