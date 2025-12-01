@@ -21,13 +21,16 @@ function Header() {
     { label: 'Территории', href: '#cities' },
   ];
 
-
-    return (
+  return (
+    // Внешний DIV: Всегда приклеен к верху (top-0) и центрирует хедер.
     <div className="fixed z-50 w-full flex justify-center top-0"> 
       <header 
-        className={`transition-all duration-700 ease-in-out ${
+        // Здесь используется кастомная анимация для плавного отскока (transition-header-smooth)
+        className={`transition-header-smooth ${
           isScrolled 
+            // СОСТОЯНИЕ СКРОЛЛА: Ограничиваем ширину (100%-2rem), закругляем, добавляем верхний отступ (mt-4)
             ? 'w-[calc(100%-2rem)] max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4' 
+            // СОСТОЯНИЕ ВВЕРХУ: Полная ширина (w-full), без закругления, нет отступа сверху
             : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30 rounded-none' 
         }`}
       >
@@ -262,7 +265,7 @@ function CitiesSection() {
     {
       id: 1,
       name: 'Ivan-City',
-      logo: 'https://i.imgur.com/22YDl33.png',
+      logo: 'https://i.imgur.com/rqEIUG0.png',
       players: 6,
       isOpen: false
     },
@@ -334,7 +337,7 @@ function CitiesSection() {
               </button>
             </div>
 
-            <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-3 max-h-[100px] overflow-y-auto pr-2 custom-scrollbar">
               {filteredCities.length > 0 ? (
                 filteredCities.map((city) => (
                   <div
