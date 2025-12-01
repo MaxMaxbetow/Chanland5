@@ -14,34 +14,128 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* добавить в CSS или в App.jsx <style> */
+/* Плавная анимация закругления для хедера */
 .transition-header-smooth {
-  transition-duration: 0.7s; 
-  /* что то там для эффекта отскока (вроде уже устарело) */
-  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1.4); 
-  transition-property: all; 
-}
-/* header smooth animations */
-.header-outer {
-  overflow: visible; /* чтобы тень и скругления не обрезались */
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-property: border-radius, width, max-width, margin-top, 
+                       background-color, backdrop-filter, border, 
+                       box-shadow, transform !important;
 }
 
-.header-inner {
-  transform-origin: center;
-  transition-property: transform, border-radius, background-color, box-shadow, backdrop-filter;
-  transition-duration: 700ms;
-  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform, border-radius, box-shadow, backdrop-filter;
+/* Плавное изменение border-radius */
+.transition-header-smooth.rounded-full {
+  border-radius: 9999px !important;
+  animation: smooth-rounding 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
 }
 
-/* маленькое появление меню/блока */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in-up {
-  animation: fadeInUp 220ms ease-out both;
+.transition-header-smooth.rounded-none {
+  border-radius: 0px !important;
+  animation: smooth-flattening 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
 }
 
-/* если нужен класс "без обрезки" для body/контейнеров */
-.no-clip { overflow: visible !important; }
+/* Анимация при скролле (становится круглым) */
+@keyframes smooth-rounding {
+  0% {
+    border-radius: 0px;
+  }
+  50% {
+    border-radius: 12px;
+  }
+  100% {
+    border-radius: 9999px;
+  }
+}
+
+/* Анимация при возврате вверх (становится плоским) */
+@keyframes smooth-flattening {
+  0% {
+    border-radius: 9999px;
+  }
+  50% {
+    border-radius: 12px;
+  }
+  100% {
+    border-radius: 0px;
+  }
+}
+
+/* Плавное изменение ширины */
+.transition-header-smooth.w-\[calc\(100\%-2rem\)\] {
+  width: calc(100% - 2rem) !important;
+  animation: smooth-shrink 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+.transition-header-smooth.w-full {
+  width: 100% !important;
+  animation: smooth-expand 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+@keyframes smooth-shrink {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: calc(100% - 2rem);
+  }
+}
+
+@keyframes smooth-expand {
+  0% {
+    width: calc(100% - 2rem);
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Плавное изменение отступа сверху */
+.transition-header-smooth.mt-4 {
+  margin-top: 1rem !important;
+  animation: smooth-margin-in 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+.transition-header-smooth:not(.mt-4) {
+  margin-top: 0 !important;
+  animation: smooth-margin-out 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+@keyframes smooth-margin-in {
+  0% {
+    margin-top: 0;
+  }
+  100% {
+    margin-top: 1rem;
+  }
+}
+
+@keyframes smooth-margin-out {
+  0% {
+    margin-top: 1rem;
+  }
+  100% {
+    margin-top: 0;
+  }
+}
+
+/* Легкий эффект сжатия при скролле (опционально) */
+.transition-header-smooth.scale-down {
+  transform: scaleX(0.96) !important;
+}
+
+.transition-header-smooth:not(.scale-down) {
+  transform: scaleX(1) !important;
+}
+
+/* Для более плавного перехода границ */
+.transition-header-smooth.border {
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+
+.transition-header-smooth.border-b {
+  border-bottom-width: 1px !important;
+  border-bottom-style: solid !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
