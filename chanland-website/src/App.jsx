@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
+// Задаем кастомную функцию перехода для эффекта отскока
+const BOUNCE_TRANSITION = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.5s ease-out, border 0.5s ease-out, box-shadow 0.5s ease-out, border-radius 0.5s ease-out';
+const DEFAULT_TRANSITION = 'all 0.5s ease-out'; // Используется для других элементов
+
 // Header Component
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -9,9 +13,10 @@ function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
+      // isScrolled = true, когда скролл > 50px
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true }); // passive: true для лучшей производительности скролла
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -20,17 +25,39 @@ function Header() {
     { label: 'О сервере', href: '#about' },
     { label: 'Территории', href: '#cities' },
   ];
+  
+  // 1. Анимация смещения: isScrolled ? header должен быть 'внутри' на 16px (top-4) : header должен быть 'снаружи' (top-0)
+  // Используем transform: translateY для плавности
+  const headerContainerTransform = isScrolled 
+    ? { transform: 'translateY(16px)' } // Сместить контейнер вниз на 16px
+    : { transform: 'translateY(0px)' }; // В базовом положении
+
+  // 2. Анимация изменения размера и формы (header inner element)
+  const headerClasses = isScrolled
+    ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' 
+    : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30';
+
 
   return (
-    <div className={`fixed z-50 w-full flex justify-center transition-all duration-500 ease-out ${isScrolled ? 'top-4 px-4' : 'top-0 px-0'}`}>
+    // Контейнер: fixed, top-0, will-change, используем transform для смещения
+    <div 
+      className="fixed z-50 w-full flex justify-center px-4" 
+      style={{
+        top: 0, // Фиксируем к верху
+        ...headerContainerTransform,
+        transition: BOUNCE_TRANSITION, // Применяем переход с отскоком
+        willChange: 'transform', // Подсказка браузеру
+      }}
+    >
       <header 
-        className={`transition-all duration-500 ease-out ${
-          isScrolled 
-            ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' 
-            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30'
-        }`}
+        className={headerClasses}
+        style={{
+          transition: DEFAULT_TRANSITION, // Используем обычный переход для стилей (ширина, фон и т.д.)
+          willChange: 'backdrop-filter, border-radius', // Подсказка для эффектов
+        }}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+          {/* ... Контент хедера (лого, навигация, кнопки) остается прежним */}
           <a href="#" className="flex items-center gap-3 shrink-0">
             <img 
               src="https://easydonate.s3.easyx.ru/images/sides/84/bc/84bcc9aab09ae4d54ddc34c092a960407160139d8c0628ce914ce0f43e4d7bff.png" 
@@ -83,6 +110,7 @@ function Header() {
           </div>
         </div>
 
+        {/* Мобильное меню (остается неизменным, использует дефолтные переходы) */}
         {menuOpen && (
           <div className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white/60 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-xl p-6 space-y-3">
             {navLinks.map((link) => (
@@ -123,6 +151,61 @@ function Header() {
   );
 }
 
+// ... Остальные компоненты (HeroSection, AboutSection, CitiesSection, Footer) остаются неизменными
+
+// Main App Component
+export default function App() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-50 overflow-x-hidden">
+      {/* ... Стилизация фона */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-blue-100/30 to-purple-100/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-amber-100/20 to-rose-100/20 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-white/50 to-transparent rounded-full" />
+      </div>
+
+      <Header />
+      
+      <main className="relative z-10">
+        <HeroSection />
+        <AboutSection />
+        <CitiesSection />
+      </main>
+      
+      <Footer />
+
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        html {
+          scroll-behavior: smooth;
+        }
+        
+        /* ... Стили скроллбара */
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background: rgba(100, 116, 139, 0.3);
+          border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(100, 116, 139, 0.5);
+        }
+      `}</style>
+    </div>
+  );
+}
 // Hero Section Component
 function HeroSection() {
   return (
