@@ -21,18 +21,26 @@ function Header() {
     { label: 'Территории', href: '#cities' },
   ];
 
-  return (
+return (
     // Внешний DIV: Всегда приклеен к верху (top-0) и центрирует хедер.
-    <div className="fixed z-50 w-full flex justify-center top-0"> 
+    <div className="fixed z-50 w-full flex justify-center top-0 px-4 transition-all duration-700 ease-out" 
+         style={{
+           paddingLeft: isScrolled ? '1rem' : '0',
+           paddingRight: isScrolled ? '1rem' : '0',
+           paddingTop: isScrolled ? '1rem' : '0'
+         }}> 
       <header 
-        // Здесь используется кастомная анимация для плавного отскока (transition-header-smooth)
-        className={`transition-header-smooth ${
-          isScrolled 
-            // СОСТОЯНИЕ СКРОЛЛА: Ограничиваем ширину (100%-2rem), закругляем, добавляем верхний отступ (mt-4)
-            ? 'w-[calc(100%-2rem)] max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4' 
-            // СОСТОЯНИЕ ВВЕРХУ: Полная ширина (w-full), без закругления, нет отступа сверху
-            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30 rounded-none' 
-        }`}
+        className="w-full max-w-5xl transition-all duration-700 ease-out"
+        style={{
+          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.2)',
+          backdropFilter: isScrolled ? 'blur(40px)' : 'blur(24px)',
+          borderRadius: isScrolled ? '9999px' : '0px',
+          borderWidth: '1px',
+          borderColor: isScrolled ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.3)',
+          borderTop: isScrolled ? '1px solid rgba(255, 255, 255, 0.7)' : 'none',
+          borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.7)' : '1px solid rgba(255, 255, 255, 0.3)',
+          boxShadow: isScrolled ? '0 8px 32px rgba(0, 0, 0, 0.12)' : 'none'
+        }}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
           {/* ... (остальное содержимое хедера) ... */}
