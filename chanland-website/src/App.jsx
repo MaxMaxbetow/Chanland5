@@ -293,6 +293,13 @@ function CitiesSection() {
       players: 3,
       isOpen: true
     }
+     {
+      id: 4,
+      name: 'Альфорд',
+      logo: 'https://www.minecraft.net/content/dam/minecraftnet/franchise/photography/things/polar_realworld2.jpg',
+      players: 1,
+      isOpen: true
+    },
   ];
 
   const filteredCities = cities.filter(city =>
