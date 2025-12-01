@@ -14,10 +14,34 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* Добавьте этот код в ваш глобальный CSS или в App.jsx <style> */
+/* добавить в CSS или в App.jsx <style> */
 .transition-header-smooth {
   transition-duration: 0.7s; 
-  /* Кривая Безье для эффекта отскока */
+  /* что то там для эффекта отскока (вроде уже устарело) */
   transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1.4); 
   transition-property: all; 
 }
+/* header smooth animations */
+.header-outer {
+  overflow: visible; /* чтобы тень и скругления не обрезались */
+}
+
+.header-inner {
+  transform-origin: center;
+  transition-property: transform, border-radius, background-color, box-shadow, backdrop-filter;
+  transition-duration: 700ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, border-radius, box-shadow, backdrop-filter;
+}
+
+/* маленькое появление меню/блока */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 220ms ease-out both;
+}
+
+/* если нужен класс "без обрезки" для body/контейнеров */
+.no-clip { overflow: visible !important; }
