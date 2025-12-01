@@ -30,7 +30,6 @@ function Header() {
   const shadow = isScrolled ? "0 8px 32px rgba(0,0,0,0.12)" : "none";
 
   return (
-{/* HEADER WRAPPER */}
 <div
   className={`fixed z-50 w-full transition-all duration-500 ease-out ${
     isScrolled ? "top-4 px-4 flex justify-center" : "top-0 px-0"
