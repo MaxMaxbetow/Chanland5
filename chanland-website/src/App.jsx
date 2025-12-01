@@ -340,7 +340,7 @@ function CitiesSection() {
     {
       id: 1,
       name: 'Ivan-City',
-      logo: 'https://i.imgur.com/rqEIUG0.png',
+      logo: 'https://i.imgur.com/22YDl33.png',
       players: 6,
       isOpen: false
     },
