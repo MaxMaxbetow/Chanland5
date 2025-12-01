@@ -490,6 +490,39 @@ export default function App() {
       <Footer />
 
       <style>{`
+      // ... (где-то среди ваших стилей)
+
+/* Класс для общей анимации перехода */
+.header-transition {
+    /* Добавляем все нужные свойства для плавного перехода, включая width, margin-top, border-radius */
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Убедимся, что по умолчанию хедер растянут и имеет 0 закругление */
+    width: 100%;
+    margin-top: 0;
+    border-radius: 0;
+}
+
+/* Стили для хедера в состоянии скролла (узкий, закругленный, опущенный) */
+header.scrolled {
+    /* Эти классы из Tailwind (rounded-full, w-[calc(100%-2rem)], mt-4)
+       переопределяют свойства и благодаря 'header-transition' будут анимированы. */
+    
+    /* Добавляем transform для визуального сдвига */
+    transform: scale(1) translateY(0); 
+}
+
+/* Стили для хедера в состоянии наверху (полная ширина) */
+header:not(.scrolled) {
+    /* Убеждаемся, что эти свойства явно заданы для плавного возврата */
+    width: 100%;
+    margin-top: 0;
+    border-radius: 0 !important;
+    
+    /* Убеждаемся, что transform сброшен */
+    transform: scale(1) translateY(0);
+}
+
+// ... (остальные стили тем)
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
         * {
