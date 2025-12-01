@@ -22,28 +22,15 @@ function Header() {
   ];
 
 
-  return (
-    // Внешний DIV: Всегда приклеен к верху (top-0) и центрирует хедер.
-    <div className="fixed z-50 left-0 right-0 top-0 flex justify-center transition-all duration-700 ease-out" 
+   return (
+    <div className="fixed z-50 w-full top-0 flex justify-center header-container" 
          style={{
            paddingLeft: isScrolled ? '1rem' : '0',
            paddingRight: isScrolled ? '1rem' : '0',
            paddingTop: isScrolled ? '1rem' : '0'
          }}> 
       <header 
-        className="transition-all duration-700 ease-out"
-        style={{
-          width: isScrolled ? '100%' : '100vw',
-          maxWidth: isScrolled ? '80rem' : 'none',
-          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.2)',
-          backdropFilter: isScrolled ? 'blur(40px)' : 'blur(24px)',
-          borderRadius: isScrolled ? '9999px' : '0px',
-          borderWidth: '1px',
-          borderColor: isScrolled ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.3)',
-          borderTop: isScrolled ? '1px solid rgba(255, 255, 255, 0.7)' : 'none',
-          borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.7)' : '1px solid rgba(255, 255, 255, 0.3)',
-          boxShadow: isScrolled ? '0 8px 32px rgba(0, 0, 0, 0.12)' : 'none'
-        }}
+        className={`header-main ${isScrolled ? 'header-scrolled' : 'header-top'}`}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
           {/* ... (остальное содержимое хедера) ... */}
