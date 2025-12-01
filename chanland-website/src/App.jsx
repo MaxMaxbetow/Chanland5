@@ -22,15 +22,14 @@ function Header() {
   ];
 
 
-   return (
-    <div className="fixed z-50 w-full top-0 flex justify-center header-container" 
-         style={{
-           paddingLeft: isScrolled ? '1rem' : '0',
-           paddingRight: isScrolled ? '1rem' : '0',
-           paddingTop: isScrolled ? '1rem' : '0'
-         }}> 
+    return (
+    <div className="fixed z-50 w-full flex justify-center top-0"> 
       <header 
-        className={`header-main ${isScrolled ? 'header-scrolled' : 'header-top'}`}
+        className={`transition-all duration-700 ease-in-out ${
+          isScrolled 
+            ? 'w-[calc(100%-2rem)] max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4' 
+            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30 rounded-none' 
+        }`}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
           {/* ... (остальное содержимое хедера) ... */}
