@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
-// Header Component
 import React, { useState, useEffect } from 'react';
-// Предполагая, что у вас есть компоненты X, Menu, ChevronDown, ExternalLink
-// import { X, Menu, ChevronDown, ExternalLink } from 'lucide-react'; 
 
-// Важно: убедитесь, что вы добавили класс transition-header-smooth в ваш CSS
-// .transition-header-smooth { transition-duration: 0.7s; transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1.4); transition-property: all; }
+// Предполагая, что вы используете иконки, например, из lucide-react (X, Menu, ChevronDown, ExternalLink)
+// Вам нужно будет импортировать их из вашего источника или заменить на ваши SVG/компоненты.
+// function X() { return <svg>...</svg> } 
+// function Menu() { return <svg>...</svg> } 
+// function ChevronDown() { return <svg>...</svg> } 
+// function ExternalLink() { return <svg>...</svg> } 
 
 function Header({ X, Menu, ChevronDown, ExternalLink }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,6 +17,7 @@ function Header({ X, Menu, ChevronDown, ExternalLink }) {
 
   useEffect(() => {
     const handleScroll = () => {
+      // isScrolled становится true, когда прокрутка больше 50px
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
@@ -29,21 +31,19 @@ function Header({ X, Menu, ChevronDown, ExternalLink }) {
   ];
 
   return (
-    // Изменено: Удалены все классы, которые меняют top и px. Хедер всегда приклеен к верху.
+    // Внешний DIV: Всегда приклеен к верху и центрирует хедер
     <div className="fixed z-50 w-full flex justify-center top-0"> 
       <header 
-        // Изменено: Используем transition-header-smooth для эффекта отскока
-        // Классы isScrolled теперь управляют шириной и закруглением
+        // Здесь применяется ПЛАВНЫЙ ПЕРЕХОД с эффектом отскока (Overshoot Bounce)
         className={`transition-header-smooth ${
           isScrolled 
-            // Хедер сжат, закруглен, и имеет отступ сверху и по бокам (px-4)
-            ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4 mx-4' 
-            // Хедер на всю ширину, без закруглений, приклеен к краю
+            // СОСТОЯНИЕ СКРОЛЛА: Ограничиваем ширину (100%-2rem), закругляем, добавляем верхний отступ (mt-4)
+            ? 'w-[calc(100%-2rem)] max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4' 
+            // СОСТОЯНИЕ ВВЕРХУ: Полная ширина (w-full), без закругления, без отступа сверху
             : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30 rounded-none' 
         }`}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-          {/* ... (остальная часть содержимого хедера осталась без изменений) ... */}
           <a href="#" className="flex items-center gap-3 shrink-0">
             <img 
               src="https://easydonate.s3.easyx.ru/images/sides/84/bc/84bcc9aab09ae4d54ddc34c092a960407160139d8c0628ce914ce0f43e4d7bff.png" 
@@ -95,8 +95,7 @@ function Header({ X, Menu, ChevronDown, ExternalLink }) {
             </button>
           </div>
         </div>
-        
-        {/* ... (мобильное меню) ... */}
+
         {menuOpen && (
           <div className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white/60 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-xl p-6 space-y-3">
             {navLinks.map((link) => (
@@ -136,6 +135,8 @@ function Header({ X, Menu, ChevronDown, ExternalLink }) {
     </div>
   );
 }
+
+export default Header;
 
 // Hero Section Component
 function HeroSection() {
