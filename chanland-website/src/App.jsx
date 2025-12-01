@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
-// Header Component (Исправленный)
+// Header Component
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [downloadOpen, setDownloadOpen] = useState(false);
@@ -22,20 +22,15 @@ function Header() {
   ];
 
   return (
-    // Внешний DIV: Всегда приклеен к верху (top-0) и центрирует хедер.
-    <div className="fixed z-50 w-full flex justify-center top-0"> 
+    <div className={`fixed z-50 w-full flex justify-center transition-all duration-500 ease-out ${isScrolled ? 'top-4 px-4' : 'top-0 px-0'}`}>
       <header 
-        // Здесь используется кастомная анимация для плавного отскока (transition-header-smooth)
-        className={`transition-header-smooth ${
+        className={`transition-all duration-500 ease-out ${
           isScrolled 
-            // СОСТОЯНИЕ СКРОЛЛА: Ограничиваем ширину (100%-2rem), закругляем, добавляем верхний отступ (mt-4)
-            ? 'w-[calc(100%-2rem)] max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4' 
-            // СОСТОЯНИЕ ВВЕРХУ: Полная ширина (w-full), без закругления, нет отступа сверху
-            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30 rounded-none' 
+            ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' 
+            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30'
         }`}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-          {/* ... (остальное содержимое хедера) ... */}
           <a href="#" className="flex items-center gap-3 shrink-0">
             <img 
               src="https://easydonate.s3.easyx.ru/images/sides/84/bc/84bcc9aab09ae4d54ddc34c092a960407160139d8c0628ce914ce0f43e4d7bff.png" 
