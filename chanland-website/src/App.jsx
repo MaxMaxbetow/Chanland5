@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
-import React, { useState, useEffect } from 'react';
-
 // Header Component (Исправленный)
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
