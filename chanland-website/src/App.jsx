@@ -292,14 +292,14 @@ function CitiesSection() {
       logo: 'https://images.bauerhosting.com/legacy/empire-images/articles/5be1b60cfd0c0bc844479a97/shrek.jpg?ar=16%3A9&fit=crop&crop=top&auto=format&w=1440&q=80',
       players: 3,
       isOpen: true
-    }
-     {
+    },
+    {
       id: 4,
       name: 'Альфорд',
       logo: 'https://www.minecraft.net/content/dam/minecraftnet/franchise/photography/things/polar_realworld2.jpg',
       players: 1,
       isOpen: true
-    },
+    }
   ];
 
   const filteredCities = cities.filter(city =>
