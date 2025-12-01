@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
-// Header Component (Обновленный)
-function Header({ theme, setTheme }) {
+// Header Component (Исправленный)
+function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [downloadOpen, setDownloadOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -21,26 +21,28 @@ function Header({ theme, setTheme }) {
     { label: 'Территории', href: '#cities' },
   ];
 
-  // Классы для стилей темы и скролла
-  const headerScrolledClass = `scrolled w-[calc(100%-2rem)] max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4 dark-theme-header-scrolled`;
-  const headerTopClass = `w-full bg-white/20 backdrop-blur-xl border-b border-white/30 rounded-none dark-theme-header-top`;
-
   return (
-    // Добавляем transition-transform и top-0 для базовой позиции
+    // Внешний DIV: Всегда приклеен к верху (top-0) и центрирует хедер.
     <div className="fixed z-50 w-full flex justify-center top-0"> 
       <header 
-        // Добавляем класс 'header-transition' для плавности
-        className={`header-transition ${isScrolled ? headerScrolledClass : headerTopClass}`}
+        // Здесь используется кастомная анимация для плавного отскока (transition-header-smooth)
+        className={`transition-header-smooth ${
+          isScrolled 
+            // СОСТОЯНИЕ СКРОЛЛА: Ограничиваем ширину (100%-2rem), закругляем, добавляем верхний отступ (mt-4)
+            ? 'w-[calc(100%-2rem)] max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4' 
+            // СОСТОЯНИЕ ВВЕРХУ: Полная ширина (w-full), без закругления, нет отступа сверху
+            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30 rounded-none' 
+        }`}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-          
+          {/* ... (остальное содержимое хедера) ... */}
           <a href="#" className="flex items-center gap-3 shrink-0">
             <img 
               src="https://easydonate.s3.easyx.ru/images/sides/84/bc/84bcc9aab09ae4d54ddc34c092a960407160139d8c0628ce914ce0f43e4d7bff.png" 
               alt="ChanLand" 
               className="w-10 h-10 rounded-xl object-cover"
             />
-            <span className="text-xl font-bold text-slate-800 tracking-wide hidden sm:block dark-theme-text-primary">ChanLand</span>
+            <span className="text-xl font-bold text-slate-800 tracking-wide hidden sm:block">ChanLand</span>
           </a>
 
           <nav className="hidden lg:flex items-center gap-1">
@@ -48,7 +50,7 @@ function Header({ theme, setTheme }) {
               <a
                 key={link.label}
                 href={link.href}
-                className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium transition-all duration-300 rounded-full hover:bg-white/40 dark-theme-secondary-text dark-hover-text dark-theme-hover"
+                className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium transition-all duration-300 rounded-full hover:bg-white/40"
               >
                 {link.label}
               </a>
@@ -57,18 +59,19 @@ function Header({ theme, setTheme }) {
               href="https://docs.google.com/document/d/1sEyfJkmkkf5YVV5XCS5Y7kxNYjW-pmFpTOZCBmgY11I/edit?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium transition-all duration-300 rounded-full hover:bg-white/40 flex items-center gap-1 dark-theme-secondary-text dark-hover-text dark-theme-hover"
+              className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium transition-all duration-300 rounded-full hover:bg-white/40 flex items-center gap-1"
             >
               Доп. инфо
               <ExternalLink className="w-3 h-3" />
             </a>
           </nav>
 
+          <div className="flex items-center gap-2 sm:gap-3">
             <a
               href="https://discord.gg/9WsxwGyVkE"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 sm:px-5 py-2 sm:py-2.5 bg-white/50 hover:bg-white/70 backdrop-blur-sm rounded-full font-semibold text-slate-700 border border-white/60 shadow-lg transition-all duration-300 flex items-center gap-2 dark-theme-discord-button"
+              className="px-3 sm:px-5 py-2 sm:py-2.5 bg-white/50 hover:bg-white/70 backdrop-blur-sm rounded-full font-semibold text-slate-700 border border-white/60 shadow-lg transition-all duration-300 flex items-center gap-2"
             >
               <svg className="w-5 h-5 text-[#5865F2]" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
@@ -78,30 +81,30 @@ function Header({ theme, setTheme }) {
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden p-2 rounded-full bg-white/30 hover:bg-white/50 backdrop-blur-sm border border-white/40 transition-all duration-300 dark-theme-mobile-menu-button"
+              className="lg:hidden p-2 rounded-full bg-white/30 hover:bg-white/50 backdrop-blur-sm border border-white/40 transition-all duration-300"
             >
-              {menuOpen ? <X className="w-5 h-5 text-slate-700 dark-theme-text-primary" /> : <Menu className="w-5 h-5 text-slate-700 dark-theme-text-primary" />}
+              {menuOpen ? <X className="w-5 h-5 text-slate-700" /> : <Menu className="w-5 h-5 text-slate-700" />}
             </button>
           </div>
         </div>
 
         {menuOpen && (
-          <div className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white/60 dark-theme-mobile-menu backdrop-blur-2xl rounded-3xl border border-white/50 dark-theme-border-alt shadow-xl p-6 space-y-3">
+          <div className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white/60 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-xl p-6 space-y-3">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="block px-4 py-3 text-slate-700 hover:text-slate-900 font-medium rounded-xl hover:bg-white/50 transition-all dark-theme-text dark-hover-text dark-theme-hover"
+                className="block px-4 py-3 text-slate-700 hover:text-slate-900 font-medium rounded-xl hover:bg-white/50 transition-all"
               >
                 {link.label}
               </a>
             ))}
             
-            <div className="pt-2 border-t border-white/30 dark-theme-border-alt">
+            <div className="pt-2 border-t border-white/30">
               <button
                 onClick={() => setDownloadOpen(!downloadOpen)}
-                className="flex items-center justify-between w-full px-4 py-3 text-slate-700 font-medium rounded-xl hover:bg-white/50 transition-all dark-theme-text dark-theme-hover"
+                className="flex items-center justify-between w-full px-4 py-3 text-slate-700 font-medium rounded-xl hover:bg-white/50 transition-all"
               >
                 <span>Скачать сборку</span>
                 <ChevronDown className={`w-4 h-4 transition-transform ${downloadOpen ? 'rotate-180' : ''}`} />
@@ -109,10 +112,10 @@ function Header({ theme, setTheme }) {
               
               {downloadOpen && (
                 <div className="overflow-hidden pl-4 space-y-2 mt-2">
-                  <a href="https://www.dropbox.com/scl/fo/k88tm3wivn3qmzo6bkgft/ANrJMW5tN_oaE47nokFa1mw?rlkey=m3qz2lzoylu07myg5n22541ck&st=4dn4lnz3&dl=0" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-slate-500 hover:text-slate-800 text-sm rounded-lg hover:bg-white/40 transition-all dark-theme-secondary-text dark-hover-text dark-theme-hover">
+                  <a href="https://www.dropbox.com/scl/fo/k88tm3wivn3qmzo6bkgft/ANrJMW5tN_oaE47nokFa1mw?rlkey=m3qz2lzoylu07myg5n22541ck&st=4dn4lnz3&dl=0" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-slate-500 hover:text-slate-800 text-sm rounded-lg hover:bg-white/40 transition-all">
                     Сборка сезон 4
                   </a>
-                  <a href="https://www.dropbox.com/scl/fo/k88tm3wivn3qmzo6bkgft/ANrJMW5tN_oaE47nokFa1mw?rlkey=m3qz2lzoylu07myg5n22541ck&st=4dn4lnz3&dl=0" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-slate-500 hover:text-slate-800 text-sm rounded-lg hover:bg-white/40 transition-all dark-theme-secondary-text dark-hover-text dark-theme-hover">
+                  <a href="https://www.dropbox.com/scl/fo/k88tm3wivn3qmzo6bkgft/ANrJMW5tN_oaE47nokFa1mw?rlkey=m3qz2lzoylu07myg5n22541ck&st=4dn4lnz3&dl=0" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-slate-500 hover:text-slate-800 text-sm rounded-lg hover:bg-white/40 transition-all">
                     Сборка 1.21.4
                   </a>
                 </div>
@@ -124,7 +127,6 @@ function Header({ theme, setTheme }) {
     </div>
   );
 }
-
 
 // Hero Section Component
 function HeroSection() {
@@ -263,7 +265,7 @@ function CitiesSection() {
     {
       id: 1,
       name: 'Ivan-City',
-      logo: 'https://i.imgur.com/22YDl33.png',
+      logo: 'https://i.imgur.com/rqEIUG0.png',
       players: 6,
       isOpen: false
     },
@@ -335,7 +337,7 @@ function CitiesSection() {
               </button>
             </div>
 
-            <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-3 max-h-[100px] overflow-y-auto pr-2 custom-scrollbar">
               {filteredCities.length > 0 ? (
                 filteredCities.map((city) => (
                   <div
@@ -490,39 +492,6 @@ export default function App() {
       <Footer />
 
       <style>{`
-      // ... (где-то среди ваших стилей)
-
-/* Класс для общей анимации перехода */
-.header-transition {
-    /* Добавляем все нужные свойства для плавного перехода, включая width, margin-top, border-radius */
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    /* Убедимся, что по умолчанию хедер растянут и имеет 0 закругление */
-    width: 100%;
-    margin-top: 0;
-    border-radius: 0;
-}
-
-/* Стили для хедера в состоянии скролла (узкий, закругленный, опущенный) */
-header.scrolled {
-    /* Эти классы из Tailwind (rounded-full, w-[calc(100%-2rem)], mt-4)
-       переопределяют свойства и благодаря 'header-transition' будут анимированы. */
-    
-    /* Добавляем transform для визуального сдвига */
-    transform: scale(1) translateY(0); 
-}
-
-/* Стили для хедера в состоянии наверху (полная ширина) */
-header:not(.scrolled) {
-    /* Убеждаемся, что эти свойства явно заданы для плавного возврата */
-    width: 100%;
-    margin-top: 0;
-    border-radius: 0 !important;
-    
-    /* Убеждаемся, что transform сброшен */
-    transform: scale(1) translateY(0);
-}
-
-// ... (остальные стили тем)
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
         * {
