@@ -3,21 +3,14 @@ import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, User
 
 import React, { useState, useEffect } from 'react';
 
-// Предполагая, что вы используете иконки, например, из lucide-react (X, Menu, ChevronDown, ExternalLink)
-// Вам нужно будет импортировать их из вашего источника или заменить на ваши SVG/компоненты.
-// function X() { return <svg>...</svg> } 
-// function Menu() { return <svg>...</svg> } 
-// function ChevronDown() { return <svg>...</svg> } 
-// function ExternalLink() { return <svg>...</svg> } 
-
-function Header({ X, Menu, ChevronDown, ExternalLink }) {
+// Header Component
+function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [downloadOpen, setDownloadOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      // isScrolled становится true, когда прокрутка больше 50px
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
@@ -31,16 +24,12 @@ function Header({ X, Menu, ChevronDown, ExternalLink }) {
   ];
 
   return (
-    // Внешний DIV: Всегда приклеен к верху и центрирует хедер
-    <div className="fixed z-50 w-full flex justify-center top-0"> 
+    <div className={`fixed z-50 w-full flex justify-center transition-all duration-500 ease-out ${isScrolled ? 'top-4 px-4' : 'top-0 px-0'}`}>
       <header 
-        // Здесь применяется ПЛАВНЫЙ ПЕРЕХОД с эффектом отскока (Overshoot Bounce)
-        className={`transition-header-smooth ${
+        className={`transition-all duration-500 ease-out ${
           isScrolled 
-            // СОСТОЯНИЕ СКРОЛЛА: Ограничиваем ширину (100%-2rem), закругляем, добавляем верхний отступ (mt-4)
-            ? 'w-[calc(100%-2rem)] max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4' 
-            // СОСТОЯНИЕ ВВЕРХУ: Полная ширина (w-full), без закругления, без отступа сверху
-            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30 rounded-none' 
+            ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' 
+            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30'
         }`}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
@@ -135,6 +124,7 @@ function Header({ X, Menu, ChevronDown, ExternalLink }) {
     </div>
   );
 }
+
 
 export default Header;
 
