@@ -147,7 +147,7 @@ function HeroSection() {
           </div>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-slate-800 mb-4 tracking-tight">
-            Chan<span className="text-slate-600">Land</span>
+            Chan<span className="text-sky-300">Land</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-slate-600 font-light mb-10 max-w-md mx-auto">
