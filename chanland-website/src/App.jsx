@@ -1,8 +1,217 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
+// Theme Switcher Component
+function ThemeSwitcher({ currentTheme, setTheme }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const themes = [
+    { id: 'sheep', label: 'Sheep (Светлая)', color: 'bg-white border border-gray-300' },
+    { id: 'wither', label: 'Wither (Тёмная)', color: 'bg-slate-800' },
+    { id: 'bedrock', label: 'Bedrock (Чёрная)', color: 'bg-black' },
+  ];
+
+  const toggleOpen = () => setIsOpen(!isOpen);
+
+  // Закрытие при клике вне меню
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpen && !event.target.closest('.theme-switcher-container')) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
+
+  return (
+    <div className="relative theme-switcher-container shrink-0">
+      <button
+        onClick={toggleOpen}
+        className="p-2 sm:p-3 rounded-full bg-white/30 hover:bg-white/50 backdrop-blur-sm border border-white/40 transition-all duration-300 flex items-center gap-1 text-slate-700 dark:text-white dark:bg-black/30 dark:border-white/20 dark:hover:bg-black/50"
+      >
+        <Palette className="w-5 h-5" />
+        <span className="hidden sm:inline font-semibold">Темы</span>
+        <ChevronDown className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 mt-3 w-48 bg-white/80 dark:bg-black/80 backdrop-blur-2xl rounded-2xl border border-white/50 dark:border-white/10 shadow-xl p-2 origin-top-right animate-in fade-in zoom-in-95">
+          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 px-3 py-1 mb-1">
+            Выберите тему
+          </p>
+          {themes.map((theme) => (
+            <button
+              key={theme.id}
+              onClick={() => {
+                setTheme(theme.id);
+                setIsOpen(false);
+              }}
+              className="w-full text-left flex items-center gap-3 px-3 py-2 text-slate-700 dark:text-slate-200 font-medium rounded-xl hover:bg-white/50 dark:hover:bg-white/10 transition-colors"
+            >
+              {theme.label}
+              <div className="ml-auto relative">
+                {/* Круг темы */}
+                <div className={`w-4 h-4 rounded-full ${theme.color}`}></div>
+                {/* Зеленое выделение, если тема выбрана */}
+                {currentTheme === theme.id && (
+                  <div className="absolute inset-0 rounded-full ring-2 ring-offset-1 ring-green-500 ring-offset-transparent"></div>
+                )}
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+// Main App Component
+export default function App() {
+  // 1. Состояние для текущей темы, по умолчанию 'sheep' (светлая)
+  const [theme, setTheme] = useState(() => {
+    // Получаем тему из localStorage или устанавливаем по умолчанию
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') || 'sheep';
+    }
+    return 'sheep';
+  });
+
+  // 2. Эффект для применения класса темы к элементу body
+  useEffect(() => {
+    document.body.className = ''; // Сначала сбросим все классы тем
+    if (theme !== 'sheep') {
+      document.body.classList.add(`theme-${theme}`);
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+  
+  // 3. Добавляем новый CSS для тем в конце файла App.js (см. ниже)
+
+  return (
+    // Применяем класс темы к главному контейнеру,
+    // чтобы стили работали и до полной загрузки body
+    <div className={`min-h-screen overflow-x-hidden ${theme === 'sheep' ? 'bg-gradient-to-br from-slate-100 via-white to-slate-50' : 'bg-black'}`} >
+      {/* ... (фиксированные фоны) ... */}
+      
+      <div className="fixed inset-0 pointer-events-none">
+         {/* Фоны Hero, адаптирующиеся под светлую/темную тему */}
+        <div className={`absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full blur-3xl ${theme === 'sheep' ? 'bg-gradient-to-br from-blue-100/30 to-purple-100/20' : 'bg-blue-900/10'}`} />
+        <div className={`absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full blur-3xl ${theme === 'sheep' ? 'bg-gradient-to-br from-amber-100/20 to-rose-100/20' : 'bg-rose-900/10'}`} />
+      </div>
+
+      <Header theme={theme} setTheme={setTheme} />
+      
+      <main className="relative z-10">
+        <HeroSection />
+        <AboutSection />
+        <CitiesSection />
+      </main>
+      
+      <Footer />
+
+      <style>{`
+        // ... (Ваши общие стили: Inter font, scroll-behavior) ...
+
+        // ===================================
+        // СТИЛИ ТЕМ (ДОБАВЛЕНЫ)
+        // ===================================
+
+        /* Тема SHEEP (Default/White) - уже в Tailwind */
+
+        /* Тема WITHER (Dark) */
+        .theme-wither {
+          --color-bg-primary: #1e293b;
+          --color-text-primary: #f8fafc;
+          --color-text-secondary: #cbd5e1;
+          --color-card-bg: #334155;
+          --color-border: rgba(255, 255, 255, 0.15);
+          --color-accent-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Тема BEDROCK (OLED Black) */
+        .theme-bedrock {
+          --color-bg-primary: #000000;
+          --color-text-primary: #f0f0f0;
+          --color-text-secondary: #a0a0a0;
+          --color-card-bg: #111111;
+          --color-border: rgba(255, 255, 255, 0.1);
+          --color-accent-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        .theme-wither main, .theme-bedrock main {
+          background-color: var(--color-bg-primary);
+        }
+
+        /* Адаптация секций */
+        .theme-wither #about, .theme-bedrock #about {
+          background-color: var(--color-bg-primary);
+        }
+        .theme-wither #about h2, .theme-bedrock #about h2 {
+          color: var(--color-text-primary);
+        }
+        .theme-wither #about p, .theme-bedrock #about p {
+          color: var(--color-text-secondary);
+        }
+        .theme-wither .feature-card, .theme-bedrock .feature-card {
+          background-color: var(--color-card-bg);
+          border-color: var(--color-border);
+        }
+        .theme-wither .feature-card h3, .theme-bedrock .feature-card h3 {
+          color: var(--color-text-primary);
+        }
+        .theme-wither .feature-card p, .theme-bedrock .feature-card p {
+          color: var(--color-text-secondary);
+        }
+        .theme-wither footer, .theme-bedrock footer {
+          background: var(--color-card-bg);
+          border-top: 1px solid var(--color-border);
+        }
+
+        /* Адаптация Hero */
+        .theme-wither .hero-card, .theme-bedrock .hero-card {
+           background: rgba(0, 0, 0, 0.4);
+           backdrop-filter: blur(12px);
+           border: 1px solid rgba(255, 255, 255, 0.1);
+           box-shadow: none;
+        }
+        .theme-wither .hero-card h1, .theme-bedrock .hero-card h1 {
+          color: var(--color-text-primary);
+        }
+        .theme-wither .hero-card p, .theme-bedrock .hero-card p {
+          color: var(--color-text-secondary);
+        }
+        .theme-wither .hero-card .hero-button, .theme-bedrock .hero-card .hero-button {
+          background-color: var(--color-card-bg);
+          color: var(--color-text-primary);
+          border-color: var(--color-border);
+        }
+
+        /* Адаптация Header */
+        .theme-wither header.scrolled, .theme-bedrock header.scrolled {
+           background-color: rgba(0, 0, 0, 0.4);
+           border-color: var(--color-border);
+           box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        .theme-wither header:not(.scrolled), .theme-bedrock header:not(.scrolled) {
+           background-color: rgba(0, 0, 0, 0.2);
+           border-color: var(--color-border);
+        }
+        .theme-wither header span, .theme-bedrock header span {
+          color: var(--color-text-primary);
+        }
+        .theme-wither header a, .theme-bedrock header a {
+          color: var(--color-text-secondary);
+        }
+        .theme-wither header a:hover, .theme-bedrock header a:hover {
+          color: var(--color-text-primary);
+          background-color: var(--color-accent-bg);
+        }
+      `}</style>
+    </div>
+  );
+}
 // Header Component (Исправленный)
-function Header() {
+function Header({ theme, setTheme }) { // Принимаем props темы
   const [menuOpen, setMenuOpen] = useState(false);
   const [downloadOpen, setDownloadOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,40 +231,18 @@ function Header() {
   ];
 
   return (
-    // Внешний DIV: Всегда приклеен к верху (top-0) и центрирует хедер.
     <div className="fixed z-50 w-full flex justify-center top-0"> 
       <header 
-        // Здесь используется кастомная анимация для плавного отскока (transition-header-smooth)
-        className={`transition-header-smooth ${
-          isScrolled 
-            // СОСТОЯНИЕ СКРОЛЛА: Ограничиваем ширину (100%-2rem), закругляем, добавляем верхний отступ (mt-4)
-            ? 'w-[calc(100%-2rem)] max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4' 
-            // СОСТОЯНИЕ ВВЕРХУ: Полная ширина (w-full), без закругления, нет отступа сверху
-            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30 rounded-none' 
-        }`}
+        // Добавляем класс 'scrolled' для адаптации стилей в темной теме
+        className={`transition-header-smooth ${isScrolled ? 'scrolled w-[calc(100%-2rem)] max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)] mt-4' : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30 rounded-none'}`}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-          {/* ... (остальное содержимое хедера) ... */}
-          <a href="#" className="flex items-center gap-3 shrink-0">
-            <img 
-              src="https://easydonate.s3.easyx.ru/images/sides/84/bc/84bcc9aab09ae4d54ddc34c092a960407160139d8c0628ce914ce0f43e4d7bff.png" 
-              alt="ChanLand" 
-              className="w-10 h-10 rounded-xl object-cover"
-            />
-            <span className="text-xl font-bold text-slate-800 tracking-wide hidden sm:block">ChanLand</span>
-          </a>
+          
+          {/* ... (Логотип ChanLand) ... */}
 
           <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium transition-all duration-300 rounded-full hover:bg-white/40"
-              >
-                {link.label}
-              </a>
-            ))}
-            <a
+            {/* ... (Ссылки навигации) ... */}
+             <a
               href="https://docs.google.com/document/d/1sEyfJkmkkf5YVV5XCS5Y7kxNYjW-pmFpTOZCBmgY11I/edit?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
@@ -67,62 +254,35 @@ function Header() {
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            
+            {/* НОВАЯ КНОПКА ТЕМЫ */}
+            <ThemeSwitcher currentTheme={theme} setTheme={setTheme} />
+
+            {/* КНОПКА DISCORD */}
             <a
               href="https://discord.gg/9WsxwGyVkE"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 sm:px-5 py-2 sm:py-2.5 bg-white/50 hover:bg-white/70 backdrop-blur-sm rounded-full font-semibold text-slate-700 border border-white/60 shadow-lg transition-all duration-300 flex items-center gap-2"
+              className="px-3 sm:px-5 py-2 sm:py-2.5 bg-white/50 hover:bg-white/70 backdrop-blur-sm rounded-full font-semibold text-slate-700 border border-white/60 shadow-lg transition-all duration-300 flex items-center gap-2 dark:bg-black/30 dark:hover:bg-black/50 dark:text-white dark:border-white/20"
             >
+              {/* ... (SVG Discord) ... */}
               <svg className="w-5 h-5 text-[#5865F2]" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
               </svg>
               <span className="hidden sm:inline">Discord</span>
             </a>
 
+            {/* ... (Кнопка бургер-меню) ... */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden p-2 rounded-full bg-white/30 hover:bg-white/50 backdrop-blur-sm border border-white/40 transition-all duration-300"
+              className="lg:hidden p-2 rounded-full bg-white/30 hover:bg-white/50 backdrop-blur-sm border border-white/40 transition-all duration-300 dark:bg-black/30 dark:hover:bg-black/50"
             >
-              {menuOpen ? <X className="w-5 h-5 text-slate-700" /> : <Menu className="w-5 h-5 text-slate-700" />}
+              {menuOpen ? <X className="w-5 h-5 text-slate-700 dark:text-white" /> : <Menu className="w-5 h-5 text-slate-700 dark:text-white" />}
             </button>
           </div>
         </div>
 
-        {menuOpen && (
-          <div className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white/60 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-xl p-6 space-y-3">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="block px-4 py-3 text-slate-700 hover:text-slate-900 font-medium rounded-xl hover:bg-white/50 transition-all"
-              >
-                {link.label}
-              </a>
-            ))}
-            
-            <div className="pt-2 border-t border-white/30">
-              <button
-                onClick={() => setDownloadOpen(!downloadOpen)}
-                className="flex items-center justify-between w-full px-4 py-3 text-slate-700 font-medium rounded-xl hover:bg-white/50 transition-all"
-              >
-                <span>Скачать сборку</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${downloadOpen ? 'rotate-180' : ''}`} />
-              </button>
-              
-              {downloadOpen && (
-                <div className="overflow-hidden pl-4 space-y-2 mt-2">
-                  <a href="https://www.dropbox.com/scl/fo/k88tm3wivn3qmzo6bkgft/ANrJMW5tN_oaE47nokFa1mw?rlkey=m3qz2lzoylu07myg5n22541ck&st=4dn4lnz3&dl=0" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-slate-500 hover:text-slate-800 text-sm rounded-lg hover:bg-white/40 transition-all">
-                    Сборка сезон 4
-                  </a>
-                  <a href="https://www.dropbox.com/scl/fo/k88tm3wivn3qmzo6bkgft/ANrJMW5tN_oaE47nokFa1mw?rlkey=m3qz2lzoylu07myg5n22541ck&st=4dn4lnz3&dl=0" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-slate-500 hover:text-slate-800 text-sm rounded-lg hover:bg-white/40 transition-all">
-                    Сборка 1.21.4
-                  </a>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+        {/* ... (Мобильное меню) ... */}
       </header>
     </div>
   );
