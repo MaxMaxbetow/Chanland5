@@ -30,24 +30,46 @@ function Header() {
   const shadow = isScrolled ? "0 8px 32px rgba(0,0,0,0.12)" : "none";
 
   return (
-    <div className={`fixed z-50 w-full flex justify-center header-outer ${isScrolled ? "top-4 px-4" : "top-0 px-0"} transition-all duration-300`}>
-      <header className={`${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"} transition-all duration-500`}>
-        <div
-          /* Tailwind класс max-w-5xl должен быть в className, а не в style */
-          <div className="header-inner"
-            style={{
-            maxWidth: isScrolled ? "1100px" : "100%",  // Вот здесь надо менять
-            transform: `scaleX(${scaleX})`,
-            borderRadius: radius,
-            backgroundColor: bg,
-            borderColor: borderColor,
-            backdropFilter: blur,
-            boxShadow: shadow,
-            borderStyle: "solid",
-            borderWidth: "1px",
-            width: "100%"
-          }}
-        >
+{/* HEADER WRAPPER */}
+<div
+  className={`fixed z-50 w-full transition-all duration-500 ease-out ${
+    isScrolled ? "top-4 px-4 flex justify-center" : "top-0 px-0"
+  }`}
+  style={{ pointerEvents: "none" }}
+>
+
+  {/* HEADER */}
+  <header
+    className={`transition-header-smooth ${
+      isScrolled
+        ? "backdrop-blur-lg border border-white/10 rounded-full"
+        : "rounded-none"
+    }`}
+    style={{
+      width: isScrolled ? "1100px" : "100%",   // ← ВСЯ ШИРИНА В НЕСКРОЛЕ
+      height: isScrolled ? "64px" : "72px",    // ← КРУГЛОЕ СОСТОЯНИЕ КАК РАНЬШЕ
+      transition: "0.5s",
+      pointerEvents: "auto",
+    }}
+  >
+
+    {/* INNER CONTENT */}
+    <div
+      className="header-inner"
+      style={{
+        transform: `scaleX(${scaleX})`,
+        borderRadius: radius,
+        backgroundColor: bg,
+        borderColor: borderColor,
+        backdropFilter: blur,
+        boxShadow: shadow,
+        borderStyle: "solid",
+        borderWidth: "1px",
+        width: "100%",
+        height: "100%",
+        transition: "0.5s",
+      }}
+    >
           <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
             <a href="#" className="flex items-center gap-3 shrink-0">
               <img
