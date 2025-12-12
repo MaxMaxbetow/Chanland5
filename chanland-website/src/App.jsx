@@ -296,26 +296,16 @@ function CitiesSection() {
     city.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  return (
+ return (
     <section 
       id="cities" 
-      className="relative min-h-screen py-24
-        // === СТИЛИ ДЛЯ ВСЕХ УСТРОЙСТВ (Mobile First) ===
-        // bg-cover и bg-center всегда включены
-        bg-cover bg-center 
-        // Принудительно увеличиваем фон на мобильных, чтобы скрыть пиксели
-        bg-[length:120%_auto] 
-        // На мобильных - прокрутка вместе с контентом (проще, чем fixed)
-        bg-scroll
-        
-        // === ПЕРЕОПРЕДЕЛЕНИЕ ДЛЯ ПК/ПЛАНШЕТОВ (lg: и выше) ===
-        // На больших экранах возвращаем стандартный размер и включаем параллакс (fixed)
-        lg:bg-cover 
-        lg:bg-fixed
-      " 
+      className="relative min-h-screen py-24"
       style={{
-        // Инлайн-стиль оставляем только для URL
+        // ЭТО ВАШ РАБОЧИЙ КОД ДЛЯ ПК (fixed)
         backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed' // Параллакс на ПК
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
@@ -412,6 +402,14 @@ function CitiesSection() {
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: rgba(255, 255, 255, 0.5);
         }
+        /* === НОВОЕ ПРАВИЛО CSS ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ === */
+        /* Применяется для экранов шириной до 1024px (т.е. телефоны и большинство планшетов) */
+        @media (max-width: 1023px) {
+          #cities {
+            /* Отключаем fixed, заменяем на scroll */
+            background-attachment: scroll !important;
+            /* Принудительно делаем фон крупнее, чтобы убрать пикселизацию */
+            background-size: 120% auto !important;
       `}</style>
     </section>
   );
