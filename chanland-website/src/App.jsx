@@ -296,24 +296,17 @@ function CitiesSection() {
     city.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-return (
+  return (
     <section 
       id="cities" 
-      className="relative min-h-screen py-24 overflow-hidden" // Добавляем overflow-hidden для чистоты
+      className="relative min-h-screen py-24"
+      style={{
+        backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
     >
-      
-      {/* НОВЫЙ БЛОК: Замена фонового div на тег <img> */}
-      <div className="absolute inset-0">
-        <img
-          src="https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg"
-          alt="Фон секции Города"
-          // object-cover гарантирует покрытие контейнера и сохранение пропорций
-          // lg:scale-125 делает его крупнее на больших экранах, решая проблему пикселизации
-          className="w-full h-full object-cover **lg:scale-[1.2]**" 
-        />
-      </div>
-
-      {/* Оверлей градиента и блюр остаются поверх изображения */}
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
       
       <div className="container mx-auto px-4 relative z-10">
