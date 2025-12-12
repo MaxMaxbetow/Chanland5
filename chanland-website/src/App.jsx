@@ -300,16 +300,12 @@ return (
     <section 
       id="cities" 
       className="relative min-h-screen py-24
-        // НОВЫЕ КЛАССЫ TAILWIND ДЛЯ ФОНА
-        bg-cover bg-center 
-        // Добавьте это, если хотите, чтобы фон был немного крупнее на десктопах:
-        lg:bg-[length:120%_auto] 
+        // ИЗМЕНЕНИЕ ЗДЕСЬ: ДОБАВЛЯЕМ bg-scroll
+        bg-cover bg-center **bg-scroll** lg:bg-[length:120%_auto] 
       " 
       style={{
-        // ИНЛАЙН-СТИЛИ СВЕДЕНЫ К МИНИМУМУ:
         backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')",
-        // backgroundSize и backgroundAttachment УДАЛЕНЫ
-        // backgroundPosition можно удалить, так как есть bg-center
+        // backgroundSize и backgroundAttachment остаются в классах Tailwind
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
