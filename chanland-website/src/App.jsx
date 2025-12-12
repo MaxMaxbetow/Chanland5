@@ -296,20 +296,27 @@ function CitiesSection() {
     city.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  return (
+return (
     <section 
       id="cities" 
       className="relative min-h-screen py-24
-        // НОВЫЕ КЛАССЫ TAILWIND ДЛЯ ФОНА
-        bg-cover bg-center 
-        // Добавьте это, если хотите, чтобы фон был немного крупнее на десктопах:
-        lg:bg-[length:120%_auto] 
+        // === БАЗОВЫЕ СТИЛИ (для мобильных) ===
+        // bg-center и bg-cover (фоновый размер)
+        bg-center bg-cover
+        // Принудительно делаем фон крупнее (120%) на мобильных, чтобы избежать пикселизации
+        bg-[length:120%_auto] 
+        // На мобильных фон прокручивается вместе с контентом (scroll)
+        bg-scroll 
+
+        // === ПЕРЕОПРЕДЕЛЕНИЕ ДЛЯ ПК/ПЛАНШЕТОВ (lg: и выше) ===
+        // Включаем параллакс (fixed)
+        lg:bg-fixed
+        // Переопределяем масштаб обратно на cover, так как fixed будет хорошо выглядеть на ПК
+        lg:bg-cover 
       " 
       style={{
-        // ИНЛАЙН-СТИЛИ СВЕДЕНЫ К МИНИМУМУ:
         backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')",
-        // backgroundSize и backgroundAttachment УДАЛЕНЫ
-        // backgroundPosition можно удалить, так как есть bg-center
+        // Здесь не должно быть никаких других свойств!
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
