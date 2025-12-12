@@ -299,12 +299,13 @@ function CitiesSection() {
   return (
     <section 
       id="cities" 
-        className="absolute inset-0 w-full h-full object-cover"
+      className="relative min-h-screen py-24"
       style={{
+        // ЭТО ВАШ РАБОЧИЙ КОД ДЛЯ ПК (fixed)
         backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
+        backgroundAttachment: 'fixed' // Параллакс для ПК
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
