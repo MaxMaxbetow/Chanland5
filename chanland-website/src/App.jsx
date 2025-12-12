@@ -299,26 +299,17 @@ function CitiesSection() {
 return (
     <section 
       id="cities" 
-      className="relative min-h-screen py-24
-        // === БАЗОВЫЕ СТИЛИ (для мобильных) ===
-        // bg-center и bg-cover (фоновый размер)
-        bg-center bg-cover
-        // Принудительно делаем фон крупнее (100%) на мобильных, чтобы избежать пикселизации
-        bg-[length:100%_auto] 
-        // На мобильных фон прокручивается вместе с контентом (scroll)
-        bg-scroll 
-
-        // === ПЕРЕОПРЕДЕЛЕНИЕ ДЛЯ ПК/ПЛАНШЕТОВ (lg: и выше) ===
-        // Включаем параллакс (fixed)
-        lg:bg-fixed
-        // Переопределяем масштаб обратно на cover, так как fixed будет хорошо выглядеть на ПК
-        lg:bg-cover 
-      " 
-      style={{
-        backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')",
-        // Здесь не должно быть никаких других свойств!
-      }}
+      className="relative min-h-screen py-24 overflow-hidden"
     >
+      <div 
+        className="absolute inset-0 bg-center bg-cover"
+        style={{
+          backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')",
+          backgroundAttachment: 'fixed',
+          transform: 'translateZ(0)',
+          willChange: 'transform'
+        }}
+      />
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
       
       <div className="container mx-auto px-4 relative z-10">
