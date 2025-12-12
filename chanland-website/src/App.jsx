@@ -128,14 +128,19 @@ function HeroSection() {
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
-        <div 
-          className="absolute inset-0 bg-center bg-cover md:bg-length:120% md:bg-fixed"
-          style={{ backgroundImage: "url('https://i.ytimg.com/vi/aVNTGDMU8Wc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLChiqqQRUuqISvvoZ-k2Efnzo-NjA')" }}
+        
+        {/* НОВЫЙ БЛОК: Замена фонового div на тег <img> */}
+        <img
+          src="https://i.ytimg.com/vi/aVNTGDMU8Wc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLChiqqQRUuqISvvoZ-k2Efnzo-NjA"
+          alt="Фоновое изображение ChanLand"
+          className="absolute inset-0 w-full h-full object-cover" // <--- Ключевые стили: w-full h-full object-cover
         />
+        
+        {/* Предыдущие классы, которые создают эффект: */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/10 to-white/80" />
         <div className="absolute inset-0 backdrop-blur-[2px]" />
       </div>
-
+      
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white/20 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-white/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
 
