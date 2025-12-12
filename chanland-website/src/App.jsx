@@ -296,16 +296,15 @@ function CitiesSection() {
     city.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
- return (
+  return (
     <section 
       id="cities" 
-      className="relative min-h-screen py-24"
+        className="absolute inset-0 w-full h-full object-cover"
       style={{
-        // ЭТО ВАШ РАБОЧИЙ КОД ДЛЯ ПК (fixed)
         backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundAttachment: 'fixed' // Параллакс на ПК
+        backgroundAttachment: 'fixed'
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
@@ -402,14 +401,6 @@ function CitiesSection() {
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: rgba(255, 255, 255, 0.5);
         }
-        /* === НОВОЕ ПРАВИЛО CSS ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ === */
-        /* Применяется для экранов шириной до 1024px (т.е. телефоны и большинство планшетов) */
-        @media (max-width: 1023px) {
-          #cities {
-            /* Отключаем fixed, заменяем на scroll */
-            background-attachment: scroll !important;
-            /* Принудительно делаем фон крупнее, чтобы убрать пикселизацию */
-            background-size: 120% auto !important;
       `}</style>
     </section>
   );
