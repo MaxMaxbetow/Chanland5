@@ -129,6 +129,14 @@ function HeroSection() {
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <div 
+          // Использование произвольного класса для мобильных устройств, если bg-cover недостаточно.
+<div 
+  className="absolute inset-0 bg-center bg-cover md:bg-fixed **bg-['120%_auto']** md:bg-cover" 
+  style={{ 
+    backgroundImage: "url(...)",
+    // Стили Tailwind могут быть переопределены, но используйте их экономно
+  }}
+/>
           className="absolute inset-0 bg-cover bg-center md:bg-fixed" 
           style={{ backgroundImage: "url('https://i.ytimg.com/vi/aVNTGDMU8Wc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLChiqqQRUuqISvvoZ-k2Efnzo-NjA')" }}
         />
