@@ -129,7 +129,7 @@ function HeroSection() {
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <div 
-          className="absolute inset-0 bg-center bg-cover md:bg-fixed bg-120% auto md:bg-cover" 
+      className="absolute inset-0 bg-cover bg-center md:bg-fixed" 
           style={{ backgroundImage: "url('https://i.ytimg.com/vi/aVNTGDMU8Wc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLChiqqQRUuqISvvoZ-k2Efnzo-NjA')" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/10 to-white/80" />
