@@ -172,7 +172,7 @@ function HeroSection() {
           </div>
         </div>
 
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2">
+        <div className="absolute bottom--20 left-1/2 -translate-x-1/2">
           <div className="p-2 rounded-full bg-white/30 backdrop-blur-sm border border-white/40 animate-bounce">
             <ArrowDown className="w-5 h-5 text-slate-600" />
           </div>
