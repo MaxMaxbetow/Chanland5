@@ -299,13 +299,17 @@ function CitiesSection() {
   return (
     <section 
       id="cities" 
-      className="relative min-h-screen py-24"
+      className="relative min-h-screen py-24
+        // НОВЫЕ КЛАССЫ TAILWIND ДЛЯ ФОНА
+        bg-cover bg-center 
+        // Добавьте это, если хотите, чтобы фон был немного крупнее на десктопах:
+        lg:bg-[length:120%_auto] 
+      " 
       style={{
-        // ЭТО ВАШ РАБОЧИЙ КОД ДЛЯ ПК (fixed)
+        // ИНЛАЙН-СТИЛИ СВЕДЕНЫ К МИНИМУМУ:
         backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed' // Параллакс для ПК
+        // backgroundSize и backgroundAttachment УДАЛЕНЫ
+        // backgroundPosition можно удалить, так как есть bg-center
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
@@ -402,13 +406,6 @@ function CitiesSection() {
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: rgba(255, 255, 255, 0.5);
         }
-        /* === ПЕРЕОПРЕДЕЛЕНИЕ ДЛЯ ТЕЛЕФОНОВ И ПЛАНШЕТОВ (до 1023px) === */
-        @media (max-width: 1023px) {
-          #cities {
-            /* Принудительно делаем фон крупнее (120%), чтобы покрыть всю область и избежать пикселизации */
-            background-size: 120% auto !important; 
-            /* Принудительно отключаем fixed, чтобы фон двигался на мобильных, где fixed не поддерживается */
-            background-attachment: scroll !important;
       `}</style>
     </section>
   );
