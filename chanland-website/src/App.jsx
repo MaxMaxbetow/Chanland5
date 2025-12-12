@@ -402,6 +402,13 @@ function CitiesSection() {
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: rgba(255, 255, 255, 0.5);
         }
+        /* === ПЕРЕОПРЕДЕЛЕНИЕ ДЛЯ ТЕЛЕФОНОВ И ПЛАНШЕТОВ (до 1023px) === */
+        @media (max-width: 1023px) {
+          #cities {
+            /* Принудительно делаем фон крупнее (120%), чтобы покрыть всю область и избежать пикселизации */
+            background-size: 120% auto !important; 
+            /* Принудительно отключаем fixed, чтобы фон двигался на мобильных, где fixed не поддерживается */
+            background-attachment: scroll !important;
       `}</style>
     </section>
   );
