@@ -299,12 +299,23 @@ function CitiesSection() {
   return (
     <section 
       id="cities" 
-      className="relative min-h-screen py-24"
+      className="relative min-h-screen py-24
+        // === СТИЛИ ДЛЯ ВСЕХ УСТРОЙСТВ (Mobile First) ===
+        // bg-cover и bg-center всегда включены
+        bg-cover bg-center 
+        // Принудительно увеличиваем фон на мобильных, чтобы скрыть пиксели
+        bg-[length:120%_auto] 
+        // На мобильных - прокрутка вместе с контентом (проще, чем fixed)
+        bg-scroll
+        
+        // === ПЕРЕОПРЕДЕЛЕНИЕ ДЛЯ ПК/ПЛАНШЕТОВ (lg: и выше) ===
+        // На больших экранах возвращаем стандартный размер и включаем параллакс (fixed)
+        lg:bg-cover 
+        lg:bg-fixed
+      " 
       style={{
+        // Инлайн-стиль оставляем только для URL
         backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
