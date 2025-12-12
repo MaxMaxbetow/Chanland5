@@ -457,7 +457,7 @@ function Footer() {
             </a>
           </div>
 
-          <div className="inline-block px-6 py-3 bg-white/50 backdrop-blur-sm rounded-full border border-white/60 mb-8">
+          <div className="inline-block px-6 py-3 bg-gray/50 backdrop-blur-sm rounded-full border border-white/60 mb-8">
             <code className="text-slate-700 font-mono text-sm">chanland.play-network.io</code>
           </div>
 
