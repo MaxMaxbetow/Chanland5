@@ -297,17 +297,14 @@ function CitiesSection() {
   );
 
 return (
-    <section 
+        <section 
       id="cities" 
-      className="relative min-h-screen py-24 overflow-hidden"
+      className="relative min-h-screen py-24"
     >
       <div 
-        className="absolute inset-0 bg-center bg-cover"
+        className="absolute inset-0 bg-center bg-cover bg-scroll lg:bg-fixed"
         style={{
-          backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')",
-          backgroundAttachment: 'fixed',
-          transform: 'translateZ(0)',
-          willChange: 'transform'
+          backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')"
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
