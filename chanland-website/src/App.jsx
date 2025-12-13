@@ -1,31 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
-
-// Intersection Observer Hook
-function useInView(options = {}) {
-  const ref = useRef(null);
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsInView(true);
-      }
-    }, { threshold: 0.1, ...options });
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, []);
-
-  return [ref, isInView];
-}
 
 // Header Component
 function Header() {
@@ -151,20 +125,18 @@ function Header() {
 
 // Hero Section Component
 function HeroSection() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
+        
+        {/* НОВЫЙ БЛОК: Замена фонового div на тег <img> */}
         <img
           src="https://i.ytimg.com/vi/aVNTGDMU8Wc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLChiqqQRUuqISvvoZ-k2Efnzo-NjA"
           alt="Фоновое изображение ChanLand"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover" // <--- Ключевые стили: w-full h-full object-cover
         />
+        
+        {/* Предыдущие классы, которые создают эффект: */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/10 to-white/80" />
         <div className="absolute inset-0 backdrop-blur-[2px]" />
       </div>
@@ -172,32 +144,22 @@ function HeroSection() {
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white/20 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-white/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
 
-      <div className={`relative z-10 text-center px-4 transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      }`}>
+      <div className="relative z-10 text-center px-4">
         <div className="bg-white/25 backdrop-blur-2xl border border-white/50 rounded-[2.5rem] p-10 md:p-16 shadow-[0_20px_60px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.6)]">
-          <div className={`inline-flex items-center gap-2 px-4 py-2 bg-white/40 rounded-full text-sm text-slate-600 font-medium mb-6 border border-white/50 transition-all duration-700 delay-200 ${
-            isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-          }`}>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/40 rounded-full text-sm text-slate-600 font-medium mb-6 border border-white/50">
             <Sparkles className="w-4 h-4" />
             Сезон 4 уже здесь
           </div>
 
-          <h1 className={`text-5xl md:text-7xl lg:text-8xl font-bold text-slate-800 mb-4 tracking-tight transition-all duration-700 delay-300 ${
-            isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-          }`}>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-slate-800 mb-4 tracking-tight">
             Chan<span className="text-sky-200">Land</span>
           </h1>
 
-          <p className={`text-xl md:text-2xl text-slate-600 font-light mb-10 max-w-md mx-auto transition-all duration-700 delay-500 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-          }`}>
+          <p className="text-xl md:text-2xl text-slate-600 font-light mb-10 max-w-md mx-auto">
             Твой любимый приватный Minecraft сервер
           </p>
 
-          <div className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-700 delay-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-          }`}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="#about"
               className="px-8 py-4 bg-white/60 hover:bg-white/80 backdrop-blur-sm rounded-full font-semibold text-slate-800 border border-white/70 shadow-lg transition-all duration-300 hover:scale-105 hover:-translate-y-0.5"
@@ -215,9 +177,7 @@ function HeroSection() {
           </div>
         </div>
 
-        <div className={`absolute -bottom-20 left-1/2 -translate-x-1/2 transition-all duration-700 delay-1000 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        }`}>
+  <div className="absolute -bottom-20 left-1/2 -translate-x-1/2">
           <div className="p-2 rounded-full bg-white/30 backdrop-blur-sm border border-white/40 animate-bounce">
             <ArrowDown className="w-5 h-5 text-slate-600" />
           </div>
@@ -229,8 +189,6 @@ function HeroSection() {
 
 // About Section Component
 function AboutSection() {
-  const [headerRef, headerInView] = useInView();
-  
   const features = [
     {
       icon: Gamepad2,
@@ -258,42 +216,12 @@ function AboutSection() {
     }
   ];
 
-  const FeatureCard = ({ feature, index }) => {
-    const [cardRef, cardInView] = useInView();
-    
-    return (
-      <div 
-        ref={cardRef}
-        className={`bg-white/20 backdrop-blur-xl border border-white/40 rounded-3xl p-6 h-full transition-all duration-700 hover:scale-[1.02] hover:-translate-y-1 hover:bg-white/35 shadow-[0_8px_32px_rgba(255,255,255,0.1),inset_0_0_0_1px_rgba(255,255,255,0.1)] ${
-          cardInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}
-        style={{ transitionDelay: `${index * 150}ms` }}
-      >
-        <div className="relative h-48 rounded-2xl overflow-hidden mb-6 group">
-          <img 
-            src={feature.image} 
-            alt={feature.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-          <div className="absolute bottom-4 left-4 p-3 bg-white/30 backdrop-blur-md rounded-xl border border-white/40">
-            <feature.icon className="w-6 h-6 text-white" />
-          </div>
-        </div>
-        <h3 className="text-xl font-bold text-slate-800 mb-2">{feature.title}</h3>
-        <p className="text-slate-600 leading-relaxed">{feature.description}</p>
-      </div>
-    );
-  };
-
   return (
     <section id="about" className="py-24 relative">
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white/80 to-transparent" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div ref={headerRef} className={`text-center mb-16 transition-all duration-700 ${
-          headerInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
+        <div className="text-center mb-16">
           <span className="inline-block px-4 py-2 bg-white/40 backdrop-blur-sm rounded-full text-sm text-slate-600 font-medium mb-4 border border-white/50">
             Почему мы?
           </span>
@@ -307,7 +235,21 @@ function AboutSection() {
 
         <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {features.map((feature, index) => (
-            <FeatureCard key={feature.title} feature={feature} index={index} />
+            <div key={feature.title} className="bg-white/20 backdrop-blur-xl border border-white/40 rounded-3xl p-6 h-full transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:bg-white/35 shadow-[0_8px_32px_rgba(255,255,255,0.1),inset_0_0_0_1px_rgba(255,255,255,0.1)]">
+              <div className="relative h-48 rounded-2xl overflow-hidden mb-6 group">
+                <img 
+                  src={feature.image} 
+                  alt={feature.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                <div className="absolute bottom-4 left-4 p-3 bg-white/30 backdrop-blur-md rounded-xl border border-white/40">
+                  <feature.icon className="w-6 h-6 text-white" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">{feature.title}</h3>
+              <p className="text-slate-600 leading-relaxed">{feature.description}</p>
+            </div>
           ))}
         </div>
       </div>
@@ -318,8 +260,6 @@ function AboutSection() {
 // Cities Section Component
 function CitiesSection() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [textRef, textInView] = useInView();
-  const [citiesRef, citiesInView] = useInView();
 
   const cities = [
     {
@@ -356,8 +296,11 @@ function CitiesSection() {
     city.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  return (
-    <section id="cities" className="relative min-h-screen py-24">
+return (
+        <section 
+      id="cities" 
+      className="relative min-h-screen py-24"
+    >
       <div 
         className="absolute inset-0 bg-center bg-cover bg-scroll lg:bg-fixed"
         style={{
@@ -368,9 +311,7 @@ function CitiesSection() {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div ref={textRef} className={`bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-8 transition-all duration-700 ${
-            textInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
-          }`}>
+          <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-8">
             <p className="text-white/90 text-lg leading-relaxed">
               Города - это центры экономики и социальной жизни. Вы сможете устанавливать свои законы, 
               привлекать новых жителей и заключать союзы и мирные договоры с соседними поселениями. 
@@ -379,9 +320,7 @@ function CitiesSection() {
             </p>
           </div>
 
-          <div ref={citiesRef} className={`space-y-4 transition-all duration-700 ${
-            citiesInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
-          }`}>
+          <div className="space-y-4">
             <div className="flex gap-3">
               <div className="relative flex-1">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/50" />
@@ -400,13 +339,10 @@ function CitiesSection() {
 
             <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
               {filteredCities.length > 0 ? (
-                filteredCities.map((city, index) => (
+                filteredCities.map((city) => (
                   <div
                     key={city.id}
-                    className={`relative z-10 bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all shadow-lg hover:shadow-xl hover:border-white/50 hover:-translate-y-1 hover:bg-white/35 ${
-                      citiesInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-5'
-                    }`}
-                    style={{ transitionDelay: `${index * 100 + 200}ms`, transitionDuration: '500ms' }}
+                    className="relative z-10 bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl p-4 flex items-center gap-4 cursor-pointer transition-all shadow-lg hover:shadow-xl hover:border-white/50 hover:-translate-y-1 hover:bg-white/35"
                   >
                     <img 
                       src={city.logo} 
@@ -472,15 +408,11 @@ function CitiesSection() {
 
 // Footer Component
 function Footer() {
-  const [footerRef, footerInView] = useInView();
-  
   return (
     <footer className="relative py-16">
       <div className="absolute inset-0 bg-white/40 backdrop-blur-xl border-t border-white/50" />
       
-      <div ref={footerRef} className={`container mx-auto px-4 relative z-10 transition-all duration-700 ${
-        footerInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      }`}>
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center">
           <div className="inline-flex items-center gap-3 mb-6">
             <img 
@@ -492,4 +424,101 @@ function Footer() {
           </div>
 
           <p className="text-slate-600 mb-6 max-w-md mx-auto">
-            Приватный Minecraft сервер
+            Приватный Minecraft сервер с активным сообществом и уникальными механиками
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-6 mb-8">
+            <a 
+              href="https://discord.gg/9WsxwGyVkE" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors"
+            >
+              Discord
+              <ExternalLink className="w-3 h-3" />
+            </a>
+            <a 
+              href="https://docs.google.com/document/d/1sEyfJkmkkf5YVV5XCS5Y7kxNYjW-pmFpTOZCBmgY11I/edit?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors"
+            >
+              Документация
+              <ExternalLink className="w-3 h-3" />
+            </a>
+            <a 
+              href="https://chanland.vercel.app/cities/index.html" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors"
+            >
+              Карта городов
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+
+          <div className="inline-block px-6 py-3 bg-gray/50 backdrop-blur-sm rounded-full border border-white/60 mb-8">
+            <code className="text-slate-700 font-mono text-sm">chanland.play-network.io</code>
+          </div>
+
+          <div className="flex items-center justify-center gap-1 text-sm text-slate-500">
+            <span>© 2025 ChanLand. all rights reserved , Создано с</span>
+            <Heart className="w-4 h-4 text-red-400 fill-red-400" />
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// Main App Component
+export default function App() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-50 overflow-x-hidden">
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-blue-100/30 to-purple-100/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-amber-100/20 to-rose-100/20 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-white/50 to-transparent rounded-full" />
+      </div>
+
+      <Header />
+      
+      <main className="relative z-10">
+        <HeroSection />
+        <AboutSection />
+        <CitiesSection />
+      </main>
+      
+      <Footer />
+
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        html {
+          scroll-behavior: smooth;
+        }
+        
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background: rgba(100, 116, 139, 0.3);
+          border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(100, 116, 139, 0.5);
+        }
+      `}</style>
+    </div>
+  );
+}
