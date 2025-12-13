@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
-// Header Component
+// Header Component (Исправлено дёргание на мобильных)
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [downloadOpen, setDownloadOpen] = useState(false);
@@ -21,14 +21,23 @@ function Header() {
     { label: 'Территории', href: '#cities' },
   ];
 
+  // ИСПРАВЛЕНИЕ ДЕРГАНИЯ 1: Удаляем изменение горизонтального padding из внешнего контейнера.
+  // Теперь он просто центрирует внутренний header.
   return (
-    <div className={`fixed z-50 w-full flex justify-center transition-all duration-500 ease-out ${isScrolled ? 'top-4 px-4' : 'top-0 px-0'}`}>
+    <div className={`fixed z-50 w-full flex justify-center transition-all duration-500 ease-out ${isScrolled ? 'top-4 lg:px-4' : 'top-0 px-0'}`}>
       <header 
-        className={`transition-all duration-500 ease-out ${
-          isScrolled 
-            ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' 
-            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30'
-        }`}
+        className={`
+          transition-all duration-500 ease-out 
+          ${
+            isScrolled 
+              // Стиль в SCROLLED состоянии (ПК: меньше, закруглен, мобильные: сохраняет полную ширину)
+              ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' 
+              // Стиль в TOP состоянии (полная ширина)
+              : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30'
+          }
+          // ИСПРАВЛЕНИЕ ДЕРГАНИЯ 2: Убеждаемся, что на мобильных (до lg) ширина всегда 100vw
+          ${!isScrolled && 'lg:max-w-full'}
+        `}
       >
         <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
           <a href="#" className="flex items-center gap-3 shrink-0">
@@ -80,12 +89,10 @@ function Header() {
             >
               {menuOpen ? <X className="w-5 h-5 text-slate-700" /> : <Menu className="w-5 h-5 text-slate-700" />}
             </button>
-        </div>
+          </div>
         </div>
 
         {menuOpen && (
-          // ИСПРАВЛЕНИЕ 1: Использование 'mt-14' для предотвращения наложения на скроллящийся/сужающийся заголовок
-          // Это гарантирует, что меню всегда будет под заголовком.
           <div className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white/60 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-xl p-6 space-y-3">
             {navLinks.map((link) => (
               <a
@@ -109,7 +116,6 @@ function Header() {
               
               {downloadOpen && (
                 <div className="overflow-hidden pl-4 space-y-2 mt-2">
-                  {/* Добавлено onClick для закрытия меню после клика на ссылку */}
                   <a onClick={() => setMenuOpen(false)} href="https://www.dropbox.com/scl/fo/k88tm3wivn3qmzo6bkgft/ANrJMW5tN_oaE47nokFa1mw?rlkey=m3qz2lzoylu07myg5n22541ck&st=4dn4lnz3&dl=0" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-slate-500 hover:text-slate-800 text-sm rounded-lg hover:bg-white/40 transition-all">
                     Сборка сезон 4
                   </a>
@@ -300,18 +306,20 @@ function CitiesSection() {
   );
 
 return (
-        <section 
+    <section 
       id="cities" 
       className="relative min-h-screen py-24"
     >
-      {/* ИСПРАВЛЕНИЕ 3: Удаление 'lg:bg-fixed' для предотвращения проблем с прокруткой фона на мобильных устройствах, особенно на iOS. */}
+      {/* ИСПРАВЛЕНИЕ ПАРАЛЛАКСА: Добавлен обратно класс lg:bg-fixed */}
       <div 
-        className="absolute inset-0 bg-center bg-cover bg-scroll" // Изменено: удален lg:bg-fixed
+        className="absolute inset-0 bg-center bg-cover bg-scroll lg:bg-fixed" // <-- ВОЗВРАЩЕН lg:bg-fixed
         style={{
           backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')"
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
+      
+      <div className="container mx-auto px-4 relative z-10">
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
