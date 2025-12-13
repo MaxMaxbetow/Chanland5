@@ -310,7 +310,7 @@ return (
       id="cities" 
       className="relative min-h-screen py-24"
     >
-      {/* ИСПРАВЛЕНИЕ ПАРАЛЛАКСА: Добавлен обратно класс lg:bg-fixed */}
+
       <div 
         className="absolute inset-0 bg-center bg-cover bg-scroll lg:bg-fixed" // <-- ВОЗВРАЩЕН lg:bg-fixed
         style={{
