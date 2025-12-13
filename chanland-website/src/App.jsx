@@ -297,18 +297,17 @@ function CitiesSection() {
   );
 
 return (
-    <section 
-      id="cities" 
-      className="relative min-h-screen py-24"
-    >
-      {/* ИСПРАВЛЕНИЕ ПАРАЛЛАКСА: Добавлен обратно класс lg:bg-fixed */}
-      <div 
-        className="absolute inset-0 bg-center bg-cover bg-scroll lg:bg-fixed" // <-- ВОЗВРАЩЕН lg:bg-fixed
-        style={{
-          backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')"
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
+        <section 
+      id="cities" 
+      className="relative min-h-screen py-24"
+    >
+      <div 
+        className="absolute inset-0 bg-center bg-cover bg-scroll lg:bg-fixed"
+        style={{
+          backgroundImage: "url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg')"
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-purple-900/60 to-black/80" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
@@ -387,29 +386,24 @@ return (
         </div>
       </div>
 
-<style>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.3);
-          border-radius: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(255, 255, 255, 0.5);
-        }
-        
-        /* ИСПРАВЛЕНИЕ 5: Улучшение скроллинга на iOS */
-        .custom-scrollbar {
-          -webkit-overflow-scrolling: touch;
-        }
-      `}</style>
-    </section>
-  );
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.5);
+        }
+      `}</style>
+    </section>
+  );
 }
 
 // Footer Component
