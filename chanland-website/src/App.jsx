@@ -331,17 +331,17 @@ return (
                   className="w-full pl-12 pr-4 py-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl text-white placeholder:text-white/50 focus:border-white/40 focus:outline-none"
                 />
               </div>
-<a 
+              <a 
   href="https://discord.gg/9WsxwGyVkE" 
   target="_blank" 
   rel="noopener noreferrer"
   className="contents" // Чтобы ссылка не ломала стили кнопки
 >
-  <button className="bg-purple-600 hover:bg-purple-700 text-white rounded-2xl px-6 py-3 font-semibold flex items-center gap-2 transition-colors">
-    <Plus className="w-5 h-5" />
-    <span className="hidden sm:inline">Основать город</span>
-  </button>
-</a>
+              <button className="bg-purple-600 hover:bg-purple-700 text-white rounded-2xl px-6 py-3 font-semibold flex items-center gap-2 transition-colors">
+                <Plus className="w-5 h-5" />
+                <span className="hidden sm:inline">Основать город</span>
+              </button>
+            </div>
 
             <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
               {filteredCities.length > 0 ? (
