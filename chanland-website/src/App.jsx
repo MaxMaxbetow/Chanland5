@@ -16,7 +16,7 @@ function Header() {
   }, []);
 
   const navLinks = [
-    { label: 'Правила', href: '#hero' },
+    { label: 'Правила', href: 'https://docs.google.com/document/d/1sEyfJkmkkf5YVV5XCS5Y7kxNYjW-pmFpTOZCBmgY11I/edit?tab=t.0' },
     { label: 'О сервере', href: '#about' },
     { label: 'Территории', href: '#cities' },
   ];
