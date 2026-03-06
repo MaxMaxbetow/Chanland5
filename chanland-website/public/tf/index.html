@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Торговая Федерация</title>
+
+<style>
+body{
+background:#0f172a;
+color:white;
+font-family:Inter,system-ui;
+margin:0;
+padding:40px;
+}
+
+h1{
+font-size:40px;
+margin-bottom:20px;
+}
+
+.search{
+width:100%;
+padding:14px;
+font-size:16px;
+border-radius:10px;
+border:none;
+margin-bottom:20px;
+}
+
+.categories{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:25px;
+}
+
+.categories button{
+padding:8px 14px;
+border-radius:20px;
+border:none;
+cursor:pointer;
+background:#1e293b;
+color:white;
+}
+
+.categories button.active{
+background:#3b82f6;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+gap:16px;
+}
+
+.card{
+background:#1e293b;
+border-radius:14px;
+padding:16px;
+text-align:center;
+}
+
+.card img{
+width:48px;
+image-rendering:pixelated;
+}
+
+.price{
+margin-top:10px;
+font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Торговая Федерация</h1>
+
+<input id="search" class="search" placeholder="Найти предмет">
+
+<div id="cats" class="categories"></div>
+<div id="grid" class="grid"></div>
+
+<script>
+
+const G="https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21/assets/minecraft/textures/"
+const I=G+"item/"
+const B=G+"block/"
+
+const T={
+sword_netherite:I+'netherite_sword.png',
+axe_netherite:I+'netherite_axe.png',
+trident:I+'trident.png',
+mace:I+'mace.png',
+bow:I+'bow.png',
+helmet_netherite:I+'netherite_helmet.png',
+chest_netherite:I+'netherite_chestplate.png',
+pick_netherite:I+'netherite_pickaxe.png',
+diamond:I+'diamond.png',
+emerald:I+'emerald.png',
+totem:I+'totem_of_undying.png',
+elytra:I+'elytra.png',
+golden_apple:I+'golden_apple.png'
+}
+
+const CATS=[
+{id:"all",label:"Все"},
+{id:"weapon",label:"Оружие"},
+{id:"tool",label:"Инструменты"},
+{id:"armor",label:"Броня"},
+{id:"resource",label:"Ресурсы"},
+{id:"food",label:"Еда"},
+{id:"other",label:"Прочее"}
+]
+
+const ITEMS=[
+{name:'Незеритовый меч',price:24,cat:'weapon',img:'sword_netherite'},
+{name:'Незеритовый топор',price:24,cat:'weapon',img:'axe_netherite'},
+{name:'Трезубец',price:16,cat:'weapon',img:'trident'},
+{name:'Булава',price:16,cat:'weapon',img:'mace'},
+{name:'Лук',price:10,cat:'weapon',img:'bow'},
+{name:'Незеритовый нагрудник',price:29,cat:'armor',img:'chest_netherite'},
+{name:'Незеритовая кирка',price:25,cat:'tool',img:'pick_netherite'},
+{name:'Алмаз',price:1,cat:'resource',img:'diamond'},
+{name:'Изумруд',price:1,cat:'resource',img:'emerald'},
+{name:'Золотое яблоко',price:8,cat:'food',img:'golden_apple'},
+{name:'Тотем бессмертия',price:2,cat:'other',img:'totem'},
+{name:'Элитры',price:1500,cat:'other',img:'elytra'}
+]
+
+let category="all"
+let search=""
+
+const grid=document.getElementById("grid")
+const cats=document.getElementById("cats")
+
+function renderCats(){
+cats.innerHTML=""
+CATS.forEach(c=>{
+const btn=document.createElement("button")
+btn.textContent=c.label
+if(category===c.id) btn.classList.add("active")
+btn.onclick=()=>{
+category=c.id
+render()
+renderCats()
+}
+cats.appendChild(btn)
+})
+}
+
+function render(){
+
+const filtered=ITEMS.filter(i=>{
+const catMatch=category==="all"||i.cat===category
+const searchMatch=i.name.toLowerCase().includes(search)
+return catMatch&&searchMatch
+})
+
+grid.innerHTML=""
+
+filtered.forEach(item=>{
+const card=document.createElement("div")
+card.className="card"
+
+card.innerHTML=`
+<div>${item.name}</div>
+<img src="${T[item.img]}">
+<div class="price">от ${item.price} ap</div>
+`
+
+grid.appendChild(card)
+})
+
+}
+
+document.getElementById("search").oninput=e=>{
+search=e.target.value.toLowerCase()
+render()
+}
+
+renderCats()
+render()
+
+</script>
+
+</body>
+</html>
