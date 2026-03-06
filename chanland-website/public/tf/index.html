@@ -106,8 +106,9 @@
     // Задаем пути к папкам с картинками (ОБЯЗАТЕЛЬНО создай папку img рядом с файлом и закинь туда иконки)
     const I = 'img/';
     const B = 'img/';
+
     // Данные из твоего кода
-const G='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21/assets/minecraft/textures/';
+    const G='https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21/assets/minecraft/textures/';
 const I=G+'item/', B=G+'block/';
 
 const T={
@@ -419,76 +420,73 @@ const ITEMS = [
   {name:'Ключ испытаний',qty:'1 шт.',price:2,cat:'other',img:'trial_key'}
 ];
 
-let activeCat = 'all';
-let search = '';
+    // Состояние
+    let activeCategory = 'all';
+    let searchQuery = '';
 
-function getCategoryCount(id){
-  if(id === 'all') return ITEMS.length;
-  if(id === 'other') return ITEMS.filter(i => i.cat === 'other').length;
-  return ITEMS.filter(i => i.cat === id).length;
-}
+    // Элементы DOM
+    const catsContainer = document.getElementById('categories-container');
+    const itemsContainer = document.getElementById('items-container');
+    const searchInput = document.getElementById('search-input');
+    const emptyState = document.getElementById('empty-state');
 
-function renderCats(){
-  const catList = document.getElementById('catList');
-  catList.innerHTML = CATS.map(cat => `
-    <button class="cat-btn ${activeCat === cat.id ? 'active' : ''}" onclick="setCat('${cat.id}')">
-      <div class="cat-ico"><img src="${cat.img}" alt=""></div>
-      <span>${cat.label}</span>
-    </button>
-  `).join('');
-}
+    // Отрисовка категорий
+    function renderCategories() {
+      catsContainer.innerHTML = CATS.map(cat => {
+        const isActive = cat.id === activeCategory;
+        const baseClass = "flex items-center gap-2 px-4 py-2 rounded-2xl font-medium whitespace-nowrap transition-all duration-300 border cursor-pointer";
+        const activeClass = isActive 
+          ? "bg-amber-400 text-amber-950 border-amber-400 shadow-md" 
+          : "bg-white/50 text-slate-600 border-white/60 hover:bg-white/80 hover:text-slate-900";
+        
+        return `
+          <button onclick="setCategory('${cat.id}')" class="${baseClass} ${activeClass}">
+            <i data-lucide="${cat.icon}" class="w-4 h-4"></i>
+            ${cat.label}
+          </button>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
 
-function setCat(id){
-  activeCat = id;
-  renderCats();
-  renderItems();
-}
+    // Отрисовка предметов
+    function renderItems() {
+      const filtered = ITEMS.filter(item => {
+        const matchesCat = activeCategory === 'all' || item.cat === activeCategory;
+        const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCat && matchesSearch;
+      });
 
-function clearSearch(){
-  search = '';
-  const input = document.getElementById('searchInput');
-  input.value = '';
-  document.getElementById('clearBtn').style.display = 'none';
-  renderItems();
-}
-
-function renderItems(){
-  const q = search.trim().toLowerCase();
-
-  let list = ITEMS.filter(item => {
-    const catMatch = activeCat === 'all' ? true : item.cat === activeCat;
-    const searchMatch = !q || item.name.toLowerCase().includes(q);
-    return catMatch && searchMatch;
-  });
-
-  document.getElementById('itemsCount').textContent = `${list.length} товаров`;
-
-  const grid = document.getElementById('grid');
-
-  if(!list.length){
-    grid.innerHTML = `<div class="no-results">Ничего не найдено</div>`;
-    return;
-  }
-
-  grid.innerHTML = list.map(item => {
-    const img = T[item.img] || '';
-    const filter = PTINT[item.img] ? `style="filter:${PTINT[item.img]}"` : '';
-    const qty = item.qty && item.qty !== '1 шт.' ? `<span class="card-qty">${item.qty}</span>` : '';
-    return `
-      <div class="item-card">
-        <div class="card-name">${item.name}${qty}</div>
-        <div class="card-img">
-          <img src="${img}" alt="${item.name}" ${filter} loading="lazy">
-        </div>
-        <div class="card-price">
-          <span class="card-price-label">от</span>
-          <span class="card-price-num">${item.price}</span>
-          <span class="card-price-cur">ap</span>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
+      if (filtered.length === 0) {
+        itemsContainer.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+      } else {
+        itemsContainer.classList.remove('hidden');
+        emptyState.classList.add('hidden');
+        
+        itemsContainer.innerHTML = filtered.map(item => {
+          const imgSrc = T[item.img] || 'img/placeholder.png'; // Обработка отсутствующих картинок
+          const filterStyle = PTINT[item.img] ? `filter: ${PTINT[item.img]};` : '';
+          
+          return `
+            <div class="bg-white/40 backdrop-blur-xl border border-white/60 rounded-[2rem] p-5 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group flex flex-col">
+              <div class="relative bg-white/50 rounded-[1.5rem] h-40 flex items-center justify-center mb-4 border border-white/60 overflow-hidden shadow-inner">
+                <img src="${imgSrc}" alt="${item.name}" class="w-20 h-20 object-contain group-hover:scale-110 transition-transform duration-500 pixelated" style="${filterStyle}">
+              </div>
+              <h3 class="text-base font-bold text-slate-800 mb-1 leading-tight flex-grow">${item.name}</h3>
+              <div class="flex items-end justify-between mt-3">
+                <span class="text-xs font-semibold text-slate-500 bg-white/60 px-2.5 py-1 rounded-lg border border-white/60">${item.qty}</span>
+                <span class="text-lg font-black text-amber-600 flex items-center gap-1 drop-shadow-sm">
+                  ${item.price} 
+                  <i data-lucide="gem" class="w-4 h-4 text-emerald-500 fill-emerald-500/20"></i>
+                </span>
+              </div>
+            </div>
+          `;
+        }).join('');
+        lucide.createIcons();
+      }
+    }
 
     // Обработчики событий
     window.setCategory = (id) => {
