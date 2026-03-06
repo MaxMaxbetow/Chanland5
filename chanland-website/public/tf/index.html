@@ -1,749 +1,1604 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Торговая Федерация — ChanLand</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet"/>
-<style>
-:root {
-  --gold: #c9a84c;
-  --gold-light: #e8c97a;
-  --gold-dim: #8a6d2e;
-  --bg-deep: #0a0806;
-  --bg-dark: #100d08;
-  --bg-card: #1a1510;
-  --bg-card-hover: #221c14;
-  --text-main: #e8dcc8;
-  --text-dim: #8a7a5e;
-  --text-gold: #c9a84c;
-  --border: rgba(201,168,76,0.2);
-  --border-bright: rgba(201,168,76,0.5);
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg-deep);
-  color: var(--text-main);
-  font-family: 'Crimson Pro', Georgia, serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  opacity: 0.35;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Торговая Федерация</title>
+  <meta name="description" content="Официальный торговый сайт федерации. Каталог товаров, категории, поиск и красивые карточки в стиле основного сайта." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-1:#eef6ff;
+      --bg-2:#dcecff;
+      --bg-3:#f8fbff;
+      --text:#1e293b;
+      --muted:#64748b;
+      --line:rgba(255,255,255,.52);
+      --line-2:rgba(148,163,184,.18);
+      --card:rgba(255,255,255,.34);
+      --card-strong:rgba(255,255,255,.55);
+      --shadow:0 18px 60px rgba(37, 99, 235, .14);
+      --shadow-soft:0 10px 35px rgba(15, 23, 42, .08);
+      --blue:#60a5fa;
+      --blue-2:#38bdf8;
+      --cyan:#67e8f9;
+      --gold:#f8de7e;
+      --success:#10b981;
+      --danger:#ef4444;
+      --radius-xl:32px;
+      --radius-lg:24px;
+      --radius-md:18px;
+      --radius-sm:14px;
+      --container:1280px;
+    }
 
-/* HEADER */
-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: linear-gradient(180deg, rgba(10,8,6,0.98), rgba(10,8,6,0.85));
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem; height: 72px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.logo-emblem {
-  width: 42px; height: 42px;
-  border: 1px solid var(--gold-dim); border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #1a1510, #2a1e10);
-  font-size: 20px;
-}
-.logo-text { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: var(--gold-light); letter-spacing: 0.1em; line-height: 1.2; }
-.logo-sub { font-family: 'Crimson Pro', serif; font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase; }
-.header-nav { display: flex; gap: 2rem; align-items: center; }
-.header-nav a { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.3s; }
-.header-nav a:hover { color: var(--gold-light); }
-.btn-discord {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 20px; background: transparent;
-  border: 1px solid var(--border-bright); border-radius: 4px;
-  color: var(--gold-light); font-family: 'Cinzel', serif;
-  font-size: 0.75rem; letter-spacing: 0.1em; text-decoration: none;
-  transition: all 0.3s;
-}
-.btn-discord:hover { background: rgba(201,168,76,0.08); border-color: var(--gold-light); }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 10% 20%, rgba(125,211,252,.55), transparent 30%),
+        radial-gradient(circle at 85% 15%, rgba(255,255,255,.8), transparent 25%),
+        radial-gradient(circle at 80% 75%, rgba(96,165,250,.24), transparent 32%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2) 45%, var(--bg-3));
+      min-height:100vh;
+      overflow-x:hidden;
+    }
 
-/* HERO */
-.hero {
-  position: relative; min-height: 100vh;
-  display: flex; align-items: center; justify-content: center; overflow: hidden;
-}
-.hero-bg {
-  position: absolute; inset: 0;
-  background-image: url('https://www.complementary.dev/assets/img/newScreenshots/both5_endCity.jpg');
-  background-size: cover; background-position: center;
-  filter: brightness(0.22) sepia(0.4);
-}
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, transparent 20%, rgba(10,8,6,0.75) 70%, rgba(10,8,6,0.97) 100%);
-}
-.hero-grid {
-  position: absolute; inset: 0;
-  background-image: linear-gradient(0deg, transparent 49.5%, rgba(201,168,76,0.035) 49.5%, rgba(201,168,76,0.035) 50.5%, transparent 50.5%), linear-gradient(90deg, transparent 49.5%, rgba(201,168,76,0.035) 49.5%, rgba(201,168,76,0.035) 50.5%, transparent 50.5%);
-  background-size: 80px 80px;
-}
-.hero-content { position: relative; z-index: 10; text-align: center; padding: 2rem; animation: fadeUp 1s ease both; }
-@keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
-.hero-tag {
-  display: inline-block; padding: 6px 20px;
-  border: 1px solid var(--border-bright); border-radius: 2px;
-  font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 2rem; background: rgba(201,168,76,0.05);
-}
-.hero-title { font-family: 'Cinzel', serif; font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; line-height: 1; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-.hero-title-main { color: var(--text-main); display: block; }
-.hero-title-accent { color: var(--gold-light); display: block; }
-.hero-divider { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 2rem auto; }
-.hero-desc { font-size: 1.25rem; color: var(--text-dim); font-weight: 300; font-style: italic; max-width: 500px; margin: 0 auto 3rem; line-height: 1.6; }
-.hero-cta {
-  display: inline-flex; align-items: center; gap: 12px;
-  padding: 14px 40px; background: linear-gradient(135deg, var(--gold-dim), var(--gold));
-  border: none; border-radius: 3px; font-family: 'Cinzel', serif;
-  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--bg-deep); cursor: pointer; text-decoration: none; transition: all 0.3s;
-  box-shadow: 0 0 40px rgba(201,168,76,0.2);
-}
-.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(201,168,76,0.35); }
-.scroll-hint {
-  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  color: var(--text-dim); font-family: 'Cinzel', serif;
-  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-  animation: bounce 2.5s ease infinite;
-}
-@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
-.scroll-arr { width: 18px; height: 18px; border-right: 1px solid var(--gold-dim); border-bottom: 1px solid var(--gold-dim); transform: rotate(45deg); }
+    body::before,
+    body::after{
+      content:"";
+      position:fixed;
+      inset:auto;
+      width:420px;
+      height:420px;
+      border-radius:50%;
+      filter:blur(70px);
+      pointer-events:none;
+      z-index:0;
+      opacity:.55;
+    }
 
-/* SHOP */
-.shop-section { padding: 6rem 2rem 4rem; max-width: 1400px; margin: 0 auto; }
-.section-header { text-align: center; margin-bottom: 4rem; }
-.section-tag { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 1rem; }
-.section-title { font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; color: var(--text-main); letter-spacing: 0.05em; }
-.section-orn { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 1.5rem auto; width: 300px; }
-.orn-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim)); }
-.orn-line.r { background: linear-gradient(90deg, var(--gold-dim), transparent); }
-.orn-diamond { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
+    body::before{
+      top:-140px;
+      left:-100px;
+      background:rgba(255,255,255,.95);
+    }
 
-/* CONTROLS */
-.controls { display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; align-items: center; }
-.search-wrap { position: relative; flex: 1; min-width: 200px; }
-.search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 14px; }
-.search-input {
-  width: 100%; padding: 12px 16px 12px 40px;
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 4px; color: var(--text-main);
-  font-family: 'Crimson Pro', serif; font-size: 1rem;
-  transition: border-color 0.3s; outline: none;
-}
-.search-input:focus { border-color: var(--gold-dim); }
-.search-input::placeholder { color: var(--text-dim); }
-.sort-select {
-  padding: 12px 36px 12px 16px; background: var(--bg-card);
-  border: 1px solid var(--border); border-radius: 4px;
-  color: var(--text-dim); font-family: 'Cinzel', serif;
-  font-size: 0.75rem; letter-spacing: 0.05em; cursor: pointer; outline: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7a5e'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 12px center;
-  transition: border-color 0.3s;
-}
-.sort-select:focus { border-color: var(--gold-dim); }
-.sort-select option { background: var(--bg-dark); color: var(--text-main); }
+    body::after{
+      right:-120px;
+      bottom:-120px;
+      background:rgba(96,165,250,.28);
+    }
 
-/* CATS */
-.cats { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 3rem; }
-.cat-btn {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 16px; background: var(--bg-card);
-  border: 1px solid var(--border); border-radius: 3px; cursor: pointer;
-  transition: all 0.25s; font-family: 'Cinzel', serif;
-  font-size: 0.7rem; letter-spacing: 0.08em; color: var(--text-dim); text-transform: uppercase;
-}
-.cat-btn img { width: 18px; height: 18px; image-rendering: pixelated; }
-.cat-btn:hover { border-color: var(--gold-dim); color: var(--text-main); background: var(--bg-card-hover); }
-.cat-btn.active { border-color: var(--gold); color: var(--gold-light); background: rgba(201,168,76,0.08); box-shadow: 0 0 12px rgba(201,168,76,0.1); }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button,input{font:inherit}
 
-/* GRID */
-.items-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-  gap: 1px; background: var(--border); border: 1px solid var(--border);
-}
-.item-card {
-  background: var(--bg-card); padding: 1.5rem 1rem;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  cursor: pointer; transition: background 0.25s; position: relative; overflow: hidden;
-}
-.item-card::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 70%);
-  opacity: 0; transition: opacity 0.3s;
-}
-.item-card:hover { background: var(--bg-card-hover); }
-.item-card:hover::before { opacity: 1; }
-.item-img {
-  width: 48px; height: 48px; image-rendering: pixelated; image-rendering: crisp-edges;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
-  transition: transform 0.3s;
-}
-.item-card:hover .item-img { transform: translateY(-3px) scale(1.08); }
-.item-name {
-  font-family: 'Cinzel', serif; font-size: 0.62rem; font-weight: 600;
-  text-align: center; color: var(--text-main); letter-spacing: 0.03em; line-height: 1.4;
-}
-.item-qty { font-size: 0.78rem; color: var(--text-dim); font-style: italic; }
-.item-price {
-  display: flex; align-items: center; gap: 6px;
-  padding: 6px 14px; background: rgba(201,168,76,0.07);
-  border: 1px solid rgba(201,168,76,0.2); border-radius: 2px; margin-top: 4px;
-}
-.price-num { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: var(--gold-light); }
-.price-icon { width: 16px; height: 16px; image-rendering: pixelated; }
+    .page{position:relative;z-index:1}
+    .container{width:min(var(--container), calc(100% - 32px));margin-inline:auto}
 
-.results-count { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 1.5rem; }
-.results-count span { color: var(--gold); }
-.no-results { text-align: center; padding: 6rem 2rem; color: var(--text-dim); font-style: italic; font-size: 1.1rem; display: none; }
+    .noise{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.08;
+      z-index:0;
+      background-image:
+        radial-gradient(circle at 1px 1px, rgba(15,23,42,.3) 1px, transparent 0);
+      background-size:24px 24px;
+      mask-image:linear-gradient(to bottom, black, rgba(0,0,0,.35));
+    }
 
-/* FOOTER */
-footer { margin-top: 6rem; border-top: 1px solid var(--border); padding: 4rem 2rem 3rem; text-align: center; }
-.footer-logo { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 900; color: var(--gold-light); letter-spacing: 0.2em; margin-bottom: 0.5rem; }
-.footer-sub { font-size: 0.9rem; color: var(--text-dim); font-style: italic; margin-bottom: 2rem; }
-.footer-links { display: flex; justify-content: center; gap: 2.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
-.footer-links a { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.3s; }
-.footer-links a:hover { color: var(--gold-light); }
-.footer-server { display: inline-block; padding: 8px 24px; border: 1px solid var(--border); border-radius: 3px; font-family: 'Courier New', monospace; font-size: 0.85rem; color: var(--gold-dim); margin-bottom: 2rem; letter-spacing: 0.05em; }
-.footer-copy { font-size: 0.85rem; color: var(--text-dim); opacity: 0.5; }
+    .glass{
+      background:var(--card);
+      backdrop-filter:blur(22px);
+      -webkit-backdrop-filter:blur(22px);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.4);
+    }
 
-/* MODAL */
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.88);
-  backdrop-filter: blur(8px); z-index: 200;
-  display: flex; align-items: center; justify-content: center; padding: 2rem;
-  opacity: 0; pointer-events: none; transition: opacity 0.3s;
-}
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal {
-  background: var(--bg-dark); border: 1px solid var(--border-bright);
-  border-radius: 4px; padding: 3rem; max-width: 420px; width: 100%;
-  text-align: center; position: relative;
-  transform: scale(0.92); transition: transform 0.3s;
-  box-shadow: 0 0 80px rgba(201,168,76,0.1);
-}
-.modal-overlay.open .modal { transform: scale(1); }
-.modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer; transition: color 0.2s; }
-.modal-close:hover { color: var(--gold-light); }
-.modal-img { width: 80px; height: 80px; image-rendering: pixelated; margin-bottom: 1.5rem; filter: drop-shadow(0 4px 16px rgba(201,168,76,0.3)); }
-.modal-name { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; }
-.modal-qty { color: var(--text-dim); font-style: italic; margin-bottom: 1.5rem; }
-.modal-price-big { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 900; color: var(--gold-light); margin-bottom: 0.5rem; }
-.modal-price-label { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 2rem; }
-.modal-divider { width: 80px; height: 1px; background: var(--border-bright); margin: 1.5rem auto; }
-.modal-info { font-size: 0.95rem; color: var(--text-dim); line-height: 1.8; }
-.modal-btn {
-  display: inline-block; margin-top: 1.5rem; padding: 12px 32px;
-  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
-  border: none; border-radius: 3px; font-family: 'Cinzel', serif;
-  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--bg-deep); cursor: pointer; text-decoration: none; transition: all 0.3s;
-}
-.modal-btn:hover { box-shadow: 0 4px 20px rgba(201,168,76,0.3); transform: translateY(-1px); }
+    .header-wrap{
+      position:sticky;
+      top:14px;
+      z-index:50;
+      padding-top:14px;
+    }
 
-@media (max-width: 768px) {
-  .header-nav { display: none; }
-  .items-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-  header { padding: 0 1rem; }
-  .shop-section { padding: 4rem 1rem 3rem; }
-}
-</style>
+    .header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 18px;
+      border-radius:999px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .brand-badge{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      background:linear-gradient(135deg, rgba(255,255,255,.95), rgba(147,197,253,.7));
+      border:1px solid rgba(255,255,255,.8);
+      display:grid;
+      place-items:center;
+      box-shadow:0 8px 24px rgba(59,130,246,.18);
+      font-size:24px;
+    }
+
+    .brand-title{
+      font-size:1.06rem;
+      font-weight:800;
+      letter-spacing:-.03em;
+      line-height:1.05;
+      white-space:nowrap;
+    }
+
+    .brand-sub{
+      font-size:.84rem;
+      color:var(--muted);
+      font-weight:600;
+      margin-top:2px;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    .nav a{
+      padding:12px 16px;
+      border-radius:999px;
+      color:#475569;
+      font-weight:600;
+      transition:.25s ease;
+    }
+
+    .nav a:hover{
+      background:rgba(255,255,255,.42);
+      color:#0f172a;
+    }
+
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .pill,
+    .btn,
+    .chip{
+      border:none;
+      cursor:pointer;
+      transition:transform .25s ease, background .25s ease, box-shadow .25s ease, border-color .25s ease, color .25s ease;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:14px 20px;
+      border-radius:999px;
+      font-weight:700;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .btn-primary{
+      color:white;
+      background:linear-gradient(135deg, rgba(37,99,235,.95), rgba(56,189,248,.95));
+      border:1px solid rgba(255,255,255,.35);
+    }
+
+    .btn-primary:hover{transform:translateY(-2px) scale(1.02)}
+
+    .btn-secondary{
+      color:#0f172a;
+      background:rgba(255,255,255,.6);
+      border:1px solid rgba(255,255,255,.75);
+    }
+
+    .btn-secondary:hover{transform:translateY(-2px)}
+
+    .hero{
+      padding:56px 0 26px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:22px;
+      align-items:stretch;
+    }
+
+    .hero-card{
+      position:relative;
+      overflow:hidden;
+      border-radius:40px;
+      padding:34px;
+      min-height:610px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      isolation:isolate;
+    }
+
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.08)),
+        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=80') center/cover;
+      z-index:-2;
+      transform:scale(1.03);
+    }
+
+    .hero-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.60), rgba(191,219,254,.22) 38%, rgba(15,23,42,.12) 100%),
+        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.36));
+      z-index:-1;
+    }
+
+    .hero-badge{
+      width:max-content;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.45);
+      border:1px solid rgba(255,255,255,.75);
+      color:#334155;
+      font-weight:700;
+      box-shadow:var(--shadow-soft);
+    }
+
+    .hero-title{
+      margin:18px 0 14px;
+      font-size:clamp(2.9rem, 6vw, 5.8rem);
+      line-height:.95;
+      letter-spacing:-.07em;
+      font-weight:900;
+      max-width:760px;
+    }
+
+    .hero-title .fade{
+      background:linear-gradient(135deg, #0f172a 0%, #2563eb 52%, #38bdf8 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hero-text{
+      font-size:1.12rem;
+      line-height:1.7;
+      color:#475569;
+      max-width:680px;
+      margin-bottom:26px;
+      font-weight:500;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+    }
+
+    .hero-stats{
+      margin-top:30px;
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px;
+      max-width:760px;
+    }
+
+    .stat{
+      padding:18px 18px 16px;
+      border-radius:24px;
+      background:rgba(255,255,255,.42);
+      border:1px solid rgba(255,255,255,.65);
+      backdrop-filter:blur(18px);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .stat strong{
+      display:block;
+      font-size:1.6rem;
+      font-weight:800;
+      letter-spacing:-.05em;
+      margin-bottom:6px;
+    }
+
+    .stat span{
+      font-size:.95rem;
+      color:#475569;
+      font-weight:600;
+    }
+
+    .side-panel{
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    .floating-card{
+      border-radius:34px;
+      padding:24px;
+    }
+
+    .floating-top{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .mini-card{
+      padding:18px;
+      border-radius:24px;
+      background:rgba(255,255,255,.46);
+      border:1px solid rgba(255,255,255,.72);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .mini-card h4,
+    .list-card h3,
+    .catalog-head h2,
+    .section-title h2,
+    .faq-card h3,
+    .footer-title{
+      margin:0;
+      letter-spacing:-.04em;
+    }
+
+    .mini-emoji{
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      background:linear-gradient(135deg, rgba(96,165,250,.22), rgba(255,255,255,.8));
+      margin-bottom:14px;
+      font-size:22px;
+    }
+
+    .mini-card p,
+    .list-card p,
+    .footer-note,
+    .faq-card p{
+      margin:10px 0 0;
+      color:#64748b;
+      line-height:1.65;
+      font-weight:500;
+    }
+
+    .list-card{
+      padding:24px;
+      border-radius:30px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .list-card::before{
+      content:"";
+      position:absolute;
+      inset:auto -40px -40px auto;
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(96,165,250,.16), transparent 68%);
+      pointer-events:none;
+    }
+
+    .quick-list{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .quick-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.44);
+      border:1px solid rgba(255,255,255,.65);
+    }
+
+    .quick-row .left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .quick-icon{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      background:linear-gradient(135deg, rgba(255,255,255,.9), rgba(191,219,254,.6));
+      border:1px solid rgba(255,255,255,.9);
+      display:grid;
+      place-items:center;
+      font-size:24px;
+      flex:0 0 auto;
+    }
+
+    .quick-name{font-weight:700}
+    .quick-sub{font-size:.92rem;color:#64748b;margin-top:3px}
+    .quick-price{
+      white-space:nowrap;
+      font-weight:800;
+      color:#0f172a;
+      padding:10px 12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(255,255,255,.84);
+    }
+
+    .section{
+      padding:38px 0;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:20px;
+      flex-wrap:wrap;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.5);
+      border:1px solid rgba(255,255,255,.75);
+      color:#475569;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    .section-title h2{
+      font-size:clamp(2rem, 4vw, 3.1rem);
+      font-weight:900;
+    }
+
+    .section-title p{
+      max-width:760px;
+      margin:10px 0 0;
+      color:#64748b;
+      line-height:1.7;
+      font-size:1.03rem;
+      font-weight:500;
+    }
+
+    .market-overview{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:16px;
+    }
+
+    .overview-card{
+      padding:22px;
+      border-radius:28px;
+      min-height:150px;
+    }
+
+    .overview-card strong{
+      display:block;
+      font-size:2rem;
+      font-weight:900;
+      letter-spacing:-.06em;
+      margin-bottom:8px;
+    }
+
+    .overview-card span{
+      color:#64748b;
+      font-weight:600;
+      line-height:1.55;
+      display:block;
+    }
+
+    .controls{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      margin-bottom:24px;
+    }
+
+    .catalog-wrap{
+      border-radius:36px;
+      padding:24px;
+    }
+
+    .catalog-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .catalog-head p{
+      margin:10px 0 0;
+      color:#64748b;
+      line-height:1.6;
+      max-width:800px;
+      font-weight:500;
+    }
+
+    .result-pill{
+      padding:12px 15px;
+      border-radius:999px;
+      background:rgba(255,255,255,.55);
+      border:1px solid rgba(255,255,255,.82);
+      font-weight:800;
+      box-shadow:var(--shadow-soft);
+      white-space:nowrap;
+    }
+
+    .search-row{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:24px;
+      background:rgba(255,255,255,.52);
+      border:1px solid rgba(255,255,255,.8);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .search-row svg{flex:0 0 auto;color:#64748b}
+    .search-row input{
+      border:none;
+      background:transparent;
+      outline:none;
+      width:100%;
+      color:var(--text);
+      font-size:1rem;
+      font-weight:600;
+    }
+
+    .search-row input::placeholder{color:#94a3b8}
+
+    .chips{
+      display:flex;
+      gap:12px;
+      overflow:auto;
+      padding-bottom:2px;
+      scrollbar-width:none;
+    }
+
+    .chips::-webkit-scrollbar{display:none}
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.42);
+      border:1px solid rgba(255,255,255,.72);
+      white-space:nowrap;
+      font-weight:700;
+      color:#475569;
+      box-shadow:var(--shadow-soft);
+      flex:0 0 auto;
+    }
+
+    .chip:hover{transform:translateY(-1px)}
+
+    .chip.active{
+      background:linear-gradient(135deg, rgba(37,99,235,.98), rgba(56,189,248,.98));
+      color:#fff;
+      border-color:transparent;
+      box-shadow:0 14px 35px rgba(37,99,235,.24);
+    }
+
+    .chip-icon{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      background:rgba(255,255,255,.55);
+      display:grid;
+      place-items:center;
+      padding:6px;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+
+    .chip.active .chip-icon{
+      background:rgba(255,255,255,.18);
+    }
+
+    .chip-icon img{
+      width:100%;
+      height:100%;
+      image-rendering:pixelated;
+      object-fit:contain;
+    }
+
+    .products{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:16px;
+    }
+
+    .product{
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      padding:18px;
+      border-radius:28px;
+      background:rgba(255,255,255,.42);
+      border:1px solid rgba(255,255,255,.74);
+      box-shadow:var(--shadow-soft);
+      transition:transform .3s ease, background .3s ease, border-color .3s ease, box-shadow .3s ease;
+      min-height:100%;
+      overflow:hidden;
+    }
+
+    .product::before{
+      content:"";
+      position:absolute;
+      top:-50px;
+      right:-50px;
+      width:140px;
+      height:140px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(96,165,250,.18), transparent 70%);
+      pointer-events:none;
+    }
+
+    .product:hover{
+      transform:translateY(-6px) scale(1.01);
+      background:rgba(255,255,255,.58);
+      border-color:rgba(255,255,255,.92);
+      box-shadow:0 22px 52px rgba(30,41,59,.11);
+    }
+
+    .product-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .product-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.66);
+      border:1px solid rgba(255,255,255,.86);
+      font-size:.78rem;
+      font-weight:800;
+      color:#334155;
+    }
+
+    .tag.price{
+      color:#0f172a;
+      background:linear-gradient(135deg, rgba(255,255,255,.95), rgba(191,219,254,.68));
+    }
+
+    .product-icon-wrap{
+      width:76px;
+      height:76px;
+      border-radius:22px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(255,255,255,.86), rgba(219,234,254,.8));
+      border:1px solid rgba(255,255,255,.95);
+      box-shadow:0 12px 30px rgba(59,130,246,.14);
+      flex:0 0 auto;
+      overflow:hidden;
+    }
+
+    .product-icon{
+      width:58px;
+      height:58px;
+      image-rendering:pixelated;
+      object-fit:contain;
+      filter:drop-shadow(0 8px 8px rgba(15,23,42,.12));
+    }
+
+    .product-name{
+      font-size:1.06rem;
+      line-height:1.35;
+      font-weight:800;
+      letter-spacing:-.03em;
+      margin:0;
+      color:#0f172a;
+    }
+
+    .product-desc{
+      margin:0;
+      color:#64748b;
+      line-height:1.62;
+      font-weight:600;
+      font-size:.95rem;
+    }
+
+    .product-bottom{
+      margin-top:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding-top:4px;
+    }
+
+    .price-box{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .price-box span{
+      font-size:.82rem;
+      color:#64748b;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+
+    .price-box strong{
+      font-size:1.45rem;
+      letter-spacing:-.06em;
+      font-weight:900;
+      color:#0f172a;
+    }
+
+    .buy-hint{
+      padding:12px 14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.64);
+      border:1px solid rgba(255,255,255,.85);
+      color:#334155;
+      font-weight:800;
+      font-size:.88rem;
+      white-space:nowrap;
+    }
+
+    .empty{
+      grid-column:1/-1;
+      padding:34px;
+      text-align:center;
+      border-radius:28px;
+      background:rgba(255,255,255,.42);
+      border:1px dashed rgba(148,163,184,.35);
+      color:#64748b;
+      font-weight:700;
+    }
+
+    .faq-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:16px;
+    }
+
+    .faq-card{
+      padding:24px;
+      border-radius:30px;
+      min-height:200px;
+    }
+
+    .faq-icon{
+      width:52px;
+      height:52px;
+      display:grid;
+      place-items:center;
+      border-radius:18px;
+      margin-bottom:16px;
+      background:linear-gradient(135deg, rgba(255,255,255,.9), rgba(191,219,254,.65));
+      border:1px solid rgba(255,255,255,.85);
+      font-size:24px;
+    }
+
+    .footer{
+      padding:16px 0 42px;
+    }
+
+    .footer-card{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:24px;
+      border-radius:34px;
+      flex-wrap:wrap;
+    }
+
+    .footer-left{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+
+    .footer-badge{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      font-size:28px;
+      background:linear-gradient(135deg, rgba(255,255,255,.95), rgba(191,219,254,.62));
+      border:1px solid rgba(255,255,255,.84);
+    }
+
+    .footer-title{
+      font-size:1.25rem;
+      font-weight:900;
+      letter-spacing:-.04em;
+    }
+
+    .footer-note{
+      margin-top:6px;
+      font-size:.95rem;
+    }
+
+    .footer-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .fade-up{
+      opacity:0;
+      transform:translateY(24px);
+      animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) forwards;
+    }
+
+    .delay-1{animation-delay:.08s}
+    .delay-2{animation-delay:.16s}
+    .delay-3{animation-delay:.24s}
+    .delay-4{animation-delay:.32s}
+
+    @keyframes fadeUp{
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    @media (max-width: 1200px){
+      .hero-grid,
+      .market-overview,
+      .faq-grid,
+      .products{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .hero-card{min-height:unset}
+    }
+
+    @media (max-width: 980px){
+      .header{border-radius:30px;padding:14px}
+      .nav{display:none}
+      .hero-grid{grid-template-columns:1fr}
+      .floating-top{grid-template-columns:1fr 1fr}
+      .hero-stats{grid-template-columns:1fr}
+      .faq-grid,
+      .market-overview,
+      .products{grid-template-columns:1fr 1fr}
+    }
+
+    @media (max-width: 720px){
+      .container{width:min(var(--container), calc(100% - 20px))}
+      .hero{padding-top:34px}
+      .hero-card,
+      .catalog-wrap,
+      .floating-card,
+      .faq-card,
+      .footer-card{padding:18px}
+      .hero-card{border-radius:28px}
+      .floating-top,
+      .market-overview,
+      .faq-grid,
+      .products{grid-template-columns:1fr}
+      .header{
+        flex-wrap:wrap;
+        justify-content:center;
+        border-radius:24px;
+      }
+      .brand{width:100%;justify-content:center}
+      .header-actions{width:100%;justify-content:center}
+      .hero-title{font-size:clamp(2.3rem, 12vw, 4rem)}
+      .hero-text{font-size:1rem}
+      .product-top{align-items:center}
+      .product-icon-wrap{width:66px;height:66px}
+      .product-icon{width:50px;height:50px}
+      .product-bottom{flex-direction:column;align-items:flex-start}
+      .buy-hint{width:100%;text-align:center}
+      .footer-left{align-items:flex-start}
+    }
+  </style>
 </head>
 <body>
+  <div class="noise"></div>
+  <div class="page">
+    <div class="header-wrap">
+      <div class="container">
+        <header class="header glass fade-up">
+          <a class="brand" href="#top">
+            <div class="brand-badge">⚖️</div>
+            <div>
+              <div class="brand-title">Торговая Федерация</div>
+              <div class="brand-sub">Каталог, цены и быстрый поиск</div>
+            </div>
+          </a>
 
-<header>
-  <a href="#" class="logo">
-    <div class="logo-emblem">⚖️</div>
-    <div>
-      <div class="logo-text">ТОРГОВАЯ ФЕДЕРАЦИЯ</div>
-      <div class="logo-sub">ChanLand · Сезон 4</div>
+          <nav class="nav">
+            <a href="#about">О федерации</a>
+            <a href="#catalog">Каталог</a>
+            <a href="#info">Инфо</a>
+          </nav>
+
+          <div class="header-actions">
+            <a class="btn btn-secondary" href="#catalog">Открыть каталог</a>
+            <a class="btn btn-primary" href="#footer">Связаться</a>
+          </div>
+        </header>
+      </div>
     </div>
-  </a>
-  <nav class="header-nav">
-    <a href="#shop">Каталог</a>
-    <a href="https://chanland.vercel.app" target="_blank">Главная</a>
-    <a href="https://docs.google.com/document/d/1sEyfJkmkkf5YVV5XCS5Y7kxNYjW-pmFpTOZCBmgY11I/edit" target="_blank">Правила</a>
-  </nav>
-  <a href="https://discord.gg/9WsxwGyVkE" target="_blank" class="btn-discord">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
-    Discord
-  </a>
-</header>
 
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <div class="hero-tag">⚜ Официальный магазин сервера</div>
-    <h1 class="hero-title">
-      <span class="hero-title-main">Торговая</span>
-      <span class="hero-title-accent">Федерация</span>
-    </h1>
-    <div class="hero-divider"></div>
-    <p class="hero-desc">Лучшие товары Нижнего мира и Края. Честные цены, надёжные сделки.</p>
-    <a href="#shop" class="hero-cta">Открыть каталог &darr;</a>
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-card glass fade-up delay-1">
+            <div>
+              <div class="hero-badge">✨ Стиль основного сайта, но уже под торговлю</div>
+              <h1 class="hero-title">Торговая <span class="fade">Федерация</span></h1>
+              <p class="hero-text">
+                Красивый витринный сайт для сервера: оружие, броня, ресурсы, зелья, элитры и всё остальное — в одном месте.
+                Не просто список цен, а уже нормальная торговая витрина, будто это Minecraft-рынок уровня «премиум, но без пафоса до потолка».
+              </p>
+
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="#catalog">Смотреть товары</a>
+                <a class="btn btn-secondary" href="#info">Как купить</a>
+              </div>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat">
+                <strong id="stat-total">0</strong>
+                <span>товаров в каталоге</span>
+              </div>
+              <div class="stat">
+                <strong id="stat-cats">0</strong>
+                <span>категорий для быстрого фильтра</span>
+              </div>
+              <div class="stat">
+                <strong id="stat-price">0</strong>
+                <span>средняя цена по магазину</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="side-panel fade-up delay-2">
+            <div class="floating-top">
+              <div class="mini-card glass">
+                <div class="mini-emoji">🛡️</div>
+                <h4>Броня и оружие</h4>
+                <p>От алмазных вещей до фулл незерита и топовых зачарований.</p>
+              </div>
+              <div class="mini-card glass">
+                <div class="mini-emoji">💎</div>
+                <h4>Ресурсы и редкости</h4>
+                <p>Изумруды, блоки, сердце моря, пластинки и другие жирные штуки.</p>
+              </div>
+            </div>
+
+            <div class="list-card glass">
+              <h3>🔥 Популярные позиции</h3>
+              <p>Небольшой быстрый список того, что обычно цепляет взгляд первым.</p>
+              <div class="quick-list" id="quickList"></div>
+            </div>
+
+            <div class="list-card glass">
+              <h3>⚡ Почему так удобнее</h3>
+              <p>
+                Можно сразу фильтровать товары по категориям, искать по названию и видеть цену без копания в огромной стене текста.
+                Короче, не рынок-лабиринт, а рынок-самонаводка.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="container">
+          <div class="section-title fade-up">
+            <div>
+              <div class="eyebrow">🏛️ О федерации</div>
+              <h2>Торговый центр сервера</h2>
+              <p>
+                Этот сайт можно использовать как официальный прайс-лист, витрину и точку входа для игроков.
+                Дизайн сделан в той же атмосфере, что и твой основной сайт: стекло, мягкий свет, округлые карточки и большой акцент на визуал.
+              </p>
+            </div>
+          </div>
+
+          <div class="market-overview">
+            <div class="overview-card glass fade-up delay-1">
+              <strong>Поиск</strong>
+              <span>Находи предметы по названию — хоть элитры, хоть Починку, хоть Тишину, хоть зловещие ключи.</span>
+            </div>
+            <div class="overview-card glass fade-up delay-2">
+              <strong>Категории</strong>
+              <span>Оружие, броня, декор, механизмы, еда, строительство, транспорт и прочие полезности.</span>
+            </div>
+            <div class="overview-card glass fade-up delay-3">
+              <strong>Витрина</strong>
+              <span>Каждый товар в отдельной карточке, а не просто как список из бездны текста. Глазам легче, мозгу приятнее.</span>
+            </div>
+            <div class="overview-card glass fade-up delay-4">
+              <strong>Основа</strong>
+              <span>Один HTML-файл с CSS и JS внутри. Открыл — и сайт уже живой. Без React и без лишней возни.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="catalog">
+        <div class="container">
+          <div class="catalog-wrap glass fade-up">
+            <div class="catalog-head">
+              <div>
+                <div class="eyebrow">📦 Каталог федерации</div>
+                <h2>Все товары</h2>
+                <p>
+                  Ниже полный список предметов. Можно переключать категории, искать по названию и быстро смотреть цену.
+                  Если захочешь, потом легко добавим сортировку, корзину, отдельные страницы товаров, валюту сервера, Discord-заказ и что угодно ещё.
+                </p>
+              </div>
+              <div class="result-pill" id="resultCount">Найдено: 0</div>
+            </div>
+
+            <div class="controls">
+              <label class="search-row" for="searchInput">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M21 21L16.65 16.65M10.8 18.6C15.108 18.6 18.6 15.108 18.6 10.8C18.6 6.49218 15.108 3 10.8 3C6.49218 3 3 6.49218 3 10.8C3 15.108 6.49218 18.6 10.8 18.6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <input id="searchInput" type="text" placeholder="Поиск по названию предмета..." autocomplete="off" />
+              </label>
+
+              <div class="chips" id="categoryChips"></div>
+            </div>
+
+            <div class="products" id="productGrid"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="info">
+        <div class="container">
+          <div class="section-title fade-up">
+            <div>
+              <div class="eyebrow">ℹ️ Полезно знать</div>
+              <h2>Как это можно использовать</h2>
+              <p>
+                Этот блок я уже заложил под живую инфу. Здесь можно разместить правила покупки, способы оплаты, ник продавца,
+                ссылки на Discord, время работы, наличие скидок и любые важные примечания.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-grid">
+            <div class="faq-card glass fade-up delay-1">
+              <div class="faq-icon">🪙</div>
+              <h3>Валюта</h3>
+              <p>Сейчас цены выводятся как обычные числа. При желании можно добавить рядом название валюты сервера или иконку монет.</p>
+            </div>
+            <div class="faq-card glass fade-up delay-2">
+              <div class="faq-icon">📩</div>
+              <h3>Оформление</h3>
+              <p>Можно сделать кнопку «Заказать» на каждой карточке и привязать её к Discord, форме или любому другому способу связи.</p>
+            </div>
+            <div class="faq-card glass fade-up delay-3">
+              <div class="faq-icon">🎨</div>
+              <h3>Дальше можно прокачать</h3>
+              <p>Логотип, фон сервера, отдельные секции, рейтинг товаров, акции, корзину, анимации и даже красивую панель администратора.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" id="footer">
+      <div class="container">
+        <div class="footer-card glass fade-up">
+          <div class="footer-left">
+            <div class="footer-badge">🏪</div>
+            <div>
+              <div class="footer-title">Торговая Федерация</div>
+              <div class="footer-note">HTML-версия сайта в стиле основного проекта. Красиво, чисто и уже готово к доработкам.</div>
+            </div>
+          </div>
+
+          <div class="footer-actions">
+            <a class="btn btn-secondary" href="#top">Наверх</a>
+            <a class="btn btn-primary" href="#catalog">Открыть каталог</a>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
-  <div class="scroll-hint">
-    <div class="scroll-arr"></div>
-    Прокрутить
-  </div>
-</section>
 
-<section class="shop-section" id="shop">
-  <div class="section-header">
-    <div class="section-tag">⚜ Наш ассортимент</div>
-    <h2 class="section-title">Каталог товаров</h2>
-    <div class="section-orn">
-      <div class="orn-line"></div>
-      <div class="orn-diamond"></div>
-      <div class="orn-line r"></div>
-    </div>
-  </div>
-  <div class="controls">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input type="text" class="search-input" id="searchInput" placeholder="Поиск товара..."/>
-    </div>
-    <select class="sort-select" id="sortSelect">
-      <option value="default">По умолчанию</option>
-      <option value="price-asc">Цена: по возрастанию</option>
-      <option value="price-desc">Цена: по убыванию</option>
-      <option value="name-asc">Название: А–Я</option>
-    </select>
-  </div>
-  <div class="cats" id="catBar"></div>
-  <div class="results-count" id="resultsCount"></div>
-  <div class="items-grid" id="itemsGrid"></div>
-  <div class="no-results" id="noResults">Товары не найдены</div>
-</section>
+  <script>
+    const I = 'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/item/';
+    const B = 'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.4/assets/minecraft/textures/block/';
 
-<footer>
-  <div class="footer-logo">⚖ ТОРГОВАЯ ФЕДЕРАЦИЯ</div>
-  <div class="footer-sub">Официальный магазин сервера ChanLand</div>
-  <div class="footer-server">chanland.play-network.io</div>
-  <div class="footer-links">
-    <a href="https://chanland.vercel.app" target="_blank">Главная</a>
-    <a href="https://discord.gg/9WsxwGyVkE" target="_blank">Discord</a>
-    <a href="https://docs.google.com/document/d/1sEyfJkmkkf5YVV5XCS5Y7kxNYjW-pmFpTOZCBmgY11I/edit" target="_blank">Правила</a>
-    <a href="https://chanland.vercel.app/cities/index.html" target="_blank">Карта городов</a>
-  </div>
-  <div class="footer-copy">© 2025 ChanLand · Все права защищены</div>
-</footer>
+    const T = {
+      sword_netherite:I+'netherite_sword.png',
+      axe_netherite:I+'netherite_axe.png',
+      trident:I+'trident.png',
+      mace:I+'mace.png',
+      bow:I+'bow.png',
+      helmet_netherite:I+'netherite_helmet.png',
+      chest_netherite:I+'netherite_chestplate.png',
+      legs_netherite:I+'netherite_leggings.png',
+      boots_netherite:I+'netherite_boots.png',
+      helmet_diamond:I+'diamond_helmet.png',
+      chest_diamond:I+'diamond_chestplate.png',
+      legs_diamond:I+'diamond_leggings.png',
+      boots_diamond:I+'diamond_boots.png',
+      pick_netherite:I+'netherite_pickaxe.png',
+      shovel_netherite:I+'netherite_shovel.png',
+      hoe_netherite:I+'netherite_hoe.png',
+      pick_diamond:I+'diamond_pickaxe.png',
+      fishing_rod:I+'fishing_rod.png',
+      enchanted_book:I+'enchanted_book.png',
+      netherite_ingot:I+'netherite_ingot.png',
+      diamond:I+'diamond.png',
+      iron_ingot:I+'iron_ingot.png',
+      gold_ingot:I+'gold_ingot.png',
+      emerald:I+'emerald.png',
+      copper_ingot:I+'copper_ingot.png',
+      lapis:I+'lapis_lazuli.png',
+      amethyst:I+'amethyst_shard.png',
+      ancient_debris:B+'ancient_debris_top.png',
+      diamond_block:B+'diamond_block.png',
+      iron_block:B+'iron_block.png',
+      gold_block:B+'gold_block.png',
+      emerald_block:B+'emerald_block.png',
+      emerald_ore:B+'emerald_ore.png',
+      copper_block:B+'copper_block.png',
+      quartz_block:B+'quartz_block_side.png',
+      bone_block:B+'bone_block_top.png',
+      obsidian:B+'obsidian.png',
+      sea_lantern:B+'sea_lantern.png',
+      lapis_block:B+'lapis_block.png',
+      redstone_block:B+'redstone_block.png',
+      slime_block:B+'slime_block.png',
+      honey_block:B+'honey_block_side.png',
+      light_block:B+'light_block_15.png',
+      tnt:B+'tnt_side.png',
+      beacon:B+'beacon.png',
+      potion_invis:I+'potion.png',
+      potion_nightvis:I+'potion.png',
+      potion_fire:I+'potion.png',
+      potion_jump:I+'potion.png',
+      potion_regen:I+'potion.png',
+      potion_strength:I+'potion.png',
+      potion_speed:I+'potion.png',
+      potion_turtle:I+'potion.png',
+      ominous_bottle:I+'ominous_bottle.png',
+      ender_pearl:I+'ender_pearl.png',
+      golden_apple:I+'golden_apple.png',
+      enchanted_apple:I+'enchanted_golden_apple.png',
+      golden_carrot:I+'golden_carrot.png',
+      exp_bottle:I+'experience_bottle.png',
+      totem:I+'totem_of_undying.png',
+      ghast_tear:I+'ghast_tear.png',
+      slimeball:I+'slimeball.png',
+      blaze_powder:I+'blaze_powder.png',
+      blaze_rod:I+'blaze_rod.png',
+      gunpowder:I+'gunpowder.png',
+      arrow:I+'arrow.png',
+      firework:I+'firework_rocket.png',
+      elytra:I+'elytra.png',
+      shulker_shell:I+'shulker_shell.png',
+      heart_of_sea:I+'heart_of_the_sea.png',
+      book:I+'book.png',
+      leather:I+'leather.png',
+      nether_wart:I+'nether_wart.png',
+      sugar_cane:I+'sugar_cane.png',
+      dragons_breath:I+'dragon_breath.png',
+      trial_key:I+'trial_key.png',
+      ominous_key:I+'ominous_trial_key.png',
+      wither_skull:I+'wither_skeleton_skull.png',
+      apple:I+'apple.png',
+      cooked_cod:I+'cooked_cod.png',
+      cooked_beef:I+'cooked_beef.png',
+      carrot:I+'carrot.png',
+      bread:I+'bread.png',
+      end_crystal:I+'end_crystal.png',
+      music_disc:I+'music_disc_pigstep.png',
+      music_disc_relic:I+'music_disc_relic.png',
+      music_disc_creator:I+'music_disc_creator.png',
+      breeze_rod:I+'breeze_rod.png',
+      tpl_coast:I+'coast_armor_trim_smithing_template.png',
+      tpl_dune:I+'dune_armor_trim_smithing_template.png',
+      tpl_eye:I+'eye_armor_trim_smithing_template.png',
+      tpl_host:I+'host_armor_trim_smithing_template.png',
+      tpl_raiser:I+'raiser_armor_trim_smithing_template.png',
+      tpl_rib:I+'rib_armor_trim_smithing_template.png',
+      tpl_sentry:I+'sentry_armor_trim_smithing_template.png',
+      tpl_shaper:I+'shaper_armor_trim_smithing_template.png',
+      tpl_silence:I+'silence_armor_trim_smithing_template.png',
+      tpl_snout:I+'snout_armor_trim_smithing_template.png',
+      tpl_spire:I+'spire_armor_trim_smithing_template.png',
+      tpl_tide:I+'tide_armor_trim_smithing_template.png',
+      tpl_vex:I+'vex_armor_trim_smithing_template.png',
+      tpl_ward:I+'ward_armor_trim_smithing_template.png',
+      tpl_wayfinder:I+'wayfinder_armor_trim_smithing_template.png',
+      tpl_wild:I+'wild_armor_trim_smithing_template.png',
+      tpl_flow:I+'flow_armor_trim_smithing_template.png',
+      netherite_upgrade_tpl:I+'netherite_upgrade_smithing_template.png'
+    };
 
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal" id="modal">
-    <button class="modal-close" id="modalClose">✕</button>
-    <img src="" alt="" class="modal-img" id="modalImg"/>
-    <div class="modal-name" id="modalName"></div>
-    <div class="modal-qty" id="modalQty"></div>
-    <div class="modal-divider"></div>
-    <div class="modal-price-big" id="modalPrice"></div>
-    <div class="modal-price-label">изумрудов</div>
-    <div class="modal-divider"></div>
-    <div class="modal-info">Для покупки обратитесь к торговцу в Discord или на сервере</div>
-    <a href="https://discord.gg/9WsxwGyVkE" target="_blank" class="modal-btn">Купить в Discord</a>
-  </div>
-</div>
+    const PTINT = {
+      potion_invis:'hue-rotate(210deg) saturate(0.25) brightness(0.95)',
+      potion_nightvis:'hue-rotate(38deg) saturate(2.2) brightness(0.9)',
+      potion_fire:'hue-rotate(345deg) saturate(2.8) brightness(0.95)',
+      potion_jump:'hue-rotate(92deg) saturate(2.2) brightness(0.9)',
+      potion_regen:'hue-rotate(288deg) saturate(3.0) brightness(0.9)',
+      potion_strength:'hue-rotate(2deg) saturate(3.0) brightness(0.85)',
+      potion_speed:'hue-rotate(158deg) saturate(2.5) brightness(0.9)',
+      potion_turtle:'hue-rotate(192deg) saturate(2.0) brightness(0.85)'
+    };
 
-<script>
-const W = 'https://minecraft.wiki/images/';
-const T = {
-  sword_netherite:W+'Netherite_Sword_JE3_BE3.png',
-  axe_netherite:W+'Netherite_Axe_JE3_BE3.png',
-  trident:W+'Trident_JE2_BE2.png',
-  mace:W+'Mace_JE1_BE1.png',
-  bow:W+'Bow_%28pulling_0%29_JE1_BE1.png',
-  helmet_netherite:W+'Netherite_Helmet_JE2_BE2.png',
-  chest_netherite:W+'Netherite_Chestplate_JE2_BE2.png',
-  legs_netherite:W+'Netherite_Leggings_JE2_BE2.png',
-  boots_netherite:W+'Netherite_Boots_JE2_BE2.png',
-  helmet_diamond:W+'Diamond_Helmet_JE3_BE3.png',
-  chest_diamond:W+'Diamond_Chestplate_JE3_BE3.png',
-  legs_diamond:W+'Diamond_Leggings_JE3_BE3.png',
-  boots_diamond:W+'Diamond_Boots_JE3_BE3.png',
-  pick_netherite:W+'Netherite_Pickaxe_JE3_BE3.png',
-  shovel_netherite:W+'Netherite_Shovel_JE3_BE3.png',
-  hoe_netherite:W+'Netherite_Hoe_JE3_BE3.png',
-  pick_diamond:W+'Diamond_Pickaxe_JE3_BE3.png',
-  fishing_rod:W+'Fishing_Rod_JE2_BE2.png',
-  enchanted_book:W+'Enchanted_Book_JE2_BE2.png',
-  netherite_ingot:W+'Netherite_Ingot_JE3_BE3.png',
-  diamond:W+'Diamond_JE3_BE3.png',
-  iron_ingot:W+'Iron_Ingot_JE3_BE3.png',
-  gold_ingot:W+'Gold_Ingot_JE3_BE3.png',
-  emerald:W+'Emerald_JE3_BE3.png',
-  copper_ingot:W+'Copper_Ingot_JE3_BE3.png',
-  lapis:W+'Lapis_Lazuli_JE1_BE1.png',
-  amethyst:W+'Amethyst_Shard_JE2_BE2.png',
-  ancient_debris:W+'Ancient_Debris_JE3_BE3.png',
-  diamond_block:W+'Diamond_Block_JE4_BE3.png',
-  iron_block:W+'Iron_Block_JE4_BE3.png',
-  gold_block:W+'Gold_Block_JE4_BE3.png',
-  emerald_block:W+'Emerald_Block_JE3_BE3.png',
-  emerald_ore:W+'Emerald_Ore_JE5_BE3.png',
-  copper_block:W+'Copper_Block_JE3_BE3.png',
-  quartz_block:W+'Quartz_Pillar_JE2_BE2.png',
-  bone_block:W+'Bone_Block_JE1_BE1.png',
-  obsidian:W+'Obsidian_JE2_BE2.png',
-  sea_lantern:W+'Sea_Lantern_JE1_BE1.gif',
-  lapis_block:W+'Lapis_Lazuli_Block_JE3_BE3.png',
-  redstone_block:W+'Block_of_Redstone_JE3_BE3.png',
-  slime_block:W+'Slime_Block_JE3_BE3.png',
-  honey_block:W+'Honey_Block_JE2_BE2.png',
-  light_block:W+'Light_Block_15_JE1_BE1.png',
-  tnt:W+'TNT_%28texture%29_JE3.png',
-  beacon:W+'Beacon_JE3_BE2.png',
-  potion_invis:W+'Potion_JE2_BE2.png',
-  potion_nightvis:W+'Potion_JE2_BE2.png',
-  potion_fire:W+'Potion_JE2_BE2.png',
-  potion_jump:W+'Potion_JE2_BE2.png',
-  potion_regen:W+'Potion_JE2_BE2.png',
-  potion_strength:W+'Potion_JE2_BE2.png',
-  potion_speed:W+'Potion_JE2_BE2.png',
-  potion_turtle:W+'Potion_JE2_BE2.png',
-  ominous_bottle:W+'Ominous_Bottle_JE1_BE1.gif',
-  ender_pearl:W+'Ender_Pearl_JE3_BE3.png',
-  golden_apple:W+'Golden_Apple_JE2_BE2.png',
-  enchanted_apple:W+'Enchanted_Golden_Apple_JE2_BE2.png',
-  golden_carrot:W+'Golden_Carrot_JE2_BE2.png',
-  exp_bottle:W+'Bottle_o%27_Enchanting_JE2_BE2.png',
-  totem:W+'Totem_of_Undying_JE2_BE2.png',
-  ghast_tear:W+'Ghast_Tear_JE2_BE2.png',
-  slimeball:W+'Slimeball_JE2_BE2.png',
-  blaze_powder:W+'Blaze_Powder_JE2_BE2.png',
-  blaze_rod:W+'Blaze_Rod_JE2_BE2.png',
-  gunpowder:W+'Gunpowder_JE2_BE2.png',
-  arrow:W+'Arrow_JE1_BE1.png',
-  firework:W+'Firework_Rocket_%28item%29_JE1_BE1.png',
-  elytra:W+'Elytra_item_JE1_BE1.png',
-  shulker_shell:W+'Shulker_Shell_JE2_BE2.png',
-  heart_of_sea:W+'Heart_of_the_Sea_JE2_BE2.png',
-  book:W+'Book_JE2_BE2.png',
-  leather:W+'Leather_JE2_BE2.png',
-  nether_wart:W+'Nether_Wart_JE2_BE2.png',
-  sugar_cane:W+'Sugar_Cane_JE2_BE2.png',
-  dragons_breath:W+'Dragon%27s_Breath_JE2_BE2.png',
-  trial_key:W+'Trial_Key_JE1_BE1.png',
-  ominous_key:W+'Ominous_Trial_Key_JE1_BE1.png',
-  wither_skull:W+'Wither_Skeleton_Skull_%28item%29_JE1_BE1.png',
-  apple:W+'Apple_JE2_BE2.png',
-  cooked_cod:W+'Cooked_Cod_JE3_BE3.png',
-  cooked_beef:W+'Cooked_Beef_JE3_BE3.png',
-  carrot:W+'Carrot_JE3_BE3.png',
-  bread:W+'Bread_JE2_BE2.png',
-  end_crystal:W+'End_Crystal_%28item%29_JE1_BE1.png',
-  music_disc:W+'Music_Disc_pigstep_JE1_BE1.png',
-  music_disc_relic:W+'Music_Disc_relic_JE1_BE1.png',
-  music_disc_creator:W+'Music_Disc_creator_JE1_BE1.png',
-  breeze_rod:W+'Breeze_Rod_JE1_BE1.png',
-  tpl_coast:W+'Coast_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_dune:W+'Dune_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_eye:W+'Eye_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_host:W+'Host_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_raiser:W+'Raiser_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_rib:W+'Rib_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_sentry:W+'Sentry_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_shaper:W+'Shaper_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_silence:W+'Silence_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_snout:W+'Snout_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_spire:W+'Spire_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_tide:W+'Tide_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_vex:W+'Vex_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_ward:W+'Ward_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_wayfinder:W+'Wayfinder_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_wild:W+'Wild_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  tpl_flow:W+'Flow_Armor_Trim_Smithing_Template_JE1_BE1.png',
-  netherite_upgrade_tpl:W+'Netherite_Upgrade_Smithing_Template_JE1_BE1.png'
-};
+    const CATS = [
+      {id:'all',label:'Все',img:T.diamond},
+      {id:'decor',label:'Декорации',img:T.sea_lantern},
+      {id:'tool',label:'Инструменты',img:T.pick_netherite},
+      {id:'weapon',label:'Оружие',img:T.sword_netherite},
+      {id:'build',label:'Механизмы',img:T.redstone_block},
+      {id:'enchant',label:'Зачарование',img:T.enchanted_book},
+      {id:'armor',label:'Броня',img:T.chest_netherite},
+      {id:'resource',label:'Строительство',img:T.obsidian},
+      {id:'ore',label:'Руда',img:T.emerald_ore},
+      {id:'potion',label:'Зельеварение',img:T.ominous_bottle},
+      {id:'misc',label:'Транспорт',img:T.elytra},
+      {id:'food',label:'Еда',img:T.golden_apple},
+      {id:'other',label:'Прочее',img:T.book}
+    ];
 
-const PTINT = {
-  potion_invis:'hue-rotate(210deg) saturate(0.25) brightness(0.95)',
-  potion_nightvis:'hue-rotate(38deg) saturate(2.2) brightness(0.9)',
-  potion_fire:'hue-rotate(345deg) saturate(2.8) brightness(0.95)',
-  potion_jump:'hue-rotate(92deg) saturate(2.2) brightness(0.9)',
-  potion_regen:'hue-rotate(288deg) saturate(3.0) brightness(0.9)',
-  potion_strength:'hue-rotate(2deg) saturate(3.0) brightness(0.85)',
-  potion_speed:'hue-rotate(158deg) saturate(2.5) brightness(0.9)',
-  potion_turtle:'hue-rotate(192deg) saturate(2.0) brightness(0.85)'
-};
+    const ITEMS = [
+      {name:'Незеритовый меч (фулл зачар)',qty:'без починки',price:90,cat:'weapon',img:'sword_netherite'},
+      {name:'Незеритовый меч',qty:'1 шт.',price:24,cat:'weapon',img:'sword_netherite'},
+      {name:'Незеритовый топор',qty:'1 шт.',price:24,cat:'weapon',img:'axe_netherite'},
+      {name:'Трезубец',qty:'1 шт.',price:16,cat:'weapon',img:'trident'},
+      {name:'Булава',qty:'1 шт.',price:16,cat:'weapon',img:'mace'},
+      {name:'Лук (фулл зачар)',qty:'1 шт.',price:10,cat:'weapon',img:'bow'},
 
-const CATS = [
-  {id:'all',label:'Все',img:'diamond'},
-  {id:'decor',label:'Декорации',img:'sea_lantern'},
-  {id:'tool',label:'Инструменты',img:'pick_netherite'},
-  {id:'weapon',label:'Оружие',img:'sword_netherite'},
-  {id:'build',label:'Механизмы',img:'redstone_block'},
-  {id:'enchant',label:'Зачарование',img:'enchanted_book'},
-  {id:'armor',label:'Броня',img:'chest_netherite'},
-  {id:'resource',label:'Строительство',img:'obsidian'},
-  {id:'ore',label:'Руда',img:'emerald_ore'},
-  {id:'potion',label:'Зельеварение',img:'ominous_bottle'},
-  {id:'misc',label:'Транспорт',img:'elytra'},
-  {id:'food',label:'Еда',img:'golden_apple'},
-  {id:'other',label:'Прочее',img:'book'}
-];
+      {name:'Незеритовый шлем (топ зачар)',qty:'1 шт.',price:65,cat:'armor',img:'helmet_netherite'},
+      {name:'Незеритовый шлем',qty:'1 шт.',price:26,cat:'armor',img:'helmet_netherite'},
+      {name:'Незеритовый нагрудник (топ зачар)',qty:'1 шт.',price:86,cat:'armor',img:'chest_netherite'},
+      {name:'Незеритовый нагрудник',qty:'1 шт.',price:29,cat:'armor',img:'chest_netherite'},
+      {name:'Незеритовые поножи (топ зачар)',qty:'1 шт.',price:48,cat:'armor',img:'legs_netherite'},
+      {name:'Незеритовые поножи',qty:'1 шт.',price:28,cat:'armor',img:'legs_netherite'},
+      {name:'Незеритовые ботинки (топ зачар)',qty:'1 шт.',price:80,cat:'armor',img:'boots_netherite'},
+      {name:'Незеритовые ботинки',qty:'1 шт.',price:25,cat:'armor',img:'boots_netherite'},
+      {name:'Алмазный шлем',qty:'1 шт.',price:2,cat:'armor',img:'helmet_diamond'},
+      {name:'Алмазный нагрудник',qty:'1 шт.',price:3,cat:'armor',img:'chest_diamond'},
+      {name:'Алмазные поножи',qty:'1 шт.',price:3,cat:'armor',img:'legs_diamond'},
+      {name:'Алмазные ботинки',qty:'1 шт.',price:2,cat:'armor',img:'boots_diamond'},
 
-const ITEMS = [
-  {name:'Незеритовый меч (фулл зачар)',qty:'без починки',price:90,cat:'weapon',img:'sword_netherite'},
-  {name:'Незеритовый меч',qty:'1 шт.',price:24,cat:'weapon',img:'sword_netherite'},
-  {name:'Незеритовый топор',qty:'1 шт.',price:24,cat:'weapon',img:'axe_netherite'},
-  {name:'Трезубец',qty:'1 шт.',price:16,cat:'weapon',img:'trident'},
-  {name:'Булава',qty:'1 шт.',price:16,cat:'weapon',img:'mace'},
-  {name:'Лук (фулл зачар)',qty:'1 шт.',price:10,cat:'weapon',img:'bow'},
-  {name:'Незеритовый шлем (топ зачар)',qty:'1 шт.',price:65,cat:'armor',img:'helmet_netherite'},
-  {name:'Незеритовый шлем',qty:'1 шт.',price:26,cat:'armor',img:'helmet_netherite'},
-  {name:'Незеритовый нагрудник (топ зачар)',qty:'1 шт.',price:86,cat:'armor',img:'chest_netherite'},
-  {name:'Незеритовый нагрудник',qty:'1 шт.',price:29,cat:'armor',img:'chest_netherite'},
-  {name:'Незеритовые поножи (топ зачар)',qty:'1 шт.',price:48,cat:'armor',img:'legs_netherite'},
-  {name:'Незеритовые поножи',qty:'1 шт.',price:28,cat:'armor',img:'legs_netherite'},
-  {name:'Незеритовые ботинки (топ зачар)',qty:'1 шт.',price:80,cat:'armor',img:'boots_netherite'},
-  {name:'Незеритовые ботинки',qty:'1 шт.',price:25,cat:'armor',img:'boots_netherite'},
-  {name:'Алмазный шлем',qty:'1 шт.',price:2,cat:'armor',img:'helmet_diamond'},
-  {name:'Алмазный нагрудник',qty:'1 шт.',price:3,cat:'armor',img:'chest_diamond'},
-  {name:'Алмазные поножи',qty:'1 шт.',price:3,cat:'armor',img:'legs_diamond'},
-  {name:'Алмазные ботинки',qty:'1 шт.',price:2,cat:'armor',img:'boots_diamond'},
-  {name:'Незеритовая кирка (топ зачар)',qty:'без починки',price:46,cat:'tool',img:'pick_netherite'},
-  {name:'Незеритовая кирка',qty:'1 шт.',price:25,cat:'tool',img:'pick_netherite'},
-  {name:'Алмазная кирка (фулл зачар)',qty:'без починки',price:15,cat:'tool',img:'pick_diamond'},
-  {name:'Незеритовая лопата',qty:'1 шт.',price:22,cat:'tool',img:'shovel_netherite'},
-  {name:'Незеритовая мотыга',qty:'1 шт.',price:22,cat:'tool',img:'hoe_netherite'},
-  {name:'Удочка (фулл зачар)',qty:'1 шт.',price:10,cat:'tool',img:'fishing_rod'},
-  {name:'Починка',qty:'книга',price:200,cat:'enchant',img:'enchanted_book'},
-  {name:'Проворство III',qty:'книга',price:500,cat:'enchant',img:'enchanted_book'},
-  {name:'Скорость души III',qty:'книга',price:15,cat:'enchant',img:'enchanted_book'},
-  {name:'Защита IV',qty:'книга',price:16,cat:'enchant',img:'enchanted_book'},
-  {name:'Шёлковое касание',qty:'книга',price:14,cat:'enchant',img:'enchanted_book'},
-  {name:'Прочность III',qty:'книга',price:16,cat:'enchant',img:'enchanted_book'},
-  {name:'Добыча III',qty:'книга',price:21,cat:'enchant',img:'enchanted_book'},
-  {name:'Острота V',qty:'книга',price:22,cat:'enchant',img:'enchanted_book'},
-  {name:'Удача III',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
-  {name:'Шипы III',qty:'книга',price:25,cat:'enchant',img:'enchanted_book'},
-  {name:'Эффективность V',qty:'книга',price:15,cat:'enchant',img:'enchanted_book'},
-  {name:'Бесконечность',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
-  {name:'Быстрая перезарядка III',qty:'книга',price:6,cat:'enchant',img:'enchanted_book'},
-  {name:'Везучий рыбак III',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
-  {name:'Верность III',qty:'книга',price:11,cat:'enchant',img:'enchanted_book'},
-  {name:'Взрывоустойчивость IV',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
-  {name:'Воспламенение',qty:'книга',price:6,cat:'enchant',img:'enchanted_book'},
-  {name:'Громовержец',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
-  {name:'Заговор огня II',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
-  {name:'Защита от снарядов IV',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
-  {name:'Ледоход II',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
-  {name:'Небесная кара V',qty:'книга',price:5,cat:'enchant',img:'enchanted_book'},
-  {name:'Невесомость IV',qty:'книга',price:25,cat:'enchant',img:'enchanted_book'},
-  {name:'Бич членистоногих V',qty:'книга',price:5,cat:'enchant',img:'enchanted_book'},
-  {name:'Огнеупорность IV',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
-  {name:'Отдача II',qty:'книга',price:9,cat:'enchant',img:'enchanted_book'},
-  {name:'Откидывание II',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
-  {name:'Плотность V',qty:'книга',price:20,cat:'enchant',img:'enchanted_book'},
-  {name:'Подводная ходьба III',qty:'книга',price:14,cat:'enchant',img:'enchanted_book'},
-  {name:'Подводник',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
-  {name:'Подводное дыхание III',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
-  {name:'Порыв ветра III',qty:'книга',price:100,cat:'enchant',img:'enchanted_book'},
-  {name:'Приманка III',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
-  {name:'Пробитие IV',qty:'книга',price:18,cat:'enchant',img:'enchanted_book'},
-  {name:'Пронзатель V',qty:'книга',price:7,cat:'enchant',img:'enchanted_book'},
-  {name:'Пронзающая стрела IV',qty:'книга',price:6,cat:'enchant',img:'enchanted_book'},
-  {name:'Разящий клинок III',qty:'книга',price:16,cat:'enchant',img:'enchanted_book'},
-  {name:'Сила V',qty:'книга',price:12,cat:'enchant',img:'enchanted_book'},
-  {name:'Тройной выстрел',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
-  {name:'Тягун III',qty:'книга',price:23,cat:'enchant',img:'enchanted_book'},
-  {name:'Незеритовый слиток',qty:'1 шт.',price:23,cat:'resource',img:'netherite_ingot'},
-  {name:'Древние обломки',qty:'1 шт.',price:5,cat:'resource',img:'ancient_debris'},
-  {name:'Алмаз',qty:'3 шт.',price:1,cat:'resource',img:'diamond'},
-  {name:'Алмазный блок',qty:'16 шт.',price:48,cat:'resource',img:'diamond_block'},
-  {name:'Железо',qty:'64 шт.',price:1,cat:'resource',img:'iron_ingot'},
-  {name:'Железный блок',qty:'64 шт.',price:8,cat:'resource',img:'iron_block'},
-  {name:'Золото',qty:'64 шт.',price:3,cat:'resource',img:'gold_ingot'},
-  {name:'Золотой блок',qty:'64 шт.',price:24,cat:'resource',img:'gold_block'},
-  {name:'Изумруд',qty:'64 шт.',price:1,cat:'resource',img:'emerald'},
-  {name:'Изумрудный блок',qty:'64 шт.',price:8,cat:'resource',img:'emerald_block'},
-  {name:'Медь',qty:'64 шт.',price:1,cat:'resource',img:'copper_ingot'},
-  {name:'Лазурит',qty:'64 шт.',price:1,cat:'resource',img:'lapis'},
-  {name:'Лазуритовый блок',qty:'64 шт.',price:9,cat:'resource',img:'lapis_block'},
-  {name:'Осколок аметиста',qty:'64 шт.',price:1,cat:'resource',img:'amethyst'},
-  {name:'Кристалл Края',qty:'16 шт.',price:16,cat:'resource',img:'end_crystal'},
-  {name:'Сердце моря',qty:'1 шт.',price:64,cat:'resource',img:'heart_of_sea'},
-  {name:'Изумрудная руда',qty:'1 шт.',price:10,cat:'ore',img:'emerald_ore'},
-  {name:'Медный блок',qty:'64 шт.',price:4,cat:'resource',img:'copper_block'},
-  {name:'Кварцевый блок',qty:'64 шт.',price:2,cat:'resource',img:'quartz_block'},
-  {name:'Костяной блок',qty:'64 шт.',price:8,cat:'resource',img:'bone_block'},
-  {name:'Обсидиан',qty:'64 шт.',price:10,cat:'resource',img:'obsidian'},
-  {name:'Редстоуновый блок',qty:'32 шт.',price:4,cat:'build',img:'redstone_block'},
-  {name:'Блок слизи',qty:'64 шт.',price:9,cat:'build',img:'slime_block'},
-  {name:'Морской фонарь',qty:'64 шт.',price:5,cat:'decor',img:'sea_lantern'},
-  {name:'Блок мёда',qty:'16 шт.',price:4,cat:'decor',img:'honey_block'},
-  {name:'Блок света',qty:'32 шт.',price:6,cat:'decor',img:'light_block'},
-  {name:'Пластинка PigStep',qty:'1 шт.',price:150,cat:'decor',img:'music_disc'},
-  {name:'Пластинка Relic',qty:'1 шт.',price:150,cat:'decor',img:'music_disc_relic'},
-  {name:'Пластинка Creator',qty:'1 шт.',price:100,cat:'decor',img:'music_disc_creator'},
-  {name:'Пластинка Aaron Cherof',qty:'1 шт.',price:175,cat:'decor',img:'music_disc'},
-  {name:'Пластинки (прочие)',qty:'1 шт.',price:20,cat:'decor',img:'music_disc'},
-  {name:'Отделка Берег',qty:'1 шт.',price:8,cat:'decor',img:'tpl_coast'},
-  {name:'Отделка Дюна',qty:'1 шт.',price:10,cat:'decor',img:'tpl_dune'},
-  {name:'Отделка Oko',qty:'1 шт.',price:10,cat:'decor',img:'tpl_eye'},
-  {name:'Отделка Хранитель',qty:'1 шт.',price:10,cat:'decor',img:'tpl_host'},
-  {name:'Отделка Собиратель',qty:'1 шт.',price:10,cat:'decor',img:'tpl_raiser'},
-  {name:'Отделка Ребро',qty:'1 шт.',price:8,cat:'decor',img:'tpl_rib'},
-  {name:'Отделка Страж',qty:'1 шт.',price:8,cat:'decor',img:'tpl_sentry'},
-  {name:'Отделка Скульптор',qty:'1 шт.',price:15,cat:'decor',img:'tpl_shaper'},
-  {name:'Отделка Тишина',qty:'1 шт.',price:10,cat:'decor',img:'tpl_silence'},
-  {name:'Отделка Рыло',qty:'1 шт.',price:10,cat:'decor',img:'tpl_snout'},
-  {name:'Отделка Ось',qty:'1 шт.',price:8,cat:'decor',img:'tpl_spire'},
-  {name:'Отделка Прилив',qty:'1 шт.',price:15,cat:'decor',img:'tpl_tide'},
-  {name:'Отделка Вредина',qty:'1 шт.',price:10,cat:'decor',img:'tpl_vex'},
-  {name:'Отделка Вождь',qty:'1 шт.',price:10,cat:'decor',img:'tpl_ward'},
-  {name:'Отделка Искатель',qty:'1 шт.',price:10,cat:'decor',img:'tpl_wayfinder'},
-  {name:'Отделка Дебри',qty:'1 шт.',price:10,cat:'decor',img:'tpl_wild'},
-  {name:'Отделка Поток',qty:'1 шт.',price:8,cat:'decor',img:'tpl_flow'},
-  {name:'Незеритовое улучшение',qty:'1 шт.',price:7,cat:'other',img:'netherite_upgrade_tpl'},
-  {name:'Зелье невидимости',qty:'1 шт.',price:3,cat:'potion',img:'potion_invis'},
-  {name:'Зелье ночного зрения',qty:'1 шт.',price:1,cat:'potion',img:'potion_nightvis'},
-  {name:'Зелье огнестойкости',qty:'1 шт.',price:1,cat:'potion',img:'potion_fire'},
-  {name:'Зелье прыгучести',qty:'1 шт.',price:2,cat:'potion',img:'potion_jump'},
-  {name:'Зелье регенерации',qty:'1 шт.',price:2,cat:'potion',img:'potion_regen'},
-  {name:'Зелье силы',qty:'1 шт.',price:3,cat:'potion',img:'potion_strength'},
-  {name:'Зелье стремительности',qty:'1 шт.',price:2,cat:'potion',img:'potion_speed'},
-  {name:'Зелье черепашьей мощи IV',qty:'1 шт.',price:7,cat:'potion',img:'potion_turtle'},
-  {name:'Зловещая бутылочка I',qty:'2 шт.',price:2,cat:'potion',img:'ominous_bottle'},
-  {name:'Зловещая бутылочка II',qty:'1 шт.',price:2,cat:'potion',img:'ominous_bottle'},
-  {name:'Зловещая бутылочка III',qty:'1 шт.',price:2,cat:'potion',img:'ominous_bottle'},
-  {name:'Зловещая бутылочка IV',qty:'1 шт.',price:3,cat:'potion',img:'ominous_bottle'},
-  {name:'Зловещая бутылочка V',qty:'1 шт.',price:3,cat:'potion',img:'ominous_bottle'},
-  {name:'Зачарованное золотое яблоко',qty:'1 шт.',price:9,cat:'food',img:'enchanted_apple'},
-  {name:'Золотое яблоко',qty:'16 шт.',price:8,cat:'food',img:'golden_apple'},
-  {name:'Золотая морковь',qty:'64 шт.',price:5,cat:'food',img:'golden_carrot'},
-  {name:'Хлеб',qty:'64 шт.',price:2,cat:'food',img:'bread'},
-  {name:'Жареная рыба',qty:'64 шт.',price:2,cat:'food',img:'cooked_cod'},
-  {name:'Жареное мясо',qty:'64 шт.',price:2,cat:'food',img:'cooked_beef'},
-  {name:'Морковь',qty:'64 шт.',price:2,cat:'food',img:'carrot'},
-  {name:'Яблоко',qty:'64 шт.',price:8,cat:'food',img:'apple'},
-  {name:'Тотем бессмертия',qty:'1 шт.',price:2,cat:'other',img:'totem'},
-  {name:'Эндер-жемчуг',qty:'16 шт.',price:4,cat:'other',img:'ender_pearl'},
-  {name:'Маяк',qty:'1 шт.',price:50,cat:'other',img:'beacon'},
-  {name:'Зелье опыта',qty:'1 шт.',price:1,cat:'other',img:'exp_bottle'},
-  {name:'Динамит',qty:'64 шт.',price:18,cat:'other',img:'tnt'},
-  {name:'Драконье дыхание',qty:'16 шт.',price:8,cat:'other',img:'dragons_breath'},
-  {name:'Книга',qty:'64 шт.',price:4,cat:'other',img:'book'},
-  {name:'Кожа',qty:'64 шт.',price:3,cat:'other',img:'leather'},
-  {name:'Незерский нарост',qty:'64 шт.',price:3,cat:'other',img:'nether_wart'},
-  {name:'Огненный порошок',qty:'64 шт.',price:6,cat:'other',img:'blaze_powder'},
-  {name:'Огненный стержень',qty:'32 шт.',price:6,cat:'other',img:'blaze_rod'},
-  {name:'Панцирь шалкера',qty:'16 шт.',price:4,cat:'other',img:'shulker_shell'},
-  {name:'Порох',qty:'64 шт.',price:3,cat:'other',img:'gunpowder'},
-  {name:'Сахарный тростник',qty:'64 шт.',price:1,cat:'other',img:'sugar_cane'},
-  {name:'Слеза гаста',qty:'32 шт.',price:12,cat:'other',img:'ghast_tear'},
-  {name:'Слизь',qty:'64 шт.',price:1,cat:'other',img:'slimeball'},
-  {name:'Стержень вихря',qty:'32 шт.',price:4,cat:'other',img:'breeze_rod'},
-  {name:'Стрела',qty:'64 шт.',price:2,cat:'other',img:'arrow'},
-  {name:'Череп скелета-иссушителя',qty:'1 шт.',price:20,cat:'other',img:'wither_skull'},
-  {name:'Элитры',qty:'1 шт.',price:1500,cat:'misc',img:'elytra'},
-  {name:'Фейерверк 1 ур.',qty:'64 шт.',price:5,cat:'other',img:'firework'},
-  {name:'Фейерверк 2 ур.',qty:'64 шт.',price:10,cat:'other',img:'firework'},
-  {name:'Фейерверк 3 ур.',qty:'64 шт.',price:15,cat:'other',img:'firework'},
-  {name:'Зловещий ключ испытаний',qty:'1 шт.',price:3,cat:'other',img:'ominous_key'},
-  {name:'Ключ испытаний',qty:'1 шт.',price:2,cat:'other',img:'trial_key'}
-];
+      {name:'Незеритовая кирка (топ зачар)',qty:'без починки',price:46,cat:'tool',img:'pick_netherite'},
+      {name:'Незеритовая кирка',qty:'1 шт.',price:25,cat:'tool',img:'pick_netherite'},
+      {name:'Алмазная кирка (фулл зачар)',qty:'без починки',price:15,cat:'tool',img:'pick_diamond'},
+      {name:'Незеритовая лопата',qty:'1 шт.',price:22,cat:'tool',img:'shovel_netherite'},
+      {name:'Незеритовая мотыга',qty:'1 шт.',price:22,cat:'tool',img:'hoe_netherite'},
+      {name:'Удочка (фулл зачар)',qty:'1 шт.',price:10,cat:'tool',img:'fishing_rod'},
 
-let activeCat = 'all', searchQ = '', sortMode = 'default';
-const FALLBACK = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><rect fill="%23222" width="48" height="48" rx="4"/><text x="24" y="32" fill="%23555" text-anchor="middle" font-size="22">?</text></svg>';
+      {name:'Починка',qty:'книга',price:200,cat:'enchant',img:'enchanted_book'},
+      {name:'Проворство III',qty:'книга',price:500,cat:'enchant',img:'enchanted_book'},
+      {name:'Скорость души III',qty:'книга',price:15,cat:'enchant',img:'enchanted_book'},
+      {name:'Защита IV',qty:'книга',price:16,cat:'enchant',img:'enchanted_book'},
+      {name:'Шёлковое касание',qty:'книга',price:14,cat:'enchant',img:'enchanted_book'},
+      {name:'Прочность III',qty:'книга',price:16,cat:'enchant',img:'enchanted_book'},
+      {name:'Добыча III',qty:'книга',price:21,cat:'enchant',img:'enchanted_book'},
+      {name:'Острота V',qty:'книга',price:22,cat:'enchant',img:'enchanted_book'},
+      {name:'Удача III',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
+      {name:'Шипы III',qty:'книга',price:25,cat:'enchant',img:'enchanted_book'},
+      {name:'Эффективность V',qty:'книга',price:15,cat:'enchant',img:'enchanted_book'},
+      {name:'Бесконечность',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
+      {name:'Быстрая перезарядка III',qty:'книга',price:6,cat:'enchant',img:'enchanted_book'},
+      {name:'Везучий рыбак III',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
+      {name:'Верность III',qty:'книга',price:11,cat:'enchant',img:'enchanted_book'},
+      {name:'Взрывоустойчивость IV',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
+      {name:'Воспламенение',qty:'книга',price:6,cat:'enchant',img:'enchanted_book'},
+      {name:'Громовержец',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
+      {name:'Заговор огня II',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
+      {name:'Защита от снарядов IV',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
+      {name:'Ледоход II',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
+      {name:'Небесная кара V',qty:'книга',price:5,cat:'enchant',img:'enchanted_book'},
+      {name:'Невесомость IV',qty:'книга',price:25,cat:'enchant',img:'enchanted_book'},
+      {name:'Бич членистоногих V',qty:'книга',price:5,cat:'enchant',img:'enchanted_book'},
+      {name:'Огнеупорность IV',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
+      {name:'Отдача II',qty:'книга',price:9,cat:'enchant',img:'enchanted_book'},
+      {name:'Откидывание II',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
+      {name:'Плотность V',qty:'книга',price:20,cat:'enchant',img:'enchanted_book'},
+      {name:'Подводная ходьба III',qty:'книга',price:14,cat:'enchant',img:'enchanted_book'},
+      {name:'Подводник',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
+      {name:'Подводное дыхание III',qty:'книга',price:10,cat:'enchant',img:'enchanted_book'},
+      {name:'Порыв ветра III',qty:'книга',price:100,cat:'enchant',img:'enchanted_book'},
+      {name:'Приманка III',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
+      {name:'Пробитие IV',qty:'книга',price:18,cat:'enchant',img:'enchanted_book'},
+      {name:'Пронзатель V',qty:'книга',price:7,cat:'enchant',img:'enchanted_book'},
+      {name:'Пронзающая стрела IV',qty:'книга',price:6,cat:'enchant',img:'enchanted_book'},
+      {name:'Разящий клинок III',qty:'книга',price:16,cat:'enchant',img:'enchanted_book'},
+      {name:'Сила V',qty:'книга',price:12,cat:'enchant',img:'enchanted_book'},
+      {name:'Тройной выстрел',qty:'книга',price:8,cat:'enchant',img:'enchanted_book'},
+      {name:'Тягун III',qty:'книга',price:23,cat:'enchant',img:'enchanted_book'},
 
-// Build category bar
-const catBar = document.getElementById('catBar');
-CATS.forEach(c => {
-  const btn = document.createElement('button');
-  btn.className = 'cat-btn' + (c.id === 'all' ? ' active' : '');
-  btn.dataset.cat = c.id;
-  btn.innerHTML = `<img src="${T[c.img]||''}" onerror="this.style.display='none'" />${c.label}`;
-  btn.onclick = () => {
-    activeCat = c.id;
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    render();
-  };
-  catBar.appendChild(btn);
-});
+      {name:'Незеритовый слиток',qty:'1 шт.',price:23,cat:'resource',img:'netherite_ingot'},
+      {name:'Древние обломки',qty:'1 шт.',price:5,cat:'resource',img:'ancient_debris'},
+      {name:'Алмаз',qty:'3 шт.',price:1,cat:'resource',img:'diamond'},
+      {name:'Алмазный блок',qty:'16 шт.',price:48,cat:'resource',img:'diamond_block'},
+      {name:'Железо',qty:'64 шт.',price:1,cat:'resource',img:'iron_ingot'},
+      {name:'Железный блок',qty:'64 шт.',price:8,cat:'resource',img:'iron_block'},
+      {name:'Золото',qty:'64 шт.',price:3,cat:'resource',img:'gold_ingot'},
+      {name:'Золотой блок',qty:'64 шт.',price:24,cat:'resource',img:'gold_block'},
+      {name:'Изумруд',qty:'64 шт.',price:1,cat:'resource',img:'emerald'},
+      {name:'Изумрудный блок',qty:'64 шт.',price:8,cat:'resource',img:'emerald_block'},
+      {name:'Медь',qty:'64 шт.',price:1,cat:'resource',img:'copper_ingot'},
+      {name:'Лазурит',qty:'64 шт.',price:1,cat:'resource',img:'lapis'},
+      {name:'Лазуритовый блок',qty:'64 шт.',price:9,cat:'resource',img:'lapis_block'},
+      {name:'Осколок аметиста',qty:'64 шт.',price:1,cat:'resource',img:'amethyst'},
+      {name:'Кристалл Края',qty:'16 шт.',price:16,cat:'resource',img:'end_crystal'},
+      {name:'Сердце моря',qty:'1 шт.',price:64,cat:'resource',img:'heart_of_sea'},
+      {name:'Изумрудная руда',qty:'1 шт.',price:10,cat:'ore',img:'emerald_ore'},
 
-document.getElementById('searchInput').addEventListener('input', e => { searchQ = e.target.value.toLowerCase(); render(); });
-document.getElementById('sortSelect').addEventListener('change', e => { sortMode = e.target.value; render(); });
+      {name:'Медный блок',qty:'64 шт.',price:4,cat:'resource',img:'copper_block'},
+      {name:'Кварцевый блок',qty:'64 шт.',price:2,cat:'resource',img:'quartz_block'},
+      {name:'Костяной блок',qty:'64 шт.',price:8,cat:'resource',img:'bone_block'},
+      {name:'Обсидиан',qty:'64 шт.',price:10,cat:'resource',img:'obsidian'},
+      {name:'Редстоуновый блок',qty:'32 шт.',price:4,cat:'build',img:'redstone_block'},
+      {name:'Малахитовая кварца',qty:'64 шт.',price:4,cat:'resource',img:'quartz_block'},
+      {name:'Блок слизи',qty:'64 шт.',price:9,cat:'build',img:'slime_block'},
 
-function imgFilter(key) {
-  if (!PTINT[key]) return 'drop-shadow(0 2px 8px rgba(0,0,0,0.6))';
-  return `drop-shadow(0 2px 8px rgba(0,0,0,0.6)) ${PTINT[key]}`;
-}
+      {name:'Морской фонарь',qty:'64 шт.',price:5,cat:'decor',img:'sea_lantern'},
+      {name:'Блок мёда',qty:'16 шт.',price:4,cat:'decor',img:'honey_block'},
+      {name:'Блок света',qty:'32 шт.',price:6,cat:'decor',img:'light_block'},
+      {name:'Пластинка PigStep',qty:'1 шт.',price:150,cat:'decor',img:'music_disc'},
+      {name:'Пластинка Relic',qty:'1 шт.',price:150,cat:'decor',img:'music_disc_relic'},
+      {name:'Пластинка Creator',qty:'1 шт.',price:100,cat:'decor',img:'music_disc_creator'},
+      {name:'Пластинка Aaron Cherof',qty:'1 шт.',price:175,cat:'decor',img:'music_disc'},
+      {name:'Пластинки (прочие)',qty:'1 шт.',price:20,cat:'decor',img:'music_disc'},
+      {name:'Отделка Берег',qty:'1 шт.',price:8,cat:'decor',img:'tpl_coast'},
+      {name:'Отделка Дюна',qty:'1 шт.',price:10,cat:'decor',img:'tpl_dune'},
+      {name:'Отделка Oko',qty:'1 шт.',price:10,cat:'decor',img:'tpl_eye'},
+      {name:'Отделка Хранитель',qty:'1 шт.',price:10,cat:'decor',img:'tpl_host'},
+      {name:'Отделка Собиратель',qty:'1 шт.',price:10,cat:'decor',img:'tpl_raiser'},
+      {name:'Отделка Ребро',qty:'1 шт.',price:8,cat:'decor',img:'tpl_rib'},
+      {name:'Отделка Страж',qty:'1 шт.',price:8,cat:'decor',img:'tpl_sentry'},
+      {name:'Отделка Скульптор',qty:'1 шт.',price:15,cat:'decor',img:'tpl_shaper'},
+      {name:'Отделка Тишина',qty:'1 шт.',price:10,cat:'decor',img:'tpl_silence'},
+      {name:'Отделка Рыло',qty:'1 шт.',price:10,cat:'decor',img:'tpl_snout'},
+      {name:'Отделка Ось',qty:'1 шт.',price:8,cat:'decor',img:'tpl_spire'},
+      {name:'Отделка Прилив',qty:'1 шт.',price:15,cat:'decor',img:'tpl_tide'},
+      {name:'Отделка Вредина',qty:'1 шт.',price:10,cat:'decor',img:'tpl_vex'},
+      {name:'Отделка Вождь',qty:'1 шт.',price:10,cat:'decor',img:'tpl_ward'},
+      {name:'Отделка Искатель',qty:'1 шт.',price:10,cat:'decor',img:'tpl_wayfinder'},
+      {name:'Отделка Дебри',qty:'1 шт.',price:10,cat:'decor',img:'tpl_wild'},
+      {name:'Отделка Поток',qty:'1 шт.',price:8,cat:'decor',img:'tpl_flow'},
 
-function render() {
-  let list = ITEMS.filter(item => (activeCat === 'all' || item.cat === activeCat) && item.name.toLowerCase().includes(searchQ));
-  if (sortMode === 'price-asc') list.sort((a,b) => a.price - b.price);
-  else if (sortMode === 'price-desc') list.sort((a,b) => b.price - a.price);
-  else if (sortMode === 'name-asc') list.sort((a,b) => a.name.localeCompare(b.name, 'ru'));
+      {name:'Незеритовое улучшение',qty:'1 шт.',price:7,cat:'other',img:'netherite_upgrade_tpl'},
 
-  const grid = document.getElementById('itemsGrid');
-  const noRes = document.getElementById('noResults');
-  const countEl = document.getElementById('resultsCount');
-  grid.innerHTML = '';
+      {name:'Зелье невидимости',qty:'1 шт.',price:3,cat:'potion',img:'potion_invis'},
+      {name:'Зелье ночного зрения',qty:'1 шт.',price:1,cat:'potion',img:'potion_nightvis'},
+      {name:'Зелье огнестойкости',qty:'1 шт.',price:1,cat:'potion',img:'potion_fire'},
+      {name:'Зелье прыгучести',qty:'1 шт.',price:2,cat:'potion',img:'potion_jump'},
+      {name:'Зелье регенерации',qty:'1 шт.',price:2,cat:'potion',img:'potion_regen'},
+      {name:'Зелье силы',qty:'1 шт.',price:3,cat:'potion',img:'potion_strength'},
+      {name:'Зелье стремительности',qty:'1 шт.',price:2,cat:'potion',img:'potion_speed'},
+      {name:'Зелье черепашьей мощи IV',qty:'1 шт.',price:7,cat:'potion',img:'potion_turtle'},
+      {name:'Зловещая бутылочка I',qty:'2 шт.',price:2,cat:'potion',img:'ominous_bottle'},
+      {name:'Зловещая бутылочка II',qty:'1 шт.',price:2,cat:'potion',img:'ominous_bottle'},
+      {name:'Зловещая бутылочка III',qty:'1 шт.',price:2,cat:'potion',img:'ominous_bottle'},
+      {name:'Зловещая бутылочка IV',qty:'1 шт.',price:3,cat:'potion',img:'ominous_bottle'},
+      {name:'Зловещая бутылочка V',qty:'1 шт.',price:3,cat:'potion',img:'ominous_bottle'},
 
-  if (!list.length) {
-    grid.style.display = 'none'; noRes.style.display = 'block'; countEl.innerHTML = ''; return;
-  }
-  grid.style.display = 'grid'; noRes.style.display = 'none';
-  countEl.innerHTML = `Показано: <span>${list.length}</span> товаров`;
+      {name:'Зачарованное золотое яблоко',qty:'1 шт.',price:9,cat:'food',img:'enchanted_apple'},
+      {name:'Золотое яблоко',qty:'16 шт.',price:8,cat:'food',img:'golden_apple'},
+      {name:'Золотая морковь',qty:'64 шт.',price:5,cat:'food',img:'golden_carrot'},
+      {name:'Хлеб',qty:'64 шт.',price:2,cat:'food',img:'bread'},
+      {name:'Жареная рыба',qty:'64 шт.',price:2,cat:'food',img:'cooked_cod'},
+      {name:'Жареное мясо',qty:'64 шт.',price:2,cat:'food',img:'cooked_beef'},
+      {name:'Морковь',qty:'64 шт.',price:2,cat:'food',img:'carrot'},
+      {name:'Яблоко',qty:'64 шт.',price:8,cat:'food',img:'apple'},
 
-  list.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'item-card';
-    card.innerHTML = `
-      <img src="${T[item.img]||FALLBACK}" alt="${item.name}" class="item-img"
-        style="filter:${imgFilter(item.img)}"
-        onerror="this.src='${FALLBACK}'"/>
-      <div class="item-name">${item.name}</div>
-      <div class="item-qty">${item.qty}</div>
-      <div class="item-price">
-        <img src="${T.emerald}" class="price-icon" onerror="this.style.display='none'" alt=""/>
-        <span class="price-num">${item.price}</span>
-      </div>`;
-    card.onclick = () => openModal(item);
-    grid.appendChild(card);
-  });
-}
+      {name:'Тотем бессмертия',qty:'1 шт.',price:2,cat:'other',img:'totem'},
+      {name:'Эндер-жемчуг',qty:'16 шт.',price:4,cat:'other',img:'ender_pearl'},
+      {name:'Маяк',qty:'1 шт.',price:50,cat:'other',img:'beacon'},
+      {name:'Зелье опыта',qty:'1 шт.',price:1,cat:'other',img:'exp_bottle'},
+      {name:'Динамит',qty:'64 шт.',price:18,cat:'other',img:'tnt'},
+      {name:'Драконье дыхание',qty:'16 шт.',price:8,cat:'other',img:'dragons_breath'},
+      {name:'Книга',qty:'64 шт.',price:4,cat:'other',img:'book'},
+      {name:'Кожа',qty:'64 шт.',price:3,cat:'other',img:'leather'},
+      {name:'Незерский нарост',qty:'64 шт.',price:3,cat:'other',img:'nether_wart'},
+      {name:'Огненный порошок',qty:'64 шт.',price:6,cat:'other',img:'blaze_powder'},
+      {name:'Огненный стержень',qty:'32 шт.',price:6,cat:'other',img:'blaze_rod'},
+      {name:'Панцирь шалкера',qty:'16 шт.',price:4,cat:'other',img:'shulker_shell'},
+      {name:'Порох',qty:'64 шт.',price:3,cat:'other',img:'gunpowder'},
+      {name:'Сахарный тростник',qty:'64 шт.',price:1,cat:'other',img:'sugar_cane'},
+      {name:'Слеза гаста',qty:'32 шт.',price:12,cat:'other',img:'ghast_tear'},
+      {name:'Слизь',qty:'64 шт.',price:1,cat:'other',img:'slimeball'},
+      {name:'Стержень вихря',qty:'32 шт.',price:4,cat:'other',img:'breeze_rod'},
+      {name:'Стрела',qty:'64 шт.',price:2,cat:'other',img:'arrow'},
+      {name:'Череп скелета-иссушителя',qty:'1 шт.',price:20,cat:'other',img:'wither_skull'},
+      {name:'Элитры',qty:'1 шт.',price:1500,cat:'misc',img:'elytra'},
+      {name:'Фейерверк 1 ур.',qty:'64 шт.',price:5,cat:'other',img:'firework'},
+      {name:'Фейерверк 2 ур.',qty:'64 шт.',price:10,cat:'other',img:'firework'},
+      {name:'Фейерверк 3 ур.',qty:'64 шт.',price:15,cat:'other',img:'firework'},
+      {name:'Зловещий ключ испытаний',qty:'1 шт.',price:3,cat:'other',img:'ominous_key'},
+      {name:'Ключ испытаний',qty:'1 шт.',price:2,cat:'other',img:'trial_key'}
+    ];
 
-function openModal(item) {
-  const ov = document.getElementById('modalOverlay');
-  const mi = document.getElementById('modalImg');
-  mi.src = T[item.img] || FALLBACK;
-  mi.onerror = () => mi.src = FALLBACK;
-  mi.style.filter = imgFilter(item.img);
-  document.getElementById('modalName').textContent = item.name;
-  document.getElementById('modalQty').textContent = 'Количество: ' + item.qty;
-  document.getElementById('modalPrice').textContent = item.price;
-  ov.classList.add('open');
-}
+    const productGrid = document.getElementById('productGrid');
+    const categoryChips = document.getElementById('categoryChips');
+    const searchInput = document.getElementById('searchInput');
+    const resultCount = document.getElementById('resultCount');
+    const quickList = document.getElementById('quickList');
 
-document.getElementById('modalOverlay').addEventListener('click', e => {
-  if (e.target === document.getElementById('modalOverlay')) document.getElementById('modalOverlay').classList.remove('open');
-});
-document.getElementById('modalClose').onclick = () => document.getElementById('modalOverlay').classList.remove('open');
-document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('modalOverlay').classList.remove('open'); });
+    let currentCategory = 'all';
+    let currentQuery = '';
 
-render();
-</script>
+    function formatPrice(num){
+      return new Intl.NumberFormat('ru-RU').format(num);
+    }
+
+    function getCategoryLabel(id){
+      return CATS.find(cat => cat.id === id)?.label || 'Категория';
+    }
+
+    function getItemImage(item){
+      return T[item.img] || T.book;
+    }
+
+    function getPotionStyle(item){
+      return PTINT[item.img] || '';
+    }
+
+    function renderChips(){
+      categoryChips.innerHTML = CATS.map(cat => `
+        <button class="chip ${cat.id === currentCategory ? 'active' : ''}" data-cat="${cat.id}">
+          <span class="chip-icon"><img src="${cat.img}" alt="${cat.label}" loading="lazy"></span>
+          <span>${cat.label}</span>
+        </button>
+      `).join('');
+
+      categoryChips.querySelectorAll('.chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentCategory = btn.dataset.cat;
+          renderChips();
+          renderProducts();
+        });
+      });
+    }
+
+    function filteredItems(){
+      return ITEMS.filter(item => {
+        const byCategory = currentCategory === 'all' || item.cat === currentCategory;
+        const q = currentQuery.trim().toLowerCase();
+        const byQuery = !q || item.name.toLowerCase().includes(q) || item.qty.toLowerCase().includes(q) || getCategoryLabel(item.cat).toLowerCase().includes(q);
+        return byCategory && byQuery;
+      });
+    }
+
+    function renderProducts(){
+      const items = filteredItems();
+      resultCount.textContent = `Найдено: ${items.length}`;
+
+      if(!items.length){
+        productGrid.innerHTML = `
+          <div class="empty">
+            Ничего не найдено. Попробуй другую категорию или другой запрос — а то поиск сейчас сидит и смотрит в пустоту 👀
+          </div>
+        `;
+        return;
+      }
+
+      productGrid.innerHTML = items.map(item => `
+        <article class="product">
+          <div class="product-top">
+            <div class="product-badges">
+              <span class="tag">${getCategoryLabel(item.cat)}</span>
+              <span class="tag price">${formatPrice(item.price)}</span>
+            </div>
+            <div class="product-icon-wrap">
+              <img class="product-icon" src="${getItemImage(item)}" alt="${item.name}" loading="lazy" style="${getPotionStyle(item) ? `filter:${getPotionStyle(item)} drop-shadow(0 8px 8px rgba(15,23,42,.12));` : ''}">
+            </div>
+          </div>
+
+          <div>
+            <h3 class="product-name">${item.name}</h3>
+            <p class="product-desc">Количество: <strong>${item.qty}</strong></p>
+          </div>
+
+          <div class="product-bottom">
+            <div class="price-box">
+              <span>Цена</span>
+              <strong>${formatPrice(item.price)}</strong>
+            </div>
+            <div class="buy-hint">Готово к заказу</div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderQuickList(){
+      const top = [
+        ITEMS.find(x => x.name === 'Элитры'),
+        ITEMS.find(x => x.name === 'Починка'),
+        ITEMS.find(x => x.name === 'Проворство III'),
+        ITEMS.find(x => x.name === 'Незеритовый меч (фулл зачар)')
+      ].filter(Boolean);
+
+      quickList.innerHTML = top.map(item => `
+        <div class="quick-row">
+          <div class="left">
+            <div class="quick-icon">
+              <img src="${getItemImage(item)}" alt="${item.name}" style="width:30px;height:30px;image-rendering:pixelated;object-fit:contain;${getPotionStyle(item) ? `filter:${getPotionStyle(item)};` : ''}">
+            </div>
+            <div>
+              <div class="quick-name">${item.name}</div>
+              <div class="quick-sub">${item.qty}</div>
+            </div>
+          </div>
+          <div class="quick-price">${formatPrice(item.price)}</div>
+        </div>
+      `).join('');
+    }
+
+    function initStats(){
+      document.getElementById('stat-total').textContent = ITEMS.length;
+      document.getElementById('stat-cats').textContent = CATS.length - 1;
+      const avg = Math.round(ITEMS.reduce((sum, item) => sum + item.price, 0) / ITEMS.length);
+      document.getElementById('stat-price').textContent = formatPrice(avg);
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      currentQuery = e.target.value;
+      renderProducts();
+    });
+
+    renderChips();
+    renderQuickList();
+    initStats();
+    renderProducts();
+  </script>
 </body>
 </html>
