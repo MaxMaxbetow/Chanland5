@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
+import Header from "./components/Header/Header";
 
+function App() {
+  return (
+    <>
+      <Header />
+    </>
+  );
+}
+
+export default App;
 
 // Hero Section Component
 function HeroSection() {
