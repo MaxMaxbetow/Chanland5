@@ -2,487 +2,130 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
 // Header Component
-// Вставь этот импорт в СУЩЕСТВУЮЩУЮ строку импортов наверху App.jsx:
-// import { useState, useRef, useEffect } from "react";  ← уже есть, добавь только useRef если нет
+import React, { useState, useEffect } from 'react';
+import { FileText, ShoppingBag, Headphones, LogIn, ChevronDown, Menu, X } from 'lucide-react';
 
-const NAV_LINKS = [
-  {
-    href: "/documents",
-    label: "Legal",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
-        <path d="M14 2v5a1 1 0 0 0 1 1h5" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" />
-      </svg>
-    ),
-  },
-  {
-    href: "/purchase",
-    label: "Purchase",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 10a4 4 0 0 1-8 0" />
-        <path d="M3.103 6.034h17.794" />
-        <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z" />
-      </svg>
-    ),
-  },
-  {
-    href: "https://ashfield.cc/support",
-    label: "Support",
-    external: true,
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3" />
-      </svg>
-    ),
-  },
-];
+export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-const LANGUAGES = ["EN", "DE", "FR", "ES", "RU", "ZH"];
-
-function NavDivider() {
-  return (
-    <div style={{
-      width: "1px", height: "16px",
-      backgroundColor: "rgba(255,255,255,0.08)",
-      margin: "0 4px", opacity: 0.5,
-    }} />
-  );
-}
-
-const navStyles = `
-  .exp-nav {
-    font-family: 'Onest', sans-serif;
-    display: flex; align-items: center; gap: 4px;
-    border-radius: 9999px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background-color: rgba(255,255,255,0.04);
-    backdrop-filter: blur(24px);
-    padding: 12px 28px;
-    position: relative; overflow: hidden;
-    width: fit-content;
-  }
-  .exp-nav-link {
-    display: flex; align-items: center; gap: 6px;
-    border-radius: 9999px; padding: 6px 14px;
-    font-size: 13px; color: #71717a;
-    text-decoration: none;
-    transition: color 0.15s ease; white-space: nowrap;
-  }
-  .exp-nav-link:hover { color: #fff; }
-  .exp-lang-btn {
-    display: flex; align-items: center; gap: 6px;
-    border-radius: 9999px; padding: 6px 12px;
-    font-size: 13px; color: #71717a;
-    background: none; border: none; cursor: pointer;
-    font-family: inherit; transition: color 0.15s ease;
-  }
-  .exp-lang-btn:hover { color: #fff; }
-  .exp-lang-dropdown {
-    position: absolute; top: calc(100% + 8px); left: 0;
-    background: rgba(20,20,28,0.95);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px; backdrop-filter: blur(16px);
-    overflow: hidden; min-width: 80px; z-index: 50;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  }
-  .exp-lang-option {
-    display: block; width: 100%; padding: 8px 16px;
-    font-size: 13px; color: #71717a;
-    background: none; border: none; cursor: pointer;
-    text-align: left; font-family: inherit;
-    transition: background 0.1s, color 0.1s;
-  }
-  .exp-lang-option:hover { background: rgba(255,255,255,0.06); color: #fff; }
-  .exp-lang-option.active { color: #fff; }
-  .exp-signin-btn {
-    display: flex; align-items: center; gap: 6px;
-    height: 32px; border-radius: 9999px;
-    background: rgba(255,255,255,0.07);
-    padding: 0 16px; font-size: 13px; font-weight: 500;
-    color: #fff; text-decoration: none;
-    transition: background 0.15s ease;
-    font-family: inherit; white-space: nowrap;
-  }
-  .exp-signin-btn:hover { background: rgba(255,255,255,0.12); }
-  .exp-logo-link {
-    display: flex; align-items: center; gap: 8px;
-    text-decoration: none; margin-right: 12px;
-  }
-  .exp-logo-text { font-size: 14px; font-weight: 500; color: #fff; }
-  .exp-logo-icon {
-    width: 20px; height: 20px; border-radius: 6px;
-    background: linear-gradient(135deg, #8b5cf6, #6366f1);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; color: #fff;
-  }
-  .exp-chevron { transition: transform 0.2s ease; opacity: 0.5; }
-  .exp-chevron.open { transform: rotate(180deg); }
-`;
-
-function Navbar() {
-  const [langOpen, setLangOpen] = useState(false);
-  const [selectedLang, setSelectedLang] = useState("EN");
-  const langRef = useRef(null);
-
+  // Эффект изменения шапки при скролле
   useEffect(() => {
-    function handleClick(e) {
-      if (langRef.current && !langRef.current.contains(e.target)) {
-        setLangOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navLinks = [
+    { label: 'Legal', href: '/documents', icon: <FileText className="h-3.5 w-3.5" /> },
+    { label: 'Purchase', href: '/purchase', icon: <ShoppingBag className="h-3.5 w-3.5" /> },
+    { label: 'Support', href: 'https://ashfield.cc/support', icon: <Headphones className="h-3.5 w-3.5" />, external: true },
+  ];
+
   return (
-    <>
-      <style>{navStyles}</style>
-      <nav className="exp-nav">
-        <a className="exp-logo-link" href="/">
-          <div className="exp-logo-icon">E</div>
-          <span className="exp-logo-text">Expensive</span>
-        </a>
+    <div className={`fixed z-50 w-full flex justify-center transition-all duration-500 ease-out ${isScrolled ? 'top-4 px-4' : 'top-0 px-0'}`}>
+      <header 
+        className={`relative flex items-center justify-between gap-1 w-full max-w-5xl transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] font-display ${
+          isScrolled 
+            ? 'rounded-full border border-white/[0.12] bg-white/[0.06] backdrop-blur-2xl px-6 py-2 shadow-lg shadow-black/20' 
+            : 'border-b border-transparent bg-white/[0.04] backdrop-blur-xl px-4 py-3 md:rounded-full md:border-white/[0.08] md:px-7'
+        }`}
+      >
+        {/* Декоративные фоновые эффекты из HTML */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-full hidden md:block">
+          <div className="absolute inset-y-0 left-0 w-[40%] translate-x-[280%] bg-gradient-to-r from-transparent via-white/[0.1] to-transparent"></div>
+          <div className="absolute inset-y-0 left-0 w-[70%] translate-x-[220%] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent"></div>
+        </div>
 
-        <NavDivider />
-
-        {NAV_LINKS.map((link) => (
-          
-            key={link.href}
-            className="exp-nav-link"
-            href={link.href}
-            {...(link.external ? { rel: "noopener noreferrer", target: "_blank" } : {})}
-          >
-            {link.icon}
-            {link.label}
+        {/* Логотип */}
+        <div className="relative z-10 flex items-center shrink-0">
+          <a className="flex items-center gap-2 mr-3" href="/">
+            <img alt="Expensive" width="20" height="20" className="w-5 h-5" src="/images/explogo.svg" />
+            <span className="text-sm font-medium text-white">Expensive</span>
           </a>
-        ))}
-
-        <NavDivider />
-
-        <div style={{ position: "relative" }} ref={langRef}>
-          <button className="exp-lang-btn" onClick={() => setLangOpen((v) => !v)}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}>
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-              <path d="M2 12h20" />
-            </svg>
-            {selectedLang}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`exp-chevron${langOpen ? " open" : ""}`}>
-              <path d="m6 9 6 6 6-6" />
-            </svg>
-          </button>
-
-          {langOpen && (
-            <div className="exp-lang-dropdown">
-              {LANGUAGES.map((lang) => (
-                <button
-                  key={lang}
-                  className={`exp-lang-option${lang === selectedLang ? " active" : ""}`}
-                  onClick={() => { setSelectedLang(lang); setLangOpen(false); }}
-                >
-                  {lang}
-                </button>
-              ))}
-            </div>
-          )}
         </div>
 
-        <NavDivider />
-
-        <a className="exp-signin-btn" href="/auth">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="m10 17 5-5-5-5" /><path d="M15 12H3" />
-            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-          </svg>
-          Sign in
-        </a>
-      </nav>
-    </>
-  );
-}
-
-const NAV_LINKS = [
-  {
-    href: "/documents",
-    label: "Legal",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
-        <path d="M14 2v5a1 1 0 0 0 1 1h5" />
-        <path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" />
-      </svg>
-    ),
-  },
-  {
-    href: "/purchase",
-    label: "Purchase",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 10a4 4 0 0 1-8 0" />
-        <path d="M3.103 6.034h17.794" />
-        <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z" />
-      </svg>
-    ),
-  },
-  {
-    href: "https://ashfield.cc/support",
-    label: "Support",
-    external: true,
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3" />
-      </svg>
-    ),
-  },
-];
-
-const LANGUAGES = ["EN", "DE", "FR", "ES", "RU", "ZH"];
-
-function Divider() {
-  return (
-    <div
-      style={{
-        width: "1px",
-        height: "16px",
-        backgroundColor: "rgba(255,255,255,0.08)",
-        margin: "0 4px",
-        opacity: 0.5,
-      }}
-    />
-  );
-}
-
-export default function Navbar() {
-  const [langOpen, setLangOpen] = useState(false);
-  const [selectedLang, setSelectedLang] = useState("EN");
-  const langRef = useRef(null);
-
-  useEffect(() => {
-    function handleClick(e) {
-      if (langRef.current && !langRef.current.contains(e.target)) {
-        setLangOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
-  return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap');
-
-        .exp-nav {
-          font-family: 'Onest', sans-serif;
-          display: flex;
-          align-items: center;
-          gap: 4px;
-          border-radius: 9999px;
-          border: 1px solid rgba(255,255,255,0.08);
-          background-color: rgba(255,255,255,0.04);
-          backdrop-filter: blur(24px);
-          padding: 12px 28px;
-          position: relative;
-          overflow: hidden;
-          width: fit-content;
-        }
-
-        .exp-nav-sweep {
-          pointer-events: none;
-          position: absolute;
-          inset: 0;
-          overflow: hidden;
-          border-radius: 9999px;
-        }
-
-        .exp-nav-link {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          border-radius: 9999px;
-          padding: 6px 14px;
-          font-size: 13px;
-          color: #71717a;
-          text-decoration: none;
-          transition: color 0.15s ease;
-          white-space: nowrap;
-        }
-        .exp-nav-link:hover { color: #fff; }
-
-        .exp-lang-btn {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          border-radius: 9999px;
-          padding: 6px 12px;
-          font-size: 13px;
-          color: #71717a;
-          background: none;
-          border: none;
-          cursor: pointer;
-          font-family: inherit;
-          transition: color 0.15s ease;
-        }
-        .exp-lang-btn:hover { color: #fff; }
-
-        .exp-lang-dropdown {
-          position: absolute;
-          top: calc(100% + 8px);
-          left: 0;
-          background: rgba(20,20,28,0.95);
-          border: 1px solid rgba(255,255,255,0.1);
-          border-radius: 12px;
-          backdrop-filter: blur(16px);
-          overflow: hidden;
-          min-width: 80px;
-          z-index: 50;
-          box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-        }
-
-        .exp-lang-option {
-          display: block;
-          width: 100%;
-          padding: 8px 16px;
-          font-size: 13px;
-          color: #71717a;
-          background: none;
-          border: none;
-          cursor: pointer;
-          text-align: left;
-          font-family: inherit;
-          transition: background 0.1s, color 0.1s;
-        }
-        .exp-lang-option:hover { background: rgba(255,255,255,0.06); color: #fff; }
-        .exp-lang-option.active { color: #fff; }
-
-        .exp-signin-btn {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          height: 32px;
-          border-radius: 9999px;
-          background: rgba(255,255,255,0.07);
-          padding: 0 16px;
-          font-size: 13px;
-          font-weight: 500;
-          color: #fff;
-          text-decoration: none;
-          transition: background 0.15s ease;
-          font-family: inherit;
-          white-space: nowrap;
-        }
-        .exp-signin-btn:hover { background: rgba(255,255,255,0.12); }
-
-        .exp-logo-link {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          text-decoration: none;
-          margin-right: 12px;
-        }
-        .exp-logo-text {
-          font-size: 14px;
-          font-weight: 500;
-          color: #fff;
-        }
-        .exp-logo-icon {
-          width: 20px;
-          height: 20px;
-          border-radius: 6px;
-          background: linear-gradient(135deg, #8b5cf6, #6366f1);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 11px;
-          font-weight: 700;
-          color: #fff;
-        }
-
-        .exp-chevron {
-          transition: transform 0.2s ease;
-          opacity: 0.5;
-        }
-        .exp-chevron.open { transform: rotate(180deg); }
-      `}</style>
-
-      <nav className="exp-nav">
-        {/* Sweep effects */}
-        <div className="exp-nav-sweep">
-          <div style={{
-            position: "absolute", inset: "auto 0", left: 0,
-            width: "40%", height: "100%",
-            background: "linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent)",
-            transform: "translateX(280%)",
-          }} />
-        </div>
-
-        {/* Logo */}
-        <a className="exp-logo-link" href="/">
-          <div className="exp-logo-icon">E</div>
-          <span className="exp-logo-text">Expensive</span>
-        </a>
-
-        <Divider />
-
-        {/* Nav links */}
-        {NAV_LINKS.map((link) => (
+        {/* Десктопная навигация */}
+        <div className="hidden md:flex items-center relative z-10">
+          <div className="mx-1 h-4 w-px bg-white/[0.08]"></div>
           
-            key={link.href}
-            className="exp-nav-link"
-            href={link.href}
-            {...(link.external ? { rel: "noopener noreferrer", target: "_blank" } : {})}
-          >
-            {link.icon}
-            {link.label}
-          </a>
-        ))}
+          <nav className="flex items-center gap-1 mx-2">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target={link.external ? "_blank" : "_self"}
+                rel={link.external ? "noopener noreferrer" : ""}
+                className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] text-[#71717a] transition-colors hover:text-white"
+              >
+                {link.icon}
+                {link.label}
+              </a>
+            ))}
+          </nav>
 
-        <Divider />
-
-        {/* Language selector */}
-        <div style={{ position: "relative" }} ref={langRef}>
-          <button className="exp-lang-btn" onClick={() => setLangOpen((v) => !v)}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}>
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-              <path d="M2 12h20" />
-            </svg>
-            {selectedLang}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`exp-chevron${langOpen ? " open" : ""}`}>
-              <path d="m6 9 6 6 6-6" />
-            </svg>
-          </button>
-
-          {langOpen && (
-            <div className="exp-lang-dropdown">
-              {LANGUAGES.map((lang) => (
-                <button
-                  key={lang}
-                  className={`exp-lang-option${lang === selectedLang ? " active" : ""}`}
-                  onClick={() => { setSelectedLang(lang); setLangOpen(false); }}
-                >
-                  {lang}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="mx-1 h-4 w-px bg-white/[0.08]"></div>
+          
+          {/* Действия (Language & Sign In) */}
+          <div className="flex items-center gap-1 ml-2">
+            <button className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] text-[#71717a] transition-colors hover:text-white">
+              <img alt="Language" width="14" height="14" className="opacity-70 w-3.5 h-3.5" src="/images/landing/language.svg" />
+              EN
+              <ChevronDown className="h-3 w-3 opacity-50" />
+            </button>
+            
+            <div className="mx-1 h-4 w-px bg-white/[0.08]"></div>
+            
+            <a href="/auth" className="flex h-8 items-center gap-1.5 rounded-full bg-white/[0.07] px-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.12] ml-1">
+              <LogIn className="h-3.5 w-3.5" />
+              Sign in
+            </a>
+          </div>
         </div>
 
-        <Divider />
+        {/* Кнопка мобильного меню */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden relative z-10 p-2 rounded-full bg-white/[0.07] hover:bg-white/[0.12] border border-white/[0.08] transition-colors text-[#71717a] hover:text-white"
+        >
+          {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
 
-        {/* Sign in */}
-        <a className="exp-signin-btn" href="/auth">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="m10 17 5-5-5-5" />
-            <path d="M15 12H3" />
-            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-          </svg>
-          Sign in
-        </a>
-      </nav>
-    </>
+        {/* Мобильное выпадающее меню */}
+        {menuOpen && (
+          <div className="md:hidden absolute top-full left-4 right-4 mt-2 bg-neutral-900/90 backdrop-blur-2xl rounded-2xl border border-white/[0.08] shadow-xl p-4 space-y-2 z-50">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 text-[#71717a] hover:text-white text-sm font-medium rounded-xl hover:bg-white/[0.04] transition-all"
+              >
+                {link.icon}
+                {link.label}
+              </a>
+            ))}
+            
+            <div className="pt-2 mt-2 border-t border-white/[0.08] space-y-2">
+              <button className="flex items-center justify-between w-full px-4 py-3 text-[#71717a] hover:text-white text-sm font-medium rounded-xl hover:bg-white/[0.04] transition-all">
+                <div className="flex items-center gap-3">
+                  <img alt="Language" width="14" height="14" className="opacity-70 w-3.5 h-3.5" src="/images/landing/language.svg" />
+                  Language (EN)
+                </div>
+                <ChevronDown className="h-4 w-4" />
+              </button>
+              
+              <a href="/auth" className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-white/[0.07] hover:bg-white/[0.12] text-white text-sm font-medium rounded-xl transition-all">
+                <LogIn className="h-4 w-4" />
+                Sign in
+              </a>
+            </div>
+          </div>
+        )}
+      </header>
+    </div>
   );
 }
 // Hero Section Component
