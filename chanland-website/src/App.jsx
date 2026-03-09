@@ -2,124 +2,288 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ExternalLink, Sparkles, ArrowDown, Gamepad2, Users, Zap, Heart, Search, Plus } from 'lucide-react';
 
 // Header Component
-function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [downloadOpen, setDownloadOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+import { useState, useRef, useEffect } from "react";
+
+const NAV_LINKS = [
+  {
+    href: "/documents",
+    label: "Legal",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+        <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+        <path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" />
+      </svg>
+    ),
+  },
+  {
+    href: "/purchase",
+    label: "Purchase",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 10a4 4 0 0 1-8 0" />
+        <path d="M3.103 6.034h17.794" />
+        <path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z" />
+      </svg>
+    ),
+  },
+  {
+    href: "https://ashfield.cc/support",
+    label: "Support",
+    external: true,
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3" />
+      </svg>
+    ),
+  },
+];
+
+const LANGUAGES = ["EN", "DE", "FR", "ES", "RU", "ZH"];
+
+function Divider() {
+  return (
+    <div
+      style={{
+        width: "1px",
+        height: "16px",
+        backgroundColor: "rgba(255,255,255,0.08)",
+        margin: "0 4px",
+        opacity: 0.5,
+      }}
+    />
+  );
+}
+
+export default function Navbar() {
+  const [langOpen, setLangOpen] = useState(false);
+  const [selectedLang, setSelectedLang] = useState("EN");
+  const langRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    function handleClick(e) {
+      if (langRef.current && !langRef.current.contains(e.target)) {
+        setLangOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  const navLinks = [
-    { label: 'Правила', href: 'https://docs.google.com/document/d/1sEyfJkmkkf5YVV5XCS5Y7kxNYjW-pmFpTOZCBmgY11I/edit?tab=t.0' },
-    { label: 'О сервере', href: '#about' },
-    { label: 'Территории', href: '#cities' },
-  ];
-
   return (
-    <div className={`fixed z-50 w-full flex justify-center transition-all duration-500 ease-out ${isScrolled ? 'top-4 px-4' : 'top-0 px-0'}`}>
-      <header 
-        className={`transition-all duration-500 ease-out ${
-          isScrolled 
-            ? 'w-full max-w-5xl rounded-full bg-white/60 backdrop-blur-2xl border border-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.12)]' 
-            : 'w-full bg-white/20 backdrop-blur-xl border-b border-white/30'
-        }`}
-      >
-        <div className="mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-          <a href="#" className="flex items-center gap-3 shrink-0">
-            <img 
-              src="https://easydonate.s3.easyx.ru/images/sides/84/bc/84bcc9aab09ae4d54ddc34c092a960407160139d8c0628ce914ce0f43e4d7bff.png" 
-              alt="ChanLand" 
-              className="w-10 h-10 rounded-xl object-cover"
-            />
-            <span className="text-xl font-bold text-slate-800 tracking-wide hidden sm:block">ChanLand</span>
-          </a>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap');
 
-          <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium transition-all duration-300 rounded-full hover:bg-white/40"
-              >
-                {link.label}
-              </a>
-            ))}
-            <a
-              href="https://docs.google.com/document/d/1sEyfJkmkkf5YVV5XCS5Y7kxNYjW-pmFpTOZCBmgY11I/edit?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium transition-all duration-300 rounded-full hover:bg-white/40 flex items-center gap-1"
-            >
-              Доп. инфо
-              <ExternalLink className="w-3 h-3" />
-            </a>
-          </nav>
+        .exp-nav {
+          font-family: 'Onest', sans-serif;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          border-radius: 9999px;
+          border: 1px solid rgba(255,255,255,0.08);
+          background-color: rgba(255,255,255,0.04);
+          backdrop-filter: blur(24px);
+          padding: 12px 28px;
+          position: relative;
+          overflow: hidden;
+          width: fit-content;
+        }
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            <a
-              href="https://discord.gg/9WsxwGyVkE"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 sm:px-5 py-2 sm:py-2.5 bg-white/50 hover:bg-white/70 backdrop-blur-sm rounded-full font-semibold text-slate-700 border border-white/60 shadow-lg transition-all duration-300 flex items-center gap-2"
-            >
-              <svg className="w-5 h-5 text-[#5865F2]" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-              </svg>
-              <span className="hidden sm:inline">Discord</span>
-            </a>
+        .exp-nav-sweep {
+          pointer-events: none;
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          border-radius: 9999px;
+        }
 
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden p-2 rounded-full bg-white/30 hover:bg-white/50 backdrop-blur-sm border border-white/40 transition-all duration-300"
-            >
-              {menuOpen ? <X className="w-5 h-5 text-slate-700" /> : <Menu className="w-5 h-5 text-slate-700" />}
-            </button>
-          </div>
+        .exp-nav-link {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          border-radius: 9999px;
+          padding: 6px 14px;
+          font-size: 13px;
+          color: #71717a;
+          text-decoration: none;
+          transition: color 0.15s ease;
+          white-space: nowrap;
+        }
+        .exp-nav-link:hover { color: #fff; }
+
+        .exp-lang-btn {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          border-radius: 9999px;
+          padding: 6px 12px;
+          font-size: 13px;
+          color: #71717a;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-family: inherit;
+          transition: color 0.15s ease;
+        }
+        .exp-lang-btn:hover { color: #fff; }
+
+        .exp-lang-dropdown {
+          position: absolute;
+          top: calc(100% + 8px);
+          left: 0;
+          background: rgba(20,20,28,0.95);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 12px;
+          backdrop-filter: blur(16px);
+          overflow: hidden;
+          min-width: 80px;
+          z-index: 50;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .exp-lang-option {
+          display: block;
+          width: 100%;
+          padding: 8px 16px;
+          font-size: 13px;
+          color: #71717a;
+          background: none;
+          border: none;
+          cursor: pointer;
+          text-align: left;
+          font-family: inherit;
+          transition: background 0.1s, color 0.1s;
+        }
+        .exp-lang-option:hover { background: rgba(255,255,255,0.06); color: #fff; }
+        .exp-lang-option.active { color: #fff; }
+
+        .exp-signin-btn {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          height: 32px;
+          border-radius: 9999px;
+          background: rgba(255,255,255,0.07);
+          padding: 0 16px;
+          font-size: 13px;
+          font-weight: 500;
+          color: #fff;
+          text-decoration: none;
+          transition: background 0.15s ease;
+          font-family: inherit;
+          white-space: nowrap;
+        }
+        .exp-signin-btn:hover { background: rgba(255,255,255,0.12); }
+
+        .exp-logo-link {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          text-decoration: none;
+          margin-right: 12px;
+        }
+        .exp-logo-text {
+          font-size: 14px;
+          font-weight: 500;
+          color: #fff;
+        }
+        .exp-logo-icon {
+          width: 20px;
+          height: 20px;
+          border-radius: 6px;
+          background: linear-gradient(135deg, #8b5cf6, #6366f1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 11px;
+          font-weight: 700;
+          color: #fff;
+        }
+
+        .exp-chevron {
+          transition: transform 0.2s ease;
+          opacity: 0.5;
+        }
+        .exp-chevron.open { transform: rotate(180deg); }
+      `}</style>
+
+      <nav className="exp-nav">
+        {/* Sweep effects */}
+        <div className="exp-nav-sweep">
+          <div style={{
+            position: "absolute", inset: "auto 0", left: 0,
+            width: "40%", height: "100%",
+            background: "linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent)",
+            transform: "translateX(280%)",
+          }} />
         </div>
 
-        {menuOpen && (
-          <div className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white/60 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-xl p-6 space-y-3">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="block px-4 py-3 text-slate-700 hover:text-slate-900 font-medium rounded-xl hover:bg-white/50 transition-all"
-              >
-                {link.label}
-              </a>
-            ))}
-            
-            <div className="pt-2 border-t border-white/30">
-              <button
-                onClick={() => setDownloadOpen(!downloadOpen)}
-                className="flex items-center justify-between w-full px-4 py-3 text-slate-700 font-medium rounded-xl hover:bg-white/50 transition-all"
-              >
-                <span>Скачать сборку</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${downloadOpen ? 'rotate-180' : ''}`} />
-              </button>
-              
-              {downloadOpen && (
-                <div className="overflow-hidden pl-4 space-y-2 mt-2">
-                  <a href="https://www.dropbox.com/scl/fo/k88tm3wivn3qmzo6bkgft/ANrJMW5tN_oaE47nokFa1mw?rlkey=m3qz2lzoylu07myg5n22541ck&st=4dn4lnz3&dl=0" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-slate-500 hover:text-slate-800 text-sm rounded-lg hover:bg-white/40 transition-all">
-                    Сборка сезон 4
-                  </a>
-                  <a href="https://www.dropbox.com/scl/fo/k88tm3wivn3qmzo6bkgft/ANrJMW5tN_oaE47nokFa1mw?rlkey=m3qz2lzoylu07myg5n22541ck&st=4dn4lnz3&dl=0" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-slate-500 hover:text-slate-800 text-sm rounded-lg hover:bg-white/40 transition-all">
-                    Сборка 1.21.4
-                  </a>
-                </div>
-              )}
+        {/* Logo */}
+        <a className="exp-logo-link" href="/">
+          <div className="exp-logo-icon">E</div>
+          <span className="exp-logo-text">Expensive</span>
+        </a>
+
+        <Divider />
+
+        {/* Nav links */}
+        {NAV_LINKS.map((link) => (
+          
+            key={link.href}
+            className="exp-nav-link"
+            href={link.href}
+            {...(link.external ? { rel: "noopener noreferrer", target: "_blank" } : {})}
+          >
+            {link.icon}
+            {link.label}
+          </a>
+        ))}
+
+        <Divider />
+
+        {/* Language selector */}
+        <div style={{ position: "relative" }} ref={langRef}>
+          <button className="exp-lang-btn" onClick={() => setLangOpen((v) => !v)}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.7 }}>
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+              <path d="M2 12h20" />
+            </svg>
+            {selectedLang}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`exp-chevron${langOpen ? " open" : ""}`}>
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+
+          {langOpen && (
+            <div className="exp-lang-dropdown">
+              {LANGUAGES.map((lang) => (
+                <button
+                  key={lang}
+                  className={`exp-lang-option${lang === selectedLang ? " active" : ""}`}
+                  onClick={() => { setSelectedLang(lang); setLangOpen(false); }}
+                >
+                  {lang}
+                </button>
+              ))}
             </div>
-          </div>
-        )}
-      </header>
-    </div>
+          )}
+        </div>
+
+        <Divider />
+
+        {/* Sign in */}
+        <a className="exp-signin-btn" href="/auth">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m10 17 5-5-5-5" />
+            <path d="M15 12H3" />
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          </svg>
+          Sign in
+        </a>
+      </nav>
+    </>
   );
 }
 // Hero Section Component
